@@ -6,25 +6,6 @@
  
  */
 
-* {
-    margin: 0;
-    padding: 0;
-}
-
-ul {
-    list-style: none;
-}
-
-li {
-    margin: 1em;
-    float: left;
-}
-
-li:hover {
-    background-color: transparent;
-    color: #40F;
-}
-
 body {
     background: url(../img/bg.jpg) no-repeat;
     background-size: cover;
@@ -121,12 +102,13 @@ body {
 
 /* 欢迎语 */
 
-.index-word .welcome-word li {
-    position: fixed;
+.index-word .welcome-word {
+    position: absolute;
     float: left;
     color: #fff;
     font-size: 2em;
-    margin-top: 500px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 8em;
 }
 
 
@@ -189,16 +171,19 @@ body {
 
 .sidebar-content .we-nav {
     display: inline;
-    position: fixed;
-    border-right: 1px solid #bbb;
+    position: relative;
     background-color: transparent;
     color: #fff;
     width: 100%;
+    margin-top: 20px;
 }
 
 .sidebar-content .we-nav a {
     padding: 0;
     display: inline-block;
+    margin-right: 10px;
+    border-right: 2px solid #bbb;
+    padding-right: 0.5em;
 }
 
 .sidebar-content .we-nav .we-nav-item a:hover {
@@ -207,7 +192,7 @@ body {
 
 .sidebar-content .we-nav .we-nav-item {
     text-align: center;
-    line-height: 26px;
+    line-height: 16px;
     display: inline;
     margin-top: 40px;
 }
