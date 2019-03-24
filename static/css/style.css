@@ -18,7 +18,7 @@ body {
 }
 
 .topnav ul {
-    background: #efefef;
+    background: transparent;
     list-style: none;
     position: relative;
     display: inline-table;
@@ -34,22 +34,23 @@ body {
 }
 
 .topnav ul li:hover {
-    background: #00CCFF;
+    background: transparent;
 }
 
 .topnav ul li:hover a {
-    color: #fff;
+    color: #0cf;
+    font-style: bolder;
 }
 
 .topnav ul li a {
     display: block;
     padding: 25px 30px;
-    color: #757575;
+    color: #fff;
     text-decoration: none;
 }
 
 .topnav ul ul {
-    background: #C0C0C0;
+    background: transparent;
     border-radius: 0px;
     padding: 0;
     position: absolute;
@@ -70,7 +71,7 @@ body {
 }
 
 .topnav ul ul li a:hover {
-    background: #00CCFF;
+    background: transparent;
 }
 
 
