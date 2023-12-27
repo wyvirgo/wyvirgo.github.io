@@ -1,83 +1,115 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>text</title>
+	<title>inputtext</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style>
 		body {
 			font-family: Arial, sans-serif;
-			background-color: #f2f2f2;
+			margin: 0;
+			padding: 0;
+		}
+
+		header {
+			background-color: #333;
+			color: white;
+			padding: 20px;
+			text-align: center;
+		}
+
+		header a {
+			color: white;
+			text-decoration: none;
+		}
+
+		header a:hover {
+			color: #ccc;
 		}
 
 		.container {
-			max-width: 600px;
+			max-width: 800px;
 			margin: 0 auto;
 			padding: 20px;
-			background-color: #fff;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 		}
 
-		.input-container {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
+		.form-group {
 			margin-bottom: 20px;
 		}
 
-		input[type="text"] {
-			width: 100%;
-			padding: 10px;
-			margin-bottom: 10px;
-			border: none;
-			border-bottom: 2px solid #ccc;
-			font-size: 14px;
+		.form-group label {
+			display: block;
+			font-weight: bold;
+			margin-bottom: 5px;
 		}
 
-		button {
-			padding: 10px 20px;
-			background-color: #007bff;
-			color: #fff;
+		.form-group input[type="text"] {
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			font-size: 14px;
+			padding: 10px;
+			width: 100%;
+		}
+
+		.form-group textarea {
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			font-size: 14px;
+			height: 200px;
+			padding: 10px;
+			width: 100%;
+		}
+
+		.form-group button {
+			background-color: #333;
 			border: none;
-			border-radius: 5px;
+			border-radius: 4px;
+			color: white;
 			cursor: pointer;
 			font-size: 14px;
-			margin-top: 10px;
-		}
-
-		button:hover {
-			background-color: #0056b3;
-		}
-
-		.output-container {
-			margin-top: 20px;
 			padding: 10px;
-			background-color: #fff;
-			border: 1px solid #ccc;
-			border-radius: 5px;
-			font-size: 14px;
-			white-space: pre-wrap;
-			word-wrap: break-word;
+		}
+
+		.form-group button:hover {
+			background-color: #555;
+		}
+
+		.text-display {
+			font-size: 16px;
+			line-height: 1.5;
+			margin-bottom: 20px;
+			text-align: center;
+		}
+
+		.text-display .paragraph {
+			margin-bottom: 20px;
+		}
+
+		.text-display .paragraph:last-child {
+			margin-bottom: 0;
 		}
 	</style>
 </head>
 <body>
-    <header>
-		<a href="./index.html">返回首页</a>
+	<header>
+		<a href="./index.html">返回上一页</a>
 	</header>
 	<div class="container">
-		<div class="input-container">
-			<input type="text" id="inputText" placeholder="Enter text here...">
-			<button id="submitButton">Send</button>
-		</div>
-		<div class="output-container" id="outputArea">
-			<!-- This is where the output text will be displayed -->
+		<form>
+			<div class="form-group">
+				<label for="input-text">输入文本:</label>
+				<input type="text" id="input-text" name="input-text">
+			</div>
+			<div class="form-group">
+				<label for="input-textarea">输入文本:</label>
+				<textarea id="input-textarea" name="input-textarea"></textarea>
+			</div>
+			<div class="form-group">
+				<button type="submit">发送</button>
+			</div>
+		</form>
+		<div class="text-display">
+			<div class="paragraph">这里是输入的文本内容。</div>
 		</div>
 	</div>
-
-	<script>
-		document.getElementById("submitButton").addEventListener("click", function() {
-			document.getElementById("outputArea").innerHTML = document.getElementById("inputText").value;
-			document.getElementById("inputText").value = "";
-		});
-	</script>
-</body>
-</html>
+</body
