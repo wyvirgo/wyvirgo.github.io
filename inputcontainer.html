@@ -9,44 +9,54 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #E8E8E8;
         }
         .container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 20px auto;
             padding: 20px;
+            background-color: #FFFFFF;
+            border: 1px solid #CCCCCC;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         textarea {
-            width: 100%;
+            width: calc(100% - 22px); /* 22px 是两侧 padding 的总和 */
             height: 100px;
             margin-bottom: 10px;
             resize: both;
+            border: 1px solid #CCCCCC;
+            padding: 10px;
+            border-radius: 5px;
         }
         button {
             padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
+            background-color: #4C96D6;
+            color: #FFFFFF;
             border: none;
             cursor: pointer;
+            border-radius: 5px;
         }
         .content-input,
         .content-output {
-            border: 1px solid #ccc;
+            border: 1px solid #CCCCCC;
             padding: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             overflow-y: auto;
             resize: both;
+            border-radius: 5px;
         }
         a {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: #007bff;
-            color: #fff;
+            background-color: #4C96D6;
+            color: #FFFFFF;
             padding: 10px;
             border: none;
             cursor: pointer;
             text-decoration: none;
-            display: block;
+            border-radius: 5px;
         }
     </style>
 </head>
