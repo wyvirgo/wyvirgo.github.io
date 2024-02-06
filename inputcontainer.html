@@ -27,12 +27,19 @@
             border: none;
             cursor: pointer;
         }
-        #output {
+        .content-input {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+            resize: none;
+        }
+        .content-output {
             border: 1px solid #ccc;
             padding: 10px;
             margin-top: 20px;
             max-height: 300px;
             overflow-y: auto;
+            resize: vertical;
         }
         a {
             display: block;
@@ -56,16 +63,21 @@
 <body>
     <div class="container">
         <h1>Interactive Page</h1>
-        <textarea id="inputText" placeholder="Enter text here..."></textarea>
+        <textarea id="inputText" class="content-input" placeholder="Enter text here..."></textarea>
         <button onclick="sendMessage()">Send</button>
-        <div id="output"></div>
-        <a href="./index.html" id="scrollToTopBtn" class="scroll-to-top" onclick="scrollToTop()">Back to the previous page</a>
+        <div id="output" class="content-output"></div>
+        <a href="./index.html" id="scrollToTopBtn" class="scroll-to-top" onclick="scrollToTop()">Back</a>
     </div>
 
     <script>
         function sendMessage() {
             var inputText = document.getElementById("inputText").value;
             var outputDiv = document.getElementById("output");
+            
+            // 清空内容显示区
+            outputDiv.innerHTML = "";
+
+            // 显示新的内容
             outputDiv.innerHTML += "<p>" + inputText + "</p>";
 
             // 滑动到底部
