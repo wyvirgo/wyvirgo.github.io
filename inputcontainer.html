@@ -12,8 +12,8 @@
             background-color: #E8E8E8;
             display: flex;
             justify-content: center; /* 水平居中 */
-            align-items: center; /* 垂直居中 */
-            height: 100vh; /* 全屏高度 */
+            align-items: flex-start; /* 顶部对齐 */
+            min-height: 100vh; /* 最小高度 */
         }
         .container {
             width: 100%; /* 使用百分比宽度以便跟随子元素宽度调整 */
@@ -24,7 +24,7 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        textarea {
+        textarea, .content-output {
             width: calc(50% - 22px); /* 22px 是两侧 padding 的总和 */
             min-width: 300px; /* 最小宽度 */
             height: 100px;
@@ -59,8 +59,6 @@
             box-sizing: border-box; /* 让按钮和文本输入区的宽度包括 padding */
         }
         .content-output {
-            width: 50%; /* 固定显示区宽度 */
-            min-width: 300px; /* 最小宽度 */
             height: auto; /* 高度自适应 */
             border: 1px solid #E0A5D0; /* 修复显示区的边框 */
             padding: 10px; /* 添加内边距 */
