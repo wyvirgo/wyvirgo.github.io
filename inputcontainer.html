@@ -82,7 +82,7 @@
 <body>
     <div class="container">
         <div class="button-container">
-            <button onclick="scrollToTop()">Back</button>
+            <button onclick="goBack()">Back</button>
             <button onclick="sendMessage()">Send</button>
         </div>
         <textarea id="inputText" placeholder="Enter text here..."></textarea>
@@ -92,6 +92,11 @@
     <button class="back-to-top" onclick="scrollToTop()">↑ Top</button>
 
     <script>
+        function goBack() {
+            // 返回到主页
+            window.location.href = './index.html';
+        }
+        
         function sendMessage() {
             var inputText = document.getElementById("inputText").value;
             var outputDiv = document.getElementById("output");
@@ -104,10 +109,6 @@
 
             // 滑动到底部
             outputDiv.scrollTop = outputDiv.scrollHeight;
-        }
-
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // 监听页面滚动事件，显示或隐藏返回顶部按钮
