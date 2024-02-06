@@ -1,94 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>inputcontainer</title>
-	<style>
-		body {
-			font-family: Arial, sans-serif;
-			background-color: #f2f2f2;
-		}
-		
-		header {
-			background-color: #333;
-			color: white;
-			padding: 20px;
-			text-align: center;
-		}
-		
-		.container {
-			max-width: 600px;
-			margin: 0 auto;
-			padding: 20px;
-			background-color: #fff;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-		}
-
-		.input-container {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			margin-bottom: 20px;
-		}
-
-		input[type="text"] {
-			width: 100%;
-			padding: 10px;
-			margin-bottom: 10px;
-			border: none;
-			border-bottom: 2px solid #ccc;
-			font-size: 14px;
-		}
-
-		button {
-			padding: 10px 20px;
-			background-color: #007bff;
-			color: #fff;
-			border: none;
-			border-radius: 5px;
-			cursor: pointer;
-			font-size: 14px;
-			margin-top: 10px;
-		}
-
-		button:hover {
-			background-color: #0056b3;
-		}
-
-		.output-container {
-			margin-top: 20px;
-			padding: 10px;
-			background-color: #fff;
-			border: 1px solid #ccc;
-			border-radius: 5px;
-			font-size: 14px;
-			white-space: pre-wrap;
-			word-wrap: break-word;
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        #output {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        a {
+            display: block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            display: none;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1>Interactive Page</h1>
+        <textarea id="inputText" placeholder="Enter text here..."></textarea>
+        <button onclick="sendMessage()">Send</button>
+        <div id="output"></div>
+        <a href="./index.html" id="scrollToTopBtn" class="scroll-to-top" onclick="scrollToTop()">Back to the previous page</a>
+    </div>
 
-	<div class="container">
-		<div class="output-container" id="outputArea">
-			<!-- This is where the output text will be displayed -->
-		</div>
-		<div class="input-container">
-			<input type="text" id="inputText" placeholder="Enter text here...">
-			<button id="submitButton">Send</button>
-		</div>
-	</div>
-	
-	<script>
-		document.getElementById("submitButton").addEventListener("click", function() {
-			document.getElementById("outputArea").innerHTML = document.getElementById("inputText").value;
-			document.getElementById("inputText").value = "";
-		});
-	</script>	
-	
-	<header>
-		<a href="./index.html">Back to the previous page</a>
-	</header>
-	
+    <script>
+        function sendMessage() {
+            var inputText = document.getElementById("inputText").value;
+            var outputDiv = document.getElementById("output");
+            outputDiv.innerHTML += "<p>" + inputText + "</p>";
 
+            // 滑动到底部
+            outputDiv.scrollTop = outputDiv.scrollHeight;
+
+            // 显示返回顶部按钮
+            var scrollToTopBtn = document.getElementById("scrollToTopBtn");
+            scrollToTopBtn.style.display = "block";
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
 </body>
 </html>
