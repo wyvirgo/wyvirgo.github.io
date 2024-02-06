@@ -3,33 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>loadText</title>
+    <title>Loadtext</title>
 </head>
 <body>
+    <!-- Back 按钮 -->
+    <button onclick="goToHomePage()">Back</button>
+
     <div class="container">
-        <div class="button-container">
-            <button onclick="loadText()">Load Text</button>
-        </div>
-        <textarea id="output" class="content-output" readonly></textarea>
-        <div class="button-container">
-            <button onclick="goToHomePage()">Back</button>
-        </div>
+        <textarea id="text-content" rows="10" cols="50"></textarea>
     </div>
 
     <script>
-        function loadText() {
-            // 发送请求获取文本文件内容
-            fetch('./text.txt')
-            .then(response => response.text())
-            .then(data => {
-                // 将文本文件内容显示在输出区域
-                document.getElementById("output").value = data;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
+        // 服务器中的 txt 文件 URL
+        const serverTxtUrl = './text.txt';
 
+        // 创建 XMLHttpRequest 对象
+        var xhr = new XMLHttpRequest();
+
+        // 打开连接
+        xhr.open('GET', serverTxtUrl, true);
+
+        // 设置响应类型
+        xhr.responseType = 'text';
+
+        // 处理加载完成事件
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                // 将文本内容显示在文本区域中
+                document.getElementById("text-content").value = xhr.responseText;
+            }
+        };
+
+        // 发送请求
+        xhr.send();
+
+        // 返回主页函数
         function goToHomePage() {
             // 返回到主页
             window.location.href = './index.html';
