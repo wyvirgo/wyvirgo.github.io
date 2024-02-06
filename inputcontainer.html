@@ -52,13 +52,14 @@
         .content-output {
             margin-top: 10px; /* 添加间隙 */
         }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
         a {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
             background-color: #4C96D6;
             color: #FFFFFF;
-            padding: 10px;
+            padding: 10px 20px;
             border: none;
             cursor: pointer;
             text-decoration: none;
@@ -68,11 +69,12 @@
 </head>
 <body>
     <div class="container">
-        <h1>Interactive Page</h1>
+        <div class="button-container">
+            <a href="./index.html" onclick="scrollToTop()">Back</a>
+            <button onclick="sendMessage()">Send</button>
+        </div>
         <textarea id="inputText" class="content-input" placeholder="Enter text here..."></textarea>
         <div id="output" class="content-output"></div>
-        <button onclick="sendMessage()">Send</button>
-        <a href="./index.html" id="scrollToTopBtn" onclick="scrollToTop()">Back</a>
     </div>
 
     <script>
