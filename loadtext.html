@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>loadText</title>
+</head>
+<body>
+    <div class="container">
+        <div class="button-container">
+            <button onclick="loadText()">Load Text</button>
+        </div>
+        <textarea id="output" class="content-output" readonly></textarea>
+        <div class="button-container">
+            <button onclick="goToHomePage()">Back</button>
+        </div>
+    </div>
+
+    <script>
+        function loadText() {
+            // 发送请求获取文本文件内容
+            fetch('text.txt')
+            .then(response => response.text())
+            .then(data => {
+                // 将文本文件内容显示在输出区域
+                document.getElementById("output").value = data;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function goToHomePage() {
+            // 返回到主页
+            window.location.href = './index.html';
+        }
+    </script>
+</body>
+</html>
