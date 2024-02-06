@@ -30,52 +30,36 @@
             padding: 10px;
             border-radius: 5px;
         }
-        button {
-            padding: 10px 20px;
-            background-color: #E0A5D0; /* 莫兰迪配色 */
-            color: #FFFFFF;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-        .content-input,
-        .content-output {
-            width: calc(100% - 22px); /* 22px 是两侧 padding 的总和 */
-            border: 1px solid #E0A5D0;
-            padding: 10px;
-            margin-bottom: 10px;
-            overflow-y: auto;
-            resize: both;
-            border-radius: 5px;
-        }
-        .content-output {
-            margin-top: 10px; /* 添加间隙 */
-        }
         .button-container {
             display: flex;
             justify-content: space-between;
             align-items: center; /* 垂直居中对齐 */
+            margin-bottom: 10px; /* 按钮和文本输入区之间的间距 */
         }
-        a, button {
+        button {
+            flex: 1; /* 让按钮占据相同的宽度 */
+            padding: 10px 20px;
             background-color: #4C96D6; /* 莫兰迪配色 */
             color: #FFFFFF;
-            padding: 10px 20px;
             border: none;
             cursor: pointer;
-            text-decoration: none;
             border-radius: 5px;
+            font-size: 16px; /* 文字大小一致 */
+        }
+        textarea,
+        button {
+            box-sizing: border-box; /* 让按钮和文本输入区的宽度包括 padding */
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="button-container">
-            <a href="./index.html" onclick="scrollToTop()">Back</a>
+            <button onclick="scrollToTop()">Back</button>
             <button onclick="sendMessage()">Send</button>
         </div>
-        <textarea id="inputText" class="content-input" placeholder="Enter text here..."></textarea>
-        <div id="output" class="content-output"></div>
+        <textarea id="inputText" placeholder="Enter text here..."></textarea>
+        <div id="output"></div>
     </div>
 
     <script>
