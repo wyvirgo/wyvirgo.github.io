@@ -12,6 +12,7 @@
             background-color: #E8E8E8;
         }
         .container {
+            width: 100%; /* 使用百分比宽度以便跟随子元素宽度调整 */
             max-width: 800px;
             margin: 20px auto;
             padding: 20px;
@@ -40,12 +41,16 @@
         }
         .content-input,
         .content-output {
+            width: calc(100% - 22px); /* 22px 是两侧 padding 的总和 */
             border: 1px solid #E0A5D0;
             padding: 10px;
             margin-bottom: 10px;
             overflow-y: auto;
             resize: both;
             border-radius: 5px;
+        }
+        .content-output {
+            margin-top: -10px; /* 显示区放在输入区顶部 */
         }
         a {
             position: fixed;
@@ -65,8 +70,8 @@
     <div class="container">
         <h1>Interactive Page</h1>
         <textarea id="inputText" class="content-input" placeholder="Enter text here..."></textarea>
-        <button onclick="sendMessage()">Send</button>
         <div id="output" class="content-output"></div>
+        <button onclick="sendMessage()">Send</button>
         <a href="./index.html" id="scrollToTopBtn" onclick="scrollToTop()">Back</a>
     </div>
 
@@ -75,11 +80,8 @@
             var inputText = document.getElementById("inputText").value;
             var outputDiv = document.getElementById("output");
             
-            // 清空内容显示区
-            outputDiv.innerHTML = "";
-
-            // 显示新的内容
-            outputDiv.innerHTML += "<p>" + inputText + "</p>";
+            // 显示新的内容并保留格式和换行
+            outputDiv.innerHTML += "<p>" + inputText.replace(/\n/g, "<br>") + "</p>";
 
             // 滑动到底部
             outputDiv.scrollTop = outputDiv.scrollHeight;
