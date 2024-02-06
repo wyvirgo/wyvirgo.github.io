@@ -80,6 +80,9 @@
             var inputText = document.getElementById("inputText").value;
             var outputDiv = document.getElementById("output");
             
+            // 清空内容显示区
+            outputDiv.innerHTML = "";
+
             // 显示新的内容并保留格式和换行
             outputDiv.innerHTML += "<p>" + inputText.replace(/\n/g, "<br>") + "</p>";
 
