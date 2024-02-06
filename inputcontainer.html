@@ -37,18 +37,26 @@
             margin-bottom: 10px; /* 按钮和文本输入区之间的间距 */
         }
         button {
-            flex: 1; /* 让按钮占据相同的宽度 */
-            padding: 10px 20px;
+            padding: 10px; /* 适度减少按钮的内边距 */
             background-color: #4C96D6; /* 莫兰迪配色 */
             color: #FFFFFF;
             border: none;
             cursor: pointer;
             border-radius: 5px;
             font-size: 16px; /* 文字大小一致 */
+            flex: 0 1 auto; /* 让按钮的长度根据内容自适应，但不允许收缩 */
+        }
+        button:first-child {
+            margin-right: 10px; /* 第一个按钮的右边距 */
         }
         textarea,
         button {
             box-sizing: border-box; /* 让按钮和文本输入区的宽度包括 padding */
+        }
+        .content-output {
+            border: 1px solid #E0A5D0; /* 修复显示区的边框 */
+            padding: 10px; /* 添加内边距 */
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -59,7 +67,7 @@
             <button onclick="sendMessage()">Send</button>
         </div>
         <textarea id="inputText" placeholder="Enter text here..."></textarea>
-        <div id="output"></div>
+        <div id="output" class="content-output"></div>
     </div>
 
     <script>
