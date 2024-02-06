@@ -19,6 +19,7 @@
             width: 100%;
             height: 100px;
             margin-bottom: 10px;
+            resize: both;
         }
         button {
             padding: 10px 20px;
@@ -27,27 +28,15 @@
             border: none;
             cursor: pointer;
         }
-        .content-input {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 20px;
-            resize: none;
-        }
+        .content-input,
         .content-output {
             border: 1px solid #ccc;
             padding: 10px;
-            margin-top: 20px;
-            max-height: 300px;
+            margin-bottom: 20px;
             overflow-y: auto;
-            resize: vertical;
+            resize: both;
         }
         a {
-            display: block;
-            margin-top: 20px;
-            text-decoration: none;
-            color: #007bff;
-        }
-        .scroll-to-top {
             position: fixed;
             bottom: 20px;
             right: 20px;
@@ -56,7 +45,8 @@
             padding: 10px;
             border: none;
             cursor: pointer;
-            display: none;
+            text-decoration: none;
+            display: block;
         }
     </style>
 </head>
@@ -66,7 +56,7 @@
         <textarea id="inputText" class="content-input" placeholder="Enter text here..."></textarea>
         <button onclick="sendMessage()">Send</button>
         <div id="output" class="content-output"></div>
-        <a href="./index.html" id="scrollToTopBtn" class="scroll-to-top" onclick="scrollToTop()">Back</a>
+        <a href="./index.html" id="scrollToTopBtn" onclick="scrollToTop()">Back</a>
     </div>
 
     <script>
@@ -82,10 +72,6 @@
 
             // 滑动到底部
             outputDiv.scrollTop = outputDiv.scrollHeight;
-
-            // 显示返回顶部按钮
-            var scrollToTopBtn = document.getElementById("scrollToTopBtn");
-            scrollToTopBtn.style.display = "block";
         }
 
         function scrollToTop() {
