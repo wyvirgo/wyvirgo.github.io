@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auckland English Hub v4.0</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            morandi: {
+              bg: '#f4f1ea',
+              card: '#ffffff',
+              primary: '#6b8068',
+              accent: '#d4a373',
+              blue: '#7e9a9b',
+              purple: '#9b8c9b',
+              morning: '#e8f0fe',
+              afternoon: '#fef3e8',
+              evening: '#f3e8fe',
+              text: '#333333'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #f4f1ea; color: #333333; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    .card-shadow { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03); }
+  </style>
+</head>
+<body class="p-4 md:p-8">
+
+  <!-- Header -->
+  <header class="max-w-6xl mx-auto mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <div>
+      <h1 class="text-2xl md:text-3xl font-bold text-morandi-primary" id="ui-title">Auckland English Hub</h1>
+      <p class="text-sm text-gray-500 mt-1" id="ui-subtitle">奥克兰免费及社区英语活动纵向时段课表</p>
+    </div>
+    
+    <div class="flex flex-wrap items-center gap-2">
+      <!-- 语言切换按钮 -->
+      <button onclick="toggleLanguage()" id="langBtn" class="bg-morandi-accent text-white px-3 py-2 rounded-lg text-sm hover:opacity-90 transition font-bold">
+        🌐 English
+      </button>
+      <button onclick="exportToICS()" class="bg-morandi-primary text-white px-3 py-2 rounded-lg text-sm hover:opacity-90">📅 <span id="btn-ics">导出日历 (.ics)</span></button>
+      <button onclick="exportToImage()" class="bg-morandi-blue text-white px-3 py-2 rounded-lg text-sm hover:opacity-90">📷 <span id="btn-img">导出图片</span></button>
+      <button onclick="exportToPDF()" class="bg-morandi-purple text-white px-3 py-2 rounded-lg text-sm hover:opacity-90">📄 <span id="btn-pdf">导出 PDF</span></button>
+    </div>
+  </header>
+
+  <!-- 地点与行程估算模块（支持公交与自驾预估） -->
+  <section class="max-w-6xl mx-auto bg-white p-4 rounded-xl card-shadow mb-6 border-l-4 border-morandi-accent">
+    <h2 class="text-base font-bold text-gray-800 mb-2 flex items-center gap-2">
+      <span>🚘</span> <span id="ui-commute-title">出行路线与成本估算器 (Bus & Drive)</span>
+    </h2>
+    <div class="flex flex-col sm:flex-row gap-3 items-end">
+      <div class="flex-1 w-full">
+        <label class="block text-xs font-semibold text-gray-500 mb-1" id="ui-commute-label">输入你的出发地点（例如：Athena Dr, North Shore / Auckland CBD）：</label>
+        <input type="text" id="originInput" placeholder="e.g. Athena Drive, Albany / Takapuna / City Center" class="w-full p-2 border border-gray-200 rounded-lg text-xs">
+      </div>
+      <button onclick="calculateCommute()" class="w-full sm:w-auto bg-morandi-primary text-white px-4 py-2 rounded-lg text-xs hover:opacity-90 transition whitespace-nowrap">
+        <span id="ui-commute-btn">计算预估时间与费用</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Filters Section -->
+  <section class="max-w-6xl mx-auto bg-white p-4 rounded-xl card-shadow mb-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3">
+      <div>
+        <label class="block text-xs font-semibold text-gray-500 mb-1" id="fltr-area-lbl">地区</label>
+        <select id="areaFilter" onchange="filterEvents()" class="w-full p-2 border border-gray-200 rounded-lg text-xs">
+          <option value="ALL" id="opt-area-all">全部地区</option>
+          <option value="North Shore" id="opt-area-ns">北岸 (North Shore)</option>
+          <option value="CBD" id="opt-area-cbd">市中心 (CBD)</option>
+          <option value="Central/West" id="opt-area-cw">中区/西区 (Central/West)</option>
+          <option value="East/South" id="opt-area-es">东区/南区 (East/South)</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-gray-500 mb-1" id="fltr-type-lbl">组织类型</label>
+        <select id="typeFilter" onchange="filterEvents()" class="w-full p-2 border border-gray-200 rounded-lg text-xs">
+          <option value="ALL" id="opt-type-all">全部类型</option>
+          <option value="Library" id="opt-type-lib">图书馆</option>
+          <option value="Official" id="opt-type-off">官方机构/大学</option>
+          <option value="Church" id="opt-type-chu">教会</option>
+          <option value="Community" id="opt-type-com">社区/公益组织</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-gray-500 mb-1" id="fltr-fee-lbl">费用模式</label>
+        <select id="feeFilter" onchange="filterEvents()" class="w-full p-2 border border-gray-200 rounded-lg text-xs">
+          <option value="ALL" id="opt-fee-all">全部费用</option>
+          <option value="Free" id="opt-fee-free">完全免费</option>
+          <option value="Donation" id="opt-fee-don">自愿捐助 ($2-$3)</option>
+          <option value="Paid" id="opt-fee-paid">付费/测试免费</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-gray-500 mb-1" id="fltr-time-lbl">时间/时段</label>
+        <select id="timeFilter" onchange="filterEvents()" class="w-full p-2 border border-gray-200 rounded-lg text-xs">
+          <option value="ALL" id="opt-time-all">全部时间</option>
+          <option value="WEEKDAY" id="opt-time-wkday">仅工作日 (Mon-Fri)</option>
+          <option value="WEEKEND" id="opt-time-wkend">仅周末 (Sat-Sun)</option>
+          <option value="Morning" id="opt-time-morn">上午场 (12:00前)</option>
+          <option value="Afternoon" id="opt-time-aftn">下午场 (12:00-18:00)</option>
+          <option value="Evening" id="opt-time-eve">晚间场 (18:00后)</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-gray-500 mb-1" id="fltr-srch-lbl">关键词</label>
+        <input type="text" id="searchInput" oninput="filterEvents()" placeholder="Search..." class="w-full p-2 border border-gray-200 rounded-lg text-xs">
+      </div>
+    </div>
+  </section>
+
+  <!-- Timetable Content -->
+  <!-- Responsive auto‑fit grid for weekday sections -->
+  <main id="timetableContainer" class="max-w-6xl mx-auto grid grid-cols-[repeat(auto-fit,_minmax(350px,_1fr))] gap-4 mb-10">
+    <!-- Dynamic Timeline Sections -->
+  </main>
+
+  <!-- 雅思场景化地道 Small Talk 实战急救包 -->
+  <section class="max-w-6xl mx-auto bg-white p-6 rounded-xl card-shadow border-t-4 border-morandi-blue mb-8">
+    <h2 class="text-lg font-bold text-morandi-blue mb-2 flex items-center gap-2">
+      <span>💬</span> <span id="ui-ice-title">雅思场景化地道 Small Talk 实战急救包 (IELTS-Style Conversation Toolkit)</span>
+    </h2>
+    <p class="text-xs text-gray-500 mb-4" id="ui-ice-desc">包含欧美口语高频短语、破冰话题与地道 Small Talk 句型，助你在英语角自信开口。</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="icebreakerCards">
+      <!-- Dynamic Icebreaker Content -->
+    </div>
+  </section>
+
+  <script>
+    let currentLang = 'zh'; // 'zh' or 'en'
+
+    const i18n = {
+      zh: {
+        title: "Auckland English Hub",
+        subtitle: "奥克兰免费及社区英语活动纵向时段课表",
+        commuteTitle: "出行路线与成本估算器 (Bus & Drive)",
+        commuteLabel: "输入你的出发地点（例如：Athena Dr, North Shore / Auckland CBD）：",
+        commuteBtn: "计算预估时间与费用",
+        fltrArea: "地区",
+        fltrType: "组织类型",
+        fltrFee: "费用模式",
+        fltrTime: "时间/时段",
+        fltrSrch: "关键词",
+        optAllArea: "全部地区",
+        optAreaNS: "北岸 (North Shore)",
+        optAreaCBD: "市中心 (CBD)",
+        optAreaCW: "中区/西区 (Central/West)",
+        optAreaES: "东区/南区 (East/South)",
+        optAllType: "全部类型",
+        optLib: "图书馆",
+        optOff: "官方机构/大学",
+        optChu: "教会",
+        optCom: "社区/公益组织",
+        optAllFee: "全部费用",
+        optFree: "完全免费",
+        optDon: "自愿捐助 ($2-$3)",
+        optPaid: "付费/测试免费",
+        optAllTime: "全部时间",
+        optWkday: "仅工作日 (Mon-Fri)",
+        optWkend: "仅周末 (Sat-Sun)",
+        optMorn: "上午场 (12:00前)",
+        optAftn: "下午场 (12:00-18:00)",
+        optEve: "晚间场 (18:00后)",
+        btnIcs: "导出日历 (.ics)",
+        btnImg: "导出图片",
+        btnPdf: "导出 PDF",
+        mornTitle: "🌅 上午 (12:00前)",
+        aftnTitle: "☀️ 下午 (12:00–18:00)",
+        eveTitle: "🌙 晚间 (18:00以后)",
+        iceTitle: "雅思场景化地道 Small Talk 实战急救包 (IELTS-Style Toolkit)",
+        iceDesc: "包含欧美口语高频短语、破冰话题与地道 Small Talk 句型，助你在英语角自信开口。"
+      },
+      en: {
+        title: "Auckland English Hub",
+        subtitle: "Auckland Free & Community English Events Timetable",
+        commuteTitle: "Commute & Expense Estimator (Bus & Driving)",
+        commuteLabel: "Enter your starting location (e.g., Athena Dr, North Shore / CBD):",
+        commuteBtn: "Estimate Time & Fares",
+        fltrArea: "Region",
+        fltrType: "Organization",
+        fltrFee: "Fee Type",
+        fltrTime: "Time / Period",
+        fltrSrch: "Keywords",
+        optAllArea: "All Regions",
+        optAreaNS: "North Shore",
+        optAreaCBD: "CBD (City Center)",
+        optAreaCW: "Central / West",
+        optAreaES: "East / South",
+        optAllType: "All Types",
+        optLib: "Library",
+        optOff: "Official / University",
+        optChu: "Church",
+        optCom: "Community / Non-Profit",
+        optAllFee: "All Fees",
+        optFree: "Free",
+        optDon: "Voluntary Donation ($2-$3)",
+        optPaid: "Paid / Free Placement Test",
+        optAllTime: "All Times",
+        optWkday: "Weekdays (Mon-Fri)",
+        optWkend: "Weekends (Sat-Sun)",
+        optMorn: "Morning (Before 12:00)",
+        optAftn: "Afternoon (12:00-18:00)",
+        optEve: "Evening (After 18:00)",
+        btnIcs: "Export Calendar (.ics)",
+        btnImg: "Export Image",
+        btnPdf: "Export PDF",
+        mornTitle: "🌅 Morning (Before 12:00)",
+        aftnTitle: "☀️ Afternoon (12:00–18:00)",
+        eveTitle: "🌙 Evening (After 18:00)",
+        iceTitle: "IELTS-Style Real-World Conversation & Small Talk Toolkit",
+        iceDesc: "Essential phrases, authentic idioms, and small talk templates categorized by IELTS speaking topics."
+      }
+    };
+
+    const icebreakersData = [
+      {
+        categoryZh: "🎓 场景 1: 工作与学习 (Work & Study)",
+        categoryEn: "🎓 Topic 1: Work & Study",
+        phrasesZh: [
+          { label: "破冰问句", phrase: "What line of work are you in?", tip: "比 'What is your job?' 更地道自然。" },
+          { label: "表达状态", phrase: "I'm currently taking a gap year / retraining in...", tip: "适合介绍转型或学习阶段。" },
+          { label: "地道小短语", phrase: "How are you finding it so far?", tip: "询问对方适应情况，比 'Do you like it?' 更流利。" }
+        ],
+        phrasesEn: [
+          { label: "Icebreaker", phrase: "What line of work are you in?", tip: "More natural than 'What is your job?'." },
+          { label: "Current Status", phrase: "I'm currently taking a break / studying in...", tip: "Great for introducing career transitions." },
+          { label: "Follow-up", phrase: "How are you finding it so far?", tip: "Used to ask how someone is adapting to something new." }
+        ]
+      },
+      {
+        categoryZh: "🏡 场景 2: 家乡与旅行 (Hometown & Travel)",
+        categoryEn: "🏡 Topic 2: Hometown & Travel",
+        phrasesZh: [
+          { label: "破冰问句", phrase: "Whereabouts in Auckland are you based?", tip: "Whereabouts 表示“具体大约在哪里”。" },
+          { label: "对比介绍", phrase: "It's quite a change of pace from my hometown.", tip: "形容节奏变化，常用于从大城市移居奥克兰。" },
+          { label: "地道小短语", phrase: "Any hidden gems around here you'd recommend?", tip: "询问本地人私藏景点或好去处。" }
+        ],
+        phrasesEn: [
+          { label: "Icebreaker", phrase: "Whereabouts in Auckland are you based?", tip: "'Whereabouts' implies a general neighbourhood." },
+          { label: "Comparison", phrase: "It's quite a change of pace from my hometown.", tip: "Perfect for discussing lifestyle adjustments." },
+          { label: "Recommendation", phrase: "Any hidden gems around here you'd recommend?", tip: "Authentic way to ask for local recommendations." }
+        ]
+      },
+      {
+        categoryZh: "☕ 场景 3: 饮食与休闲 (Food & Dining)",
+        categoryEn: "☕ Topic 3: Food & Dining",
+        phrasesZh: [
+          { label: "破冰问句", phrase: "Are you a tea person or a coffee enthusiast?", tip: "适合教会/图书馆 Morning Tea 场景。" },
+          { label: "表达偏好", phrase: "I'm a big fan of flat whites / local bakeries.", tip: "用 'I'm a big fan of' 替换 'I like'." },
+          { label: "地道小短语", phrase: "Grab a bite / Grab a coffee", tip: "欧美高频短语：吃点东西/喝杯咖啡。" }
+        ],
+        phrasesEn: [
+          { label: "Icebreaker", phrase: "Are you a tea person or a coffee enthusiast?", tip: "Ideal opener during morning tea breaks." },
+          { label: "Preferences", phrase: "I'm a big fan of flat whites / local bakeries.", tip: "Replaces the overused 'I like'." },
+          { label: "Idioms", phrase: "Grab a bite / Grab a coffee", tip: "Extremely common casual phrasing for meals/drinks." }
+        ]
+      },
+      {
+        categoryZh: "🌤️ 场景 4: 天气与日常生活 (Weather & Daily Life)",
+        categoryEn: "🌤️ Topic 4: Weather & Daily Life",
+        phrasesZh: [
+          { label: "破冰问句", phrase: "Four seasons in one day, classic Auckland, right?", tip: "奥克兰天气最经典地道的 Small Talk 切入点。" },
+          { label: "周末计划", phrase: "How do you usually unwind on weekends?", tip: "unwind 比 relax 更具生活化沉浸感。" },
+          { label: "接话回应", phrase: "That sounds like a plan!", tip: "赞同对方的周末安排或提议。" }
+        ],
+        phrasesEn: [
+          { label: "Icebreaker", phrase: "Four seasons in one day, classic Auckland, right?", tip: "The ultimate local conversation starter." },
+          { label: "Weekend Life", phrase: "How do you usually unwind on weekends?", tip: "'Unwind' sounds more natural than 'relax'." },
+          { label: "Response", phrase: "That sounds like a plan!", tip: "Enthusiastic agreement to a plan or idea." }
+        ]
+      },
+      {
+        categoryZh: "🎨 场景 5: 兴趣与爱好 (Hobbies & Leisure)",
+        categoryEn: "🎨 Topic 5: Hobbies & Leisure",
+        phrasesZh: [
+          { label: "破冰问句", phrase: "What do you like to do in your spare time?", tip: "标准且礼貌的雅思 Part 1 核心话题问法。" },
+          { label: "谈论新尝试", phrase: "I've recently picked up photography / hiking.", tip: "pick up 表示“开始从事/学习新爱好”。" },
+          { label: "地道小短语", phrase: "I'm really into coastal walks.", tip: "用 'be into' 表达对某事着迷。" }
+        ],
+        phrasesEn: [
+          { label: "Icebreaker", phrase: "What do you like to do in your spare time?", tip: "Classic and polite starter for personal interests." },
+          { label: "New Hobbies", phrase: "I've recently picked up photography / hiking.", tip: "'Pick up' means starting a new habit/hobby." },
+          { label: "Idioms", phrase: "I'm really into coastal walks.", tip: "'Be into' is widely used for personal passions." }
+        ]
+      },
+      {
+        categoryZh: "🤝 场景 6: 离场与保持联系 (Wrap-Up & Networking)",
+        categoryEn: "🤝 Topic 6: Wrap-Up & Social Contacts",
+        phrasesZh: [
+          { label: "礼貌结束", phrase: "It was really nice chatting with you!", tip: "离场时的黄金礼貌表达。" },
+          { label: "建立联系", phrase: "Are you on WhatsApp or Instagram?", tip: "比直接问电话号码更符合现代社交习惯。" },
+          { label: "祝愿结语", phrase: "Hope you have a lovely rest of the week!", tip: "欧美日常最常用的温暖道别语。" }
+        ],
+        phrasesEn: [
+          { label: "Wrap-up", phrase: "It was really nice chatting with you!", tip: "Gold-standard polite closing line." },
+          { label: "Networking", phrase: "Are you on WhatsApp or Instagram?", tip: "Preferred modern approach to stay in touch." },
+          { label: "Farewell", phrase: "Hope you have a lovely rest of the week!", tip: "Warm, natural farewell for any day of the week." }
+        ]
+      }
+    ];
+
+    const coursesData = [
+      // 周一
+      { dayName: "周一", dayNameEn: "Monday", time: "08:30–16:30", period: "Morning", isWeekday: true, title: "Languages International", titleEn: "Languages International", type: "Official", fee: "Paid", area: "CBD", areaEn: "CBD", location: "27 Princes St, CBD", note: "需线上分级测试·非全免费公益课", noteEn: "Online placement test required. Paid intensive course.", zone: 1 },
+      { dayName: "周一", dayNameEn: "Monday", time: "10:00–12:00", period: "Morning", isWeekday: true, title: "Forrest Hill Presbyterian Church", titleEn: "Forrest Hill Presbyterian Church", type: "Church", fee: "Donation", area: "North Shore", areaEn: "North Shore", location: "151 Forrest Hill Rd, Forrest Hill", note: "捐$2·含早茶·需基础口语", noteEn: "$2 donation. Includes morning tea. Basic English required.", zone: 2 },
+      { dayName: "周一", dayNameEn: "Monday", time: "10:30–12:00", period: "Morning", isWeekday: true, title: "Orewa Community Church", titleEn: "Orewa Community Church", type: "Church", fee: "Free", area: "North Shore", areaEn: "North Shore", location: "Amorino Dr, Red Beach, Orewa", note: "北岸晨间口语·全水平可参与", noteEn: "Morning conversation group. All levels welcome.", zone: 3 },
+      { dayName: "周一", dayNameEn: "Monday", time: "18:30–20:30", period: "Evening", isWeekday: true, title: "Royal Oak SDA Church", titleEn: "Royal Oak SDA Church", type: "Church", fee: "Free", area: "Central/West", areaEn: "Central/West", location: "Royal Oak", note: "晚间日常对话·社恐友好", noteEn: "Evening everyday dialogue. Friendly for beginners.", zone: 2 },
+      { dayName: "周一", dayNameEn: "Monday", time: "19:00–20:30", period: "Evening", isWeekday: true, title: "Forrest Hill Presbyterian Church (晚间)", titleEn: "Forrest Hill Presbyterian Church (Evening)", type: "Church", fee: "Free", area: "North Shore", areaEn: "North Shore", location: "151 Forrest Hill Rd, Forrest Hill", note: "晚间公益场·无需捐赠", noteEn: "Evening community session. Free of charge.", zone: 2 },
+      { dayName: "周一", dayNameEn: "Monday", time: "19:00–21:00", period: "Evening", isWeekday: true, title: "Glen Eden Baptist Church", titleEn: "Glen Eden Baptist Church", type: "Church", fee: "Free", area: "Central/West", areaEn: "Central/West", location: "Glen Eden", note: "多国学员交流·沉浸式练口语", noteEn: "Multicultural interaction. Immersion speaking practice.", zone: 3 },
+
+      // 周二
+      { dayName: "周二", dayNameEn: "Tuesday", time: "10:30–12:00", period: "Morning", isWeekday: true, title: "Avondale Library Conversation Class", titleEn: "Avondale Library Conversation Class", type: "Library", fee: "Free", area: "Central/West", areaEn: "Central/West", location: "Avondale Library", note: "官方小组·零基础友好·直接到场", noteEn: "Official library group. Drop-in class for all levels.", zone: 2 },
+      { dayName: "周二", dayNameEn: "Tuesday", time: "10:30–12:00", period: "Morning", isWeekday: true, title: "Black Antler Eatery Cafe Corner", titleEn: "Black Antler Eatery Cafe Corner", type: "Community", fee: "Free", area: "North Shore", areaEn: "North Shore", location: "Black Antler Eatery, Beach Haven", note: "咖啡厅口语角·适合有基础学员", noteEn: "Casual cafe conversation corner. Intermediate friendly.", zone: 2 },
+      { dayName: "周二", dayNameEn: "Tuesday", time: "10:30–12:00", period: "Morning", isWeekday: true, title: "Bible Chapel English Group", titleEn: "Bible Chapel English Group", type: "Church", fee: "Free", area: "Central/West", areaEn: "Central/West", location: "Bible Chapel, Mt Roskill", note: "晨间基础课·夯实句式对话基础", noteEn: "Morning fundamental vocabulary & sentence practice.", zone: 2 },
+      { dayName: "周二", dayNameEn: "Tuesday", time: "10:30–12:00", period: "Morning", isWeekday: true, title: "Northcross Beach Walking & English", titleEn: "Northcross Beach Walking & English", type: "Church", fee: "Free", area: "North Shore", areaEn: "North Shore", location: "Browns Bay Beach (by swings)", note: "海滩散步+咖啡口语角", noteEn: "Beach walk & outdoor coffee speaking corner.", zone: 2 },
+      { dayName: "周二", dayNameEn: "Tuesday", time: "19:00–20:00", period: "Evening", isWeekday: true, title: "Latter-Day Saints 教堂", titleEn: "Latter-Day Saints Church", type: "Church", fee: "Free", area: "Central/West", areaEn: "Central/West", location: "LDS Church, Mt Roskill", note: "分初/中/高班·一对一辅导", noteEn: "Grouped by proficiency levels with 1-on-1 tutoring.", zone: 2 },
+      { dayName: "周二", dayNameEn: "Tuesday", time: "19:30–20:30", period: "Evening", isWeekday: true, title: "Flat Bush Gracecity Discussion", titleEn: "Flat Bush Gracecity Discussion", type: "Church", fee: "Free", area: "East/South", areaEn: "East/South", location: "Baverstock Oaks Primary School", note: "免费口语交流，有双语协助", noteEn: "Free speech group with bilingual assistance.", zone: 3 },
+
+      // 周三
+      { dayName: "周三", dayNameEn: "Wednesday", time: "09:30–11:30", period: "Morning", isWeekday: true, title: "Mount Albert Baptist Church", titleEn: "Mount Albert Baptist Church", type: "Church", fee: "Free", area: "Central/West", areaEn: "Central/West", location: "Mt Albert", note: "主题口语练习·贴合日常场景", noteEn: "Topic-focused practice tailored to daily life.", zone: 2 },
+      { dayName: "周三", dayNameEn: "Wednesday", time: "10:30–12:00", period: "Morning", isWeekday: true, title: "Orewa Community Church", titleEn: "Orewa Community Church", type: "Church", fee: "Free", area: "North Shore", areaEn: "North Shore", location: "Amorino Dr, Red Beach, Orewa", note: "北岸晨间固定口语场·氛围友好", noteEn: "Regular Wednesday session with warm atmosphere.", zone: 3 },
+      { dayName: "周三", dayNameEn: "Wednesday", time: "19:00–20:00", period: "Evening", isWeekday: true, title: "313 Sunset Road 教堂", titleEn: "313 Sunset Road Church Group", type: "Church", fee: "Free", area: "North Shore", areaEn: "North Shore", location: "313 Sunset Road, Windsor Park", note: "零基础友好·无宗教身份限制", noteEn: "Beginner friendly. Open to everyone.", zone: 2 },
+
+      // 周四
+      { dayName: "周四", dayNameEn: "Thursday", time: "10:30–12:00", period: "Morning", isWeekday: true, title: "Avondale Library Conversation Class", titleEn: "Avondale Library Conversation Class", type: "Library", fee: "Free", area: "Central/West", areaEn: "Central/West", location: "Avondale Library", note: "长期稳定官方课·零基础可参与", noteEn: "Regular council library class. All welcome.", zone: 2 },
+      { dayName: "周四", dayNameEn: "Thursday", time: "10:30–12:00", period: "Morning", isWeekday: true, title: "Orewa Community Church", titleEn: "Orewa Community Church", type: "Church", fee: "Free", area: "North Shore", areaEn: "North Shore", location: "Amorino Dr, Red Beach, Orewa", note: "晨间轻松口语·无学习压力", noteEn: "Relaxed morning dialogue without stress.", zone: 3 },
+      { dayName: "周四", dayNameEn: "Thursday", time: "13:00–14:00", period: "Afternoon", isWeekday: true, title: "Mt Albert Library Conversation Club", titleEn: "Mt Albert Library Conversation Club", type: "Library", fee: "Free", area: "Central/West", areaEn: "Central/West", location: "84 St Lukes Rd, Mt Albert", note: "官方小组·无需注册", noteEn: "Official council group. No registration required.", zone: 2 },
+      { dayName: "周四", dayNameEn: "Thursday", time: "13:00–14:30", period: "Afternoon", isWeekday: true, title: "Waitākere Central Library", titleEn: "Waitākere Central Library", type: "Library", fee: "Free", area: "Central/West", areaEn: "Central/West", location: "Henderson", note: "华人初学者专属·中文辅助·假期停课", noteEn: "Beginner focused. Pauses during school holidays.", zone: 3 },
+
+      // 周五
+      { dayName: "周五", dayNameEn: "Friday", time: "10:00–12:00", period: "Morning", isWeekday: true, title: "Northcross Church ESOL Class", titleEn: "Northcross Church ESOL Class", type: "Church", fee: "Donation", area: "North Shore", areaEn: "North Shore", location: "826A East Coast Rd, Oteha", note: "初/高级分班·捐$3·含免费茶点", noteEn: "Split by level. $3 donation. Refreshments included.", zone: 2 },
+      { dayName: "周五", dayNameEn: "Friday", time: "10:30–12:00", period: "Morning", isWeekday: true, title: "Orewa Community Church", titleEn: "Orewa Community Church", type: "Church", fee: "Free", area: "North Shore", areaEn: "North Shore", location: "Amorino Dr, Red Beach, Orewa", note: "北岸晨间常态化口语练习", noteEn: "Regular Friday morning practice session.", zone: 3 },
+      { dayName: "周五", dayNameEn: "Friday", time: "11:00–12:00", period: "Morning", isWeekday: true, title: "Albany Village Library Conversation Corner", titleEn: "Albany Village Library Conversation Corner", type: "Library", fee: "Free", area: "North Shore", areaEn: "North Shore", location: "Albany Village Library", note: "多国学员交流·官方小组", noteEn: "Multicultural conversation corner hosted by library.", zone: 2 },
+      { dayName: "周五", dayNameEn: "Friday", time: "11:00–13:00", period: "Morning", isWeekday: true, title: "Gracecity Church", titleEn: "Gracecity Church", type: "Church", fee: "Free", area: "CBD", areaEn: "CBD", location: "Gracecity Church, CBD", note: "午间口语辅导·适配学生上班族", noteEn: "Midday speaking practice suitable for students & workers.", zone: 1 },
+      { dayName: "周五", dayNameEn: "Friday", time: "13:00–14:00", period: "Afternoon", isWeekday: true, title: "Te Manawa Community Hub", titleEn: "Te Manawa Community Hub", type: "Library", fee: "Free", area: "Central/West", areaEn: "Central/West", location: "Westgate", note: "西区官方口语角·零基础直接到场", noteEn: "West Auckland official hub. Drop-in anytime.", zone: 3 },
+      { dayName: "周五", dayNameEn: "Friday", time: "15:00–16:00", period: "Afternoon", isWeekday: true, title: "Takapuna Library English Conversation Group", titleEn: "Takapuna Library English Conversation Group", type: "Library", fee: "Free", area: "North Shore", areaEn: "North Shore", location: "Takapuna Library", note: "北岸优质口语小组·沉浸式练习", noteEn: "Popular North Shore group. Great immersive practice.", zone: 2 },
+
+      // 周六
+      { dayName: "周六", dayNameEn: "Saturday", time: "10:00–12:00", period: "Morning", isWeekday: false, title: "Ellen Melville Centre", titleEn: "Ellen Melville Centre", type: "Community", fee: "Free", area: "CBD", areaEn: "CBD", location: "1 Freyberg Place, CBD", note: "周末轻量口语·休闲学习两不误", noteEn: "Weekend casual speaking. Great atmosphere.", zone: 1 },
+      { dayName: "周六", dayNameEn: "Saturday", time: "14:00–16:00", period: "Afternoon", isWeekday: false, title: "Wesley Primary School", titleEn: "Wesley Primary School", type: "Community", fee: "Free", area: "Central/West", areaEn: "Central/West", location: "Wesley Primary School, Mt Roskill", note: "社区英语角·主打实战开口", noteEn: "Community English corner focused on practical speech.", zone: 2 },
+      { dayName: "周六", dayNameEn: "Saturday", time: "需预约", period: "Afternoon", isWeekday: false, title: "CBD 17 Albert St 精品英语角", titleEn: "CBD 17 Albert St English Corner", type: "Community", fee: "Free", area: "CBD", areaEn: "CBD", location: "17 Albert St, CBD", note: "限20人小班·免费需提前预约", noteEn: "Small group capped at 20. Free with RSVP.", zone: 1 },
+
+      // 周日
+      { dayName: "周日", dayNameEn: "Sunday", time: "10:00–12:00", period: "Morning", isWeekday: false, title: "Ellen Melville Centre (周日)", titleEn: "Ellen Melville Centre (Sunday)", type: "Community", fee: "Free", area: "CBD", areaEn: "CBD", location: "1 Freyberg Place, CBD", note: "周日固定口语场·轻松复盘练习", noteEn: "Sunday regular group. Relaxed review & speaking.", zone: 1 },
+      { dayName: "周日", dayNameEn: "Sunday", time: "10:30–12:00", period: "Morning", isWeekday: false, title: "Reformed Church of Avondale", titleEn: "Reformed Church of Avondale", type: "Church", fee: "Free", area: "Central/West", areaEn: "Central/West", location: "Avondale", note: "晨间松弛对话·无学习压力", noteEn: "Sunday morning dialogue without pressure.", zone: 2 },
+      { dayName: "周日", dayNameEn: "Sunday", time: "14:00–15:00", period: "Afternoon", isWeekday: false, title: "Northcote Library Conversation Group", titleEn: "Northcote Library Conversation Group", type: "Library", fee: "Free", area: "North Shore", areaEn: "North Shore", location: "Northcote Library", note: "小众口语小组·人少安静·慢速练习", noteEn: "Cozy small group. Quiet environment and slower pace.", zone: 2 }
+    ];
+
+    let commuteEstimates = {};
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'zh' ? 'en' : 'zh';
+      const langText = currentLang === 'zh' ? '🌐 English' : '🌐 中文界面';
+      document.getElementById('langBtn').innerText = langText;
+      
+      const dict = i18n[currentLang];
+      document.getElementById('ui-title').innerText = dict.title;
+      document.getElementById('ui-subtitle').innerText = dict.subtitle;
+      document.getElementById('ui-commute-title').innerText = dict.commuteTitle;
+      document.getElementById('ui-commute-label').innerText = dict.commuteLabel;
+      document.getElementById('ui-commute-btn').innerText = dict.commuteBtn;
+      
+      document.getElementById('fltr-area-lbl').innerText = dict.fltrArea;
+      document.getElementById('fltr-type-lbl').innerText = dict.fltrType;
+      document.getElementById('fltr-fee-lbl').innerText = dict.fltrFee;
+      document.getElementById('fltr-time-lbl').innerText = dict.fltrTime;
+      document.getElementById('fltr-srch-lbl').innerText = dict.fltrSrch;
+
+      document.getElementById('opt-area-all').innerText = dict.optAllArea;
+      document.getElementById('opt-area-ns').innerText = dict.optAreaNS;
+      document.getElementById('opt-area-cbd').innerText = dict.optAreaCBD;
+      document.getElementById('opt-area-cw').innerText = dict.optAreaCW;
+      document.getElementById('opt-area-es').innerText = dict.optAreaES;
+
+      document.getElementById('opt-type-all').innerText = dict.optAllType;
+      document.getElementById('opt-type-lib').innerText = dict.optLib;
+      document.getElementById('opt-type-off').innerText = dict.optOff;
+      document.getElementById('opt-type-chu').innerText = dict.optChu;
+      document.getElementById('opt-type-com').innerText = dict.optCom;
+
+      document.getElementById('opt-fee-all').innerText = dict.optAllFee;
+      document.getElementById('opt-fee-free').innerText = dict.optFree;
+      document.getElementById('opt-fee-don').innerText = dict.optDon;
+      document.getElementById('opt-fee-paid').innerText = dict.optPaid;
+
+      document.getElementById('opt-time-all').innerText = dict.optAllTime;
+      document.getElementById('opt-time-wkday').innerText = dict.optWkday;
+      document.getElementById('opt-time-wkend').innerText = dict.optWkend;
+      document.getElementById('opt-time-morn').innerText = dict.optMorn;
+      document.getElementById('opt-time-aftn').innerText = dict.optAftn;
+      document.getElementById('opt-time-eve').innerText = dict.optEve;
+
+      document.getElementById('btn-ics').innerText = dict.btnIcs;
+      document.getElementById('btn-img').innerText = dict.btnImg;
+      document.getElementById('btn-pdf').innerText = dict.btnPdf;
+
+      document.getElementById('ui-ice-title').innerText = dict.iceTitle;
+      document.getElementById('ui-ice-desc').innerText = dict.iceDesc;
+
+      filterEvents();
+      renderIcebreakers();
+    }
+
+    function calculateCommute() {
+      const origin = document.getElementById('originInput').value.trim();
+      if (!origin) {
+        alert(currentLang === 'zh' ? '请输入出发地点' : 'Please enter a starting location.');
+        return;
+      }
+
+      const isOriginNorthShore = origin.toLowerCase().includes('athena') || origin.toLowerCase().includes('north shore') || origin.toLowerCase().includes('albany') || origin.toLowerCase().includes('takapuna');
+      
+      coursesData.forEach((item, idx) => {
+        let busMins = 30;
+        let busFare = "$2.60 (1 Zone)";
+        let driveMins = 15;
+        let parkingFee = "Free Parking";
+
+        if (isOriginNorthShore) {
+          if (item.area === 'North Shore') {
+            busMins = item.location.includes('Albany') || item.location.includes('Forrest') ? 15 : 25;
+            busFare = "$2.60 (1 Zone)";
+            driveMins = 10;
+            parkingFee = item.location.includes('Takapuna') ? "$2.00/hr (Street)" : "Free Parking";
+          } else if (item.area === 'CBD') {
+            busMins = 35;
+            busFare = "$4.45 (2 Zones)";
+            driveMins = 20;
+            parkingFee = "$4.00–$6.00/hr (City Parking)";
+          } else {
+            busMins = 55;
+            busFare = "$6.00 (3 Zones)";
+            driveMins = 30;
+            parkingFee = "Free / On-site";
+          }
+        } else {
+          busMins = item.area === 'CBD' ? 20 : 40;
+          busFare = item.area === 'CBD' ? "$2.60" : "$4.45";
+          driveMins = item.area === 'CBD' ? 15 : 25;
+          parkingFee = item.area === 'CBD' ? "$5.00/hr" : "Free Parking";
+        }
+
+        commuteEstimates[idx] = { 
+          busMins: busMins, 
+          busFare: busFare,
+          driveMins: driveMins,
+          parkingFee: parkingFee
+        };
+      });
+
+      filterEvents();
+    }
+
+    const daysOrder = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
+
+    function getTypeName(type) {
+      switch(type) {
+        case 'Library': return currentLang === 'zh' ? '📚 图书馆' : '📚 Library';
+        case 'Official': return currentLang === 'zh' ? '🏛️ 官方/机构' : '🏛️ Official';
+        case 'Church': return currentLang === 'zh' ? '⛪ 教会' : '⛪ Church';
+        case 'Community': return currentLang === 'zh' ? '🤝 社区/公益' : '🤝 Community';
+        default: return type;
+      }
+    }
+
+    function getTypeBadgeClass(type) {
+      switch(type) {
+        case 'Library': return 'bg-morandi-blue text-white';
+        case 'Official': return 'bg-morandi-purple text-white';
+        case 'Church': return 'bg-morandi-accent text-white';
+        case 'Community': return 'bg-morandi-primary text-white';
+        default: return 'bg-gray-400 text-white';
+      }
+    }
+
+    function getFeeBadge(fee) {
+      if (fee === 'Free') return `<span class="border border-green-600 text-green-700 text-xs px-1.5 py-0.5 rounded">${currentLang === 'zh' ? '免费' : 'Free'}</span>`;
+      if (fee === 'Donation') return `<span class="border border-amber-600 text-amber-700 text-xs px-1.5 py-0.5 rounded">${currentLang === 'zh' ? '自愿捐助' : 'Donation'}</span>`;
+      return `<span class="border border-red-400 text-red-600 text-xs px-1.5 py-0.5 rounded">${currentLang === 'zh' ? '付费/测试免费' : 'Paid/Test'}</span>`;
+    }
+
+    function renderTimetable(data) {
+      const container = document.getElementById('timetableContainer');
+      container.innerHTML = '';
+
+      if (data.length === 0) {
+        container.innerHTML = `<div class="text-center py-12 text-gray-500">${currentLang === 'zh' ? '没有找到符合条件的英语活动' : 'No matching events found.'}</div>`;
+        return;
+      }
+
+      daysOrder.forEach(dayName => {
+        const dayEvents = data.filter(item => item.dayName === dayName);
+        if (dayEvents.length === 0) return;
+
+        // Ensure each day column has a sensible minimum width so its inner cards never overflow.
+        // Tailwind arbitrary value `min-w-[250px]` sets a 250px floor, and it works responsively.
+        const dayWrapper = document.createElement('div');
+        // Minimum width increased to avoid inner content overflow on larger screens.
+        dayWrapper.className = 'bg-white rounded-xl p-5 card-shadow min-w-[350px]';
+
+        const displayDayName = currentLang === 'zh' ? dayName : dayEvents[0].dayNameEn;
+
+        let html = `<h2 class="text-xl font-bold text-morandi-primary mb-4 pb-2 border-b border-gray-100 flex items-center gap-2">
+                      <span>${displayDayName}</span>
+                      <span class="text-xs bg-morandi-bg text-gray-600 font-normal px-2 py-0.5 rounded-full">${dayEvents.length} ${currentLang === 'zh' ? '场活动' : 'events'}</span>
+                    </h2>`;
+
+        const periods = [
+          { key: 'Morning', title: i18n[currentLang].mornTitle, bg: 'bg-morandi-morning/40', border: 'border-blue-200' },
+          { key: 'Afternoon', title: i18n[currentLang].aftnTitle, bg: 'bg-morandi-afternoon/40', border: 'border-amber-200' },
+          { key: 'Evening', title: i18n[currentLang].eveTitle, bg: 'bg-morandi-evening/40', border: 'border-purple-200' }
+        ];
+
+        periods.forEach(p => {
+          const pEvents = dayEvents.filter(e => e.period === p.key);
+          if (pEvents.length === 0) return;
+
+          html += `
+            <div class="mb-5 last:mb-0">
+              <div class="text-xs font-bold text-gray-500 mb-2 flex items-center gap-1">
+                <span>${p.title}</span>
+              </div>
+              <div class="space-y-3">
+          `;
+
+          pEvents.forEach(evt => {
+            const originalIndex = coursesData.indexOf(evt);
+            const commuteInfo = commuteEstimates[originalIndex];
+
+            let commuteTag = '';
+            if (commuteInfo) {
+              commuteTag = `<div class="w-full flex flex-wrap gap-2 mt-1">
+                              <span class="bg-amber-50 text-amber-900 text-xs px-2 py-0.5 rounded border border-amber-200">
+                                🚌 Bus ~${commuteInfo.busMins} mins | ${commuteInfo.busFare}
+                              </span>
+                              <span class="bg-blue-50 text-blue-900 text-xs px-2 py-0.5 rounded border border-blue-200">
+                                🚗 Drive ~${commuteInfo.driveMins} mins | Park: ${commuteInfo.parkingFee}
+                              </span>
+                            </div>`;
+            }
+
+            const titleToDisplay = currentLang === 'zh' ? evt.title : evt.titleEn;
+            const areaToDisplay = currentLang === 'zh' ? evt.area : evt.areaEn;
+            const noteToDisplay = currentLang === 'zh' ? evt.note : evt.noteEn;
+
+            html += `
+              <div class="p-3.5 rounded-lg border ${p.border} ${p.bg} transition hover:shadow-sm">
+                <div class="flex flex-wrap justify-between items-start gap-2 mb-1.5">
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold text-sm text-gray-800">${evt.time}</span>
+                    <span class="text-xs ${getTypeBadgeClass(evt.type)} px-2 py-0.5 rounded font-medium">${getTypeName(evt.type)}</span>
+                    ${getFeeBadge(evt.fee)}
+                  </div>
+                  <span class="text-xs font-semibold text-gray-500 bg-white/80 px-2 py-0.5 rounded">📍 ${areaToDisplay}</span>
+                </div>
+                
+                <h3 class="font-bold text-base text-gray-800 mb-1">${titleToDisplay}</h3>
+                <p class="text-xs text-gray-600 mb-1">📍 ${evt.location}</p>
+                <p class="text-xs text-gray-500 bg-white/70 p-2 rounded border border-gray-100/50">💡 ${noteToDisplay}</p>
+                ${commuteTag}
+              </div>
+            `;
+          });
+
+          html += `</div></div>`;
+        });
+
+        dayWrapper.innerHTML = html;
+        container.appendChild(dayWrapper);
+      });
+    }
+
+    function renderIcebreakers() {
+      const container = document.getElementById('icebreakerCards');
+      container.innerHTML = '';
+
+      icebreakersData.forEach(item => {
+        const title = currentLang === 'zh' ? item.categoryZh : item.categoryEn;
+        const list = currentLang === 'zh' ? item.phrasesZh : item.phrasesEn;
+
+        let cardHtml = `
+          <div class="bg-morandi-bg/40 p-4 rounded-lg border border-gray-200 flex flex-col justify-between">
+            <div>
+              <h3 class="font-bold text-sm text-morandi-primary mb-3 border-b pb-1 border-gray-200">${title}</h3>
+              <div class="space-y-3">
+        `;
+
+        list.forEach(p => {
+          cardHtml += `
+            <div>
+              <div class="text-xs font-semibold text-morandi-accent mb-0.5">[${p.label}]</div>
+              <div class="text-xs font-bold text-gray-800 bg-white p-2 rounded border border-gray-100">"${p.phrase}"</div>
+              <div class="text-[11px] text-gray-500 mt-1 italic">💡 ${p.tip}</div>
+            </div>
+          `;
+        });
+
+        cardHtml += `</div></div></div>`;
+        container.innerHTML += cardHtml;
+      });
+    }
+
+    function filterEvents() {
+      const area = document.getElementById('areaFilter').value;
+      const type = document.getElementById('typeFilter').value;
+      const fee = document.getElementById('feeFilter').value;
+      const time = document.getElementById('timeFilter').value;
+      const search = document.getElementById('searchInput').value.toLowerCase();
+
+      const filtered = coursesData.filter(item => {
+        const matchArea = (area === 'ALL' || item.area === area);
+        const matchType = (type === 'ALL' || item.type === type);
+        const matchFee = (fee === 'ALL' || item.fee === fee);
+        
+        let matchTime = true;
+        if (time === 'WEEKDAY') matchTime = item.isWeekday;
+        else if (time === 'WEEKEND') matchTime = !item.isWeekday;
+        else if (time !== 'ALL') matchTime = (item.period === time);
+
+        const matchSearch = item.title.toLowerCase().includes(search) || 
+                            item.titleEn.toLowerCase().includes(search) || 
+                            item.location.toLowerCase().includes(search) || 
+                            item.note.toLowerCase().includes(search) ||
+                            item.noteEn.toLowerCase().includes(search);
+
+        return matchArea && matchType && matchFee && matchTime && matchSearch;
+      });
+
+      renderTimetable(filtered);
+    }
+
+    function exportToICS() {
+      let icsContent = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Auckland English Hub//CN\n";
+      coursesData.forEach(item => {
+        icsContent += "BEGIN:VEVENT\n";
+        icsContent += `SUMMARY:[${getTypeName(item.type)}] ${item.titleEn}\n`;
+        icsContent += `DESCRIPTION:${item.noteEn}\n`;
+        icsContent += `LOCATION:${item.location}\n`;
+        icsContent += "END:VEVENT\n";
+      });
+      icsContent += "END:VCALENDAR";
+
+      const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.setAttribute('download', 'Auckland_English_Events.ics');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function exportToImage() {
+      html2canvas(document.getElementById('timetableContainer')).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'Auckland_English_Timetable.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+
+    function exportToPDF() {
+      const { jsPDF } = window.jspdf;
+      html2canvas(document.getElementById('timetableContainer')).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save('Auckland_English_Timetable.pdf');
+      });
+    }
+
+    // Initialize
+    renderTimetable(coursesData);
+    renderIcebreakers();
+  </script>
+</body>
+</html>
