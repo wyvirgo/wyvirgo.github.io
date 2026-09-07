@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IELTS Master Roadmap & AI Studio | 雅思高效习得路线图与AI辅导工作室</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- html2canvas & jsPDF for Exporting -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap');
+    
+    body {
+      font-family: 'Plus Jakarta Sans', 'Noto Sans SC', sans-serif;
+      background-color: #F8F7F4;
+      color: #2D312E;
+    }
+
+    /* Morandi Color Palette Tokens */
+    .bg-morandi-base { background-color: #F8F7F4; }
+    .bg-morandi-card { background-color: #FFFFFF; }
+    .border-morandi { border-color: #E6E3DD; }
+
+    /* Tags & Accent Callouts */
+    .tag-sage { background-color: #EBF0EC; color: #4A5B4C; border: 1px solid #D2DDD4; }
+    .tag-blue { background-color: #EBF2F7; color: #3E5268; border: 1px solid #D0DFEA; }
+    .tag-ochre { background-color: #FAF4E8; color: #78622E; border: 1px solid #EFE2C8; }
+    .tag-rose { background-color: #F9EFEF; color: #7A4B4A; border: 1px solid #EBD5D4; }
+    .tag-lavender { background-color: #F1EFF7; color: #51486B; border: 1px solid #DAD5E8; }
+
+    /* Embedded Method Box Highlight */
+    .method-box-listening { background-color: #F2F6F3; border-left: 4px solid #6B7C69; }
+    .method-box-reading { background-color: #F0F5F9; border-left: 4px solid #4B637D; }
+    .method-box-speaking { background-color: #FCF8F2; border-left: 4px solid #9C824A; }
+    .method-box-writing { background-color: #FAF2F2; border-left: 4px solid #915E5D; }
+
+    /* Custom Checkbox */
+    .custom-checkbox {
+      appearance: none;
+      width: 1.25rem;
+      height: 1.25rem;
+      border: 1.5px solid #C4BEB4;
+      border-radius: 0.375rem;
+      outline: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #FFFFFF;
+    }
+    .custom-checkbox:checked {
+      background-color: #6B7C69;
+      border-color: #6B7C69;
+    }
+    .custom-checkbox:checked::after {
+      content: '✓';
+      color: white;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+
+    /* Completed Card Visual Effect */
+    .item-card.completed {
+      opacity: 0.72;
+      background-color: #F3F2EE;
+    }
+    .item-card.completed .card-title {
+      text-decoration: line-through;
+      color: #8C867A;
+    }
+
+    /* Tab active state */
+    .tab-btn.active {
+      background-color: #2D312E;
+      color: #FFFFFF;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    /* Filter button active state */
+    .filter-btn.active {
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    /* Markdown output container styling */
+    .markdown-body h3 { font-weight: 700; font-size: 1.05rem; margin-top: 1rem; margin-bottom: 0.5rem; color: #2D312E; }
+    .markdown-body h4 { font-weight: 600; font-size: 0.95rem; margin-top: 0.75rem; margin-bottom: 0.25rem; color: #4A5B4C; }
+    .markdown-body ul { list-style-type: disc; padding-left: 1.25rem; margin-bottom: 0.75rem; }
+    .markdown-body p { margin-bottom: 0.5rem; line-height: 1.6; }
+    .markdown-body code { background-color: #EFECE6; padding: 0.1rem 0.3rem; border-radius: 0.25rem; font-size: 0.85em; }
+
+    /* Hide export artifacts */
+    body.exporting .no-export { display: none !important; }
+    body.exporting .item-card { break-inside: avoid; }
+  </style>
+</head>
+<body class="min-h-full pb-12 flex flex-col">
+
+  <!-- Top Navigation Header -->
+  <header class="bg-white/80 backdrop-blur-md sticky top-0 z-30 border-b border-morandi no-export">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
+      <!-- Brand & Title -->
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-2xl bg-[#EBF0EC] border border-[#D2DDD4] flex items-center justify-center text-[#4A5B4C] shadow-sm">
+          <i class="fa-solid fa-compass-drafting text-lg"></i>
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold text-[#2D312E] tracking-tight" id="app-title">IELTS Master Roadmap & AI Studio</h1>
+          <p class="text-[11px] text-[#7A756C]" id="app-subtitle">雅思高效习得路线图与 AI 智能辅导工作室</p>
+        </div>
+      </div>
+
+      <!-- Quick Action Toolbar -->
+      <div class="flex flex-wrap items-center gap-2">
+        <!-- Search Box -->
+        <div class="relative">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-[#A39E93] text-xs"></i>
+          <input type="text" id="search-input" placeholder="搜索关键词 / 平台 / 方法..." 
+            class="w-36 sm:w-48 pl-8 pr-3 py-1.5 text-xs rounded-xl bg-[#F8F7F4] border border-[#E6E3DD] focus:outline-none focus:ring-2 focus:ring-[#8A9A86] text-[#2D312E] placeholder-[#A39E93]">
+        </div>
+
+        <!-- Language Toggle -->
+        <button id="lang-toggle-btn" class="px-3 py-1.5 text-xs font-semibold rounded-xl bg-[#F1EFF7] text-[#51486B] border border-[#DAD5E8] hover:bg-[#E5E1F0] transition flex items-center space-x-1.5">
+          <i class="fa-solid fa-globe text-xs"></i>
+          <span id="lang-toggle-text">EN / 中文</span>
+        </button>
+
+        <!-- Export Buttons -->
+        <button id="export-png-btn" class="px-3 py-1.5 text-xs font-medium rounded-xl bg-[#EBF2F7] text-[#3E5268] border border-[#D0DFEA] hover:bg-[#DEE9F2] transition flex items-center space-x-1">
+          <i class="fa-solid fa-image text-xs"></i>
+          <span id="export-png-text">导出图片</span>
+        </button>
+        <button id="export-pdf-btn" class="px-3 py-1.5 text-xs font-medium rounded-xl bg-[#FAF4E8] text-[#78622E] border border-[#EFE2C8] hover:bg-[#F3E7CF] transition flex items-center space-x-1">
+          <i class="fa-solid fa-file-pdf text-xs"></i>
+          <span id="export-pdf-text">导出 PDF</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs Bar -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-[#F0EDE8] py-2 flex overflow-x-auto gap-2 no-export">
+      <button class="tab-btn active px-4 py-1.5 text-xs font-semibold rounded-xl text-[#6E685E] hover:bg-[#F8F7F4] transition flex items-center space-x-1.5 whitespace-nowrap" data-tab="tab-roadmap">
+        <i class="fa-solid fa-map-location-dot"></i>
+        <span id="nav-roadmap-text">备考路线图 & 模块</span>
+      </button>
+      <button class="tab-btn px-4 py-1.5 text-xs font-semibold rounded-xl text-[#6E685E] hover:bg-[#F8F7F4] transition flex items-center space-x-1.5 whitespace-nowrap" data-tab="tab-theory">
+        <i class="fa-solid fa-brain"></i>
+        <span id="nav-theory-text">科学习得理论基础</span>
+      </button>
+      <button class="tab-btn px-4 py-1.5 text-xs font-semibold rounded-xl text-[#6E685E] hover:bg-[#F8F7F4] transition flex items-center space-x-1.5 whitespace-nowrap" data-tab="tab-ai-studio">
+        <i class="fa-solid fa-robot text-[#8A9A86]"></i>
+        <span id="nav-aistudio-text">AI 导师 & Prompts 工作室</span>
+      </button>
+      <button class="tab-btn px-4 py-1.5 text-xs font-semibold rounded-xl text-[#6E685E] hover:bg-[#F8F7F4] transition flex items-center space-x-1.5 whitespace-nowrap" data-tab="tab-error-matrix">
+        <i class="fa-solid fa-table-list"></i>
+        <span id="nav-errormatrix-text">我的进度 & 错题矩阵</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Application Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 flex-1 w-full" id="app-container">
+
+    <!-- Global Progress Summary Banner -->
+    <div class="bg-white rounded-2xl p-4 sm:p-5 border border-morandi shadow-sm mb-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="px-2.5 py-0.5 text-[11px] font-semibold rounded-lg tag-sage" id="method-banner-tag">Krashen i+1 & Swain 受迫输出</span>
+            <span class="text-xs text-[#8C867A]" id="progress-summary-text">已完成 0 / 16 项关键任务</span>
+          </div>
+          <h2 class="text-lg sm:text-xl font-bold text-[#2D312E] mt-1" id="banner-heading">循序渐进 · 5.0 至 7.0+ 雅思全维度习得方案</h2>
+          <p class="text-xs text-[#7A756C] mt-0.5" id="banner-subheading">融合听、说、读、写四大技能契合阶段的 $i+1$ 语料与嵌合式科学方法</p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="w-full md:w-64 flex flex-col justify-center">
+          <div class="flex justify-between text-xs font-semibold mb-1">
+            <span class="text-[#7A756C]" id="progress-label">总体备考完成度</span>
+            <span class="text-[#4A5B4C]" id="progress-percent">0%</span>
+          </div>
+          <div class="w-full h-2.5 bg-[#F8F7F4] rounded-full overflow-hidden border border-[#E6E3DD]">
+            <div id="progress-bar-inner" class="h-full bg-[#8A9A86] transition-all duration-500 rounded-full" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 1: ROADMAP & PRACTICE MODULES -->
+    <div id="tab-roadmap" class="tab-content space-y-6">
+      
+      <!-- Filter Bar -->
+      <div class="bg-white rounded-2xl p-4 border border-morandi shadow-sm space-y-3 no-export">
+        <!-- Stage Filters -->
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="text-xs font-bold text-[#6E685E] w-20 flex-shrink-0" id="filter-stage-label">目标阶段:</span>
+          <button class="filter-btn stage-btn active px-3 py-1 text-xs rounded-xl tag-sage font-medium" data-stage="all">全部阶段</button>
+          <button class="filter-btn stage-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E6E3DD] text-[#6E685E] hover:bg-[#F8F7F4]" data-stage="5.0-5.5">5.0 → 5.5</button>
+          <button class="filter-btn stage-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E6E3DD] text-[#6E685E] hover:bg-[#F8F7F4]" data-stage="5.5-6.0">5.5 → 6.0</button>
+          <button class="filter-btn stage-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E6E3DD] text-[#6E685E] hover:bg-[#F8F7F4]" data-stage="6.0-6.5">6.0 → 6.5</button>
+          <button class="filter-btn stage-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E6E3DD] text-[#6E685E] hover:bg-[#F8F7F4]" data-stage="6.5-7.0">6.5 → 7.0</button>
+        </div>
+
+        <!-- Skill Filters -->
+        <div class="flex flex-wrap items-center gap-2 pt-1 border-t border-[#F0EDE8]">
+          <span class="text-xs font-bold text-[#6E685E] w-20 flex-shrink-0" id="filter-skill-label">技能模块:</span>
+          <button class="filter-btn skill-btn active px-3 py-1 text-xs rounded-xl tag-blue font-medium" data-skill="all">全部技能</button>
+          <button class="filter-btn skill-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E6E3DD] text-[#6E685E] hover:bg-[#F8F7F4]" data-skill="listening">
+            <i class="fa-solid fa-headphones text-[10px] mr-1 text-[#4A5B4C]"></i><span class="skill-name-listening">听力</span>
+          </button>
+          <button class="filter-btn skill-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E6E3DD] text-[#6E685E] hover:bg-[#F8F7F4]" data-skill="reading">
+            <i class="fa-solid fa-book-open text-[10px] mr-1 text-[#3E5268]"></i><span class="skill-name-reading">阅读</span>
+          </button>
+          <button class="filter-btn skill-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E6E3DD] text-[#6E685E] hover:bg-[#F8F7F4]" data-skill="speaking">
+            <i class="fa-solid fa-comments text-[10px] mr-1 text-[#78622E]"></i><span class="skill-name-speaking">口语</span>
+          </button>
+          <button class="filter-btn skill-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E6E3DD] text-[#6E685E] hover:bg-[#F8F7F4]" data-skill="writing">
+            <i class="fa-solid fa-pen-nib text-[10px] mr-1 text-[#7A4B4A]"></i><span class="skill-name-writing">写作</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Roadmap Dynamic Cards Grid -->
+      <div id="stages-grid" class="space-y-8">
+        <!-- Dynamically filled by JS -->
+      </div>
+
+      <!-- Empty State -->
+      <div id="empty-state" class="hidden text-center py-16 bg-white rounded-2xl border border-morandi">
+        <i class="fa-solid fa-filter-circle-xmark text-4xl text-[#C4BEB4] mb-3"></i>
+        <h3 class="text-base font-bold text-[#2D312E]" id="empty-title">未找到匹配的资源或方法</h3>
+        <p class="text-xs text-[#7A756C] mt-1" id="empty-desc">请尝试调整筛选条件或清除搜索关键字。</p>
+        <button id="reset-filters-btn" class="mt-4 px-4 py-2 text-xs font-semibold rounded-xl tag-sage hover:opacity-90 transition">重置筛选条件</button>
+      </div>
+    </div>
+
+    <!-- TAB 2: SCIENTIFIC METHODOLOGY -->
+    <div id="tab-theory" class="tab-content hidden space-y-6">
+      <div class="bg-white rounded-2xl p-6 border border-morandi shadow-sm">
+        <h3 class="text-lg font-bold text-[#2D312E] mb-1" id="theory-title">科学习得核心理论体系</h3>
+        <p class="text-xs text-[#7A756C] mb-6" id="theory-subtitle">摒弃传统死记硬背，基于二语习得 (SLA) 权威理论构建的高效突破模型</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          
+          <!-- Theory 1 -->
+          <div class="bg-[#FAF9F7] rounded-xl p-5 border border-[#E6E3DD]">
+            <div class="w-9 h-9 rounded-xl bg-[#EBF0EC] border border-[#D2DDD4] flex items-center justify-center text-[#4A5B4C] mb-3 font-bold text-sm">
+              i+1
+            </div>
+            <h4 class="text-sm font-bold text-[#2D312E] mb-1">Krashen 可理解性输入假说</h4>
+            <span class="text-[10px] font-semibold px-2 py-0.5 rounded tag-sage inline-block mb-2">Comprehensible Input</span>
+            <p class="text-xs text-[#524E48] leading-relaxed mb-3">
+              语言习得发生在理解略高于当前水平 ($i+1$) 的输入时。材料难度保持在 85%-90% 可理解度，既无挫败感，又能实现自然吸收。
+            </p>
+            <div class="text-[11px] text-[#4A5B4C] bg-white p-2.5 rounded-lg border border-[#E0E7E2] font-medium">
+              💡 <b>雅思应用:</b> 5.0选 News in Levels，6.5+选 The Economist，精准对标 $i+1$。
+            </div>
+          </div>
+
+          <!-- Theory 2 -->
+          <div class="bg-[#FAF9F7] rounded-xl p-5 border border-[#E6E3DD]">
+            <div class="w-9 h-9 rounded-xl bg-[#F9EFEF] border border-[#EBD5D4] flex items-center justify-center text-[#7A4B4A] mb-3 font-bold text-sm">
+              <i class="fa-solid fa-[#bullhorn]"></i>
+            </div>
+            <h4 class="text-sm font-bold text-[#2D312E] mb-1">Swain 受迫输出假说</h4>
+            <span class="text-[10px] font-semibold px-2 py-0.5 rounded tag-rose inline-block mb-2">Pushed Output Hypothesis</span>
+            <p class="text-xs text-[#524E48] leading-relaxed mb-3">
+              单纯听读输入无法自动转化为高分口笔头表达。必须通过“受迫”输出，促使大脑注意到表达缺口（Noticing Gap），从而重构语法与词汇。
+            </p>
+            <div class="text-[11px] text-[#7A4B4A] bg-white p-2.5 rounded-lg border border-[#F2E5E5] font-medium">
+              💡 <b>雅思应用:</b> 听完 TED 或读完卫报后，限时 3 分钟进行口头或书面 150 词 Summary。
+            </div>
+          </div>
+
+          <!-- Theory 3 -->
+          <div class="bg-[#FAF9F7] rounded-xl p-5 border border-[#E6E3DD]">
+            <div class="w-9 h-9 rounded-xl bg-[#EBF2F7] border border-[#D0DFEA] flex items-center justify-center text-[#3E5268] mb-3 font-bold text-sm">
+              <i class="fa-solid fa-filter"></i>
+            </div>
+            <h4 class="text-sm font-bold text-[#2D312E] mb-1">Narrow Input 狭窄输入法</h4>
+            <span class="text-[10px] font-semibold px-2 py-0.5 rounded tag-blue inline-block mb-2">Narrow Reading / Listening</span>
+            <p class="text-xs text-[#524E48] leading-relaxed mb-3">
+              集中在同一话题（如“环境保护”或“人工智能”）连续阅读/收听 5-8 篇文章。核心术语重复出现，实现高频无痛词汇内化。
+            </p>
+            <div class="text-[11px] text-[#3E5268] bg-white p-2.5 rounded-lg border border-[#E1EBF2] font-medium">
+              💡 <b>雅思应用:</b> 连续3天攻克“科技与社会”类阅读/口语题，建立主题搭配库。
+            </div>
+          </div>
+
+          <!-- Theory 4 -->
+          <div class="bg-[#FAF9F7] rounded-xl p-5 border border-[#E6E3DD]">
+            <div class="w-9 h-9 rounded-xl bg-[#FAF4E8] border border-[#EFE2C8] flex items-center justify-center text-[#78622E] mb-3 font-bold text-sm">
+              <i class="fa-solid fa-[#arrows-rotate]"></i>
+            </div>
+            <h4 class="text-sm font-bold text-[#2D312E] mb-1">间隔重复与主动检索</h4>
+            <span class="text-[10px] font-semibold px-2 py-0.5 rounded tag-ochre inline-block mb-2">Spaced Repetition & Active Recall</span>
+            <p class="text-xs text-[#524E48] leading-relaxed mb-3">
+              拒绝被动看书，采用“线索卡提取”与“听写提炼”。在遗忘临界点（第1/3/7/14天）主动提取回忆，巩固长期记忆。
+            </p>
+            <div class="text-[11px] text-[#78622E] bg-white p-2.5 rounded-lg border border-[#F5ECCF] font-medium">
+              💡 <b>雅思应用:</b> 精听单句听写（Dictation）+ 雅思听力错词间隔复习卡。
+            </div>
+          </div>
+
+          <!-- Theory 5 -->
+          <div class="bg-[#FAF9F7] rounded-xl p-5 border border-[#E6E3DD]">
+            <div class="w-9 h-9 rounded-xl bg-[#F1EFF7] border border-[#DAD5E8] flex items-center justify-center text-[#51486B] mb-3 font-bold text-sm">
+              <i class="fa-solid fa-square-poll-vertical"></i>
+            </div>
+            <h4 class="text-sm font-bold text-[#2D312E] mb-1">错题归因矩阵 (Error Log Matrix)</h4>
+            <span class="text-[10px] font-semibold px-2 py-0.5 rounded tag-lavender inline-block mb-2">Metacognitive Error Analysis</span>
+            <p class="text-xs text-[#524E48] leading-relaxed mb-3">
+              盲目刷题收益极低！将每道错题归纳为“同义替换未识别”、“长难句逻辑误判”、“盲目过度推导”或“连读吞音听辨失误”。
+            </p>
+            <div class="text-[11px] text-[#51486B] bg-white p-2.5 rounded-lg border border-[#E6E1F2] font-medium">
+              💡 <b>雅思应用:</b> 使用本应用【错题矩阵】功能，记录并进行针对性微观修正。
+            </div>
+          </div>
+
+          <!-- Theory 6 -->
+          <div class="bg-[#FAF9F7] rounded-xl p-5 border border-[#E6E3DD]">
+            <div class="w-9 h-9 rounded-xl bg-[#EBF0EC] border border-[#D2DDD4] flex items-center justify-center text-[#4A5B4C] mb-3 font-bold text-sm">
+              <i class="fa-solid fa-feather-pointed"></i>
+            </div>
+            <h4 class="text-sm font-bold text-[#2D312E] mb-1">微观编辑与去套话化</h4>
+            <span class="text-[10px] font-semibold px-2 py-0.5 rounded tag-sage inline-block mb-2">Micro-Editing & De-Cliché</span>
+            <p class="text-xs text-[#524E48] leading-relaxed mb-3">
+              突破 6.5 分瓶颈的核心：彻底摒弃模板套话（如 "With the rapid development..."），通过三步微观修辞精简冗余、升级搭配。
+            </p>
+            <div class="text-[11px] text-[#4A5B4C] bg-white p-2.5 rounded-lg border border-[#E0E7E2] font-medium">
+              💡 <b>雅思应用:</b> 使用 Ludwig 语料库核对地道 Academic Collocations。
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: AI PROMPTS STUDIO & LIVE COACH -->
+    <div id="tab-ai-studio" class="tab-content hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Left 5 cols: Prompt Configurator -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="bg-white rounded-2xl p-5 border border-morandi shadow-sm">
+            <div class="flex items-center space-x-2 mb-3">
+              <div class="w-8 h-8 rounded-xl bg-[#F1EFF7] text-[#51486B] flex items-center justify-center font-bold">
+                <i class="fa-solid fa-wand-magic-sparkles text-sm"></i>
+              </div>
+              <div>
+                <h3 class="text-sm font-bold text-[#2D312E]" id="aistudio-config-title">AI 精批 Prompt 生成器</h3>
+                <p class="text-[11px] text-[#7A756C]" id="aistudio-config-sub">专为 Gemini / ChatGPT 打造的考官级 Prompt</p>
+              </div>
+            </div>
+
+            <form id="ai-prompt-form" class="space-y-3">
+              <!-- Preset Selector -->
+              <div>
+                <label class="block text-xs font-semibold text-[#524E48] mb-1" id="lbl-prompt-type">精批场景模式:</label>
+                <select id="prompt-preset-select" class="w-full text-xs p-2.5 rounded-xl bg-[#F8F7F4] border border-[#E6E3DD] focus:outline-none focus:ring-2 focus:ring-[#8A9A86] text-[#2D312E]">
+                  <option value="task2">写作 Task 2 大作文深度精批与微观重写</option>
+                  <option value="task1">写作 Task 1 图表学术语气与趋势词精批</option>
+                  <option value="speaking">口语 Part 2/3 考官提问与流利度表达重构</option>
+                  <option value="custom">自定义雅思学习与同义替换查询</option>
+                </select>
+              </div>
+
+              <!-- Target Score -->
+              <div>
+                <label class="block text-xs font-semibold text-[#524E48] mb-1" id="lbl-target-band">目标雅思分数:</label>
+                <div class="grid grid-cols-3 gap-2">
+                  <label class="cursor-pointer border border-[#E6E3DD] rounded-xl p-2 text-center hover:bg-[#F8F7F4] transition flex items-center justify-center space-x-1">
+                    <input type="radio" name="targetBand" value="6.5" class="text-[#8A9A86]">
+                    <span class="text-xs font-medium">Band 6.5</span>
+                  </label>
+                  <label class="cursor-pointer border border-[#E6E3DD] rounded-xl p-2 text-center bg-[#EBF0EC] border-[#D2DDD4] transition flex items-center justify-center space-x-1">
+                    <input type="radio" name="targetBand" value="7.0" checked class="text-[#8A9A86]">
+                    <span class="text-xs font-bold text-[#4A5B4C]">Band 7.0</span>
+                  </label>
+                  <label class="cursor-pointer border border-[#E6E3DD] rounded-xl p-2 text-center hover:bg-[#F8F7F4] transition flex items-center justify-center space-x-1">
+                    <input type="radio" name="targetBand" value="7.5+" class="text-[#8A9A86]">
+                    <span class="text-xs font-medium">Band 7.5+</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Question / Topic -->
+              <div>
+                <label class="block text-xs font-semibold text-[#524E48] mb-1" id="lbl-question-title">题目 / 话题 (Question Prompt):</label>
+                <textarea id="input-topic" rows="2" placeholder="如：Some people think that universities should provide graduates with the knowledge and skills needed in the workplace. To what extent do you agree or disagree?" 
+                  class="w-full text-xs p-2.5 rounded-xl bg-[#F8F7F4] border border-[#E6E3DD] focus:outline-none focus:ring-2 focus:ring-[#8A9A86] text-[#2D312E] placeholder-[#A39E93]"></textarea>
+              </div>
+
+              <!-- Student Response / Text -->
+              <div>
+                <label class="block text-xs font-semibold text-[#524E48] mb-1" id="lbl-student-draft">学生原始作文 / 口语草稿 (Your Draft):</label>
+                <textarea id="input-draft" rows="5" placeholder="在此粘贴你的作文文本或口语转述文字..." 
+                  class="w-full text-xs p-2.5 rounded-xl bg-[#F8F7F4] border border-[#E6E3DD] focus:outline-none focus:ring-2 focus:ring-[#8A9A86] text-[#2D312E] placeholder-[#A39E93]"></textarea>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="pt-1 flex flex-col sm:flex-row gap-2">
+                <button type="button" id="generate-prompt-btn" class="flex-1 py-2.5 px-3 text-xs font-semibold rounded-xl tag-blue hover:opacity-90 transition flex items-center justify-center space-x-1.5">
+                  <i class="fa-solid fa-code text-xs"></i>
+                  <span id="btn-generate-text">生成 Prompt 代码</span>
+                </button>
+                <button type="button" id="run-ai-btn" class="flex-1 py-2.5 px-3 text-xs font-semibold rounded-xl bg-[#4A5B4C] text-white hover:bg-[#3B4A3D] transition flex items-center justify-center space-x-1.5 shadow-sm">
+                  <i class="fa-solid fa-bolt text-xs text-[#EBF0EC]"></i>
+                  <span id="btn-runai-text">直接运行 AI 导师精批</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Right 7 cols: Generated Prompt Code & Live AI Output -->
+        <div class="lg:col-span-7 space-y-4">
+          
+          <!-- Prompt Code Output Box -->
+          <div class="bg-white rounded-2xl p-5 border border-morandi shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-[#2D312E] flex items-center">
+                <i class="fa-solid fa-terminal mr-1.5 text-[#51486B]"></i>
+                <span id="prompt-box-title">生成的 Copied Prompt 文本</span>
+              </span>
+              <button id="copy-prompt-btn" class="px-3 py-1 text-[11px] font-semibold rounded-lg tag-sage hover:opacity-90 transition flex items-center space-x-1">
+                <i class="fa-solid fa-copy"></i>
+                <span id="copy-prompt-text">复制 Prompt</span>
+              </button>
+            </div>
+            <textarea id="prompt-output-code" rows="6" readonly class="w-full text-xs p-3 rounded-xl bg-[#2D312E] text-[#E6E3DD] font-mono leading-relaxed focus:outline-none resize-y"></textarea>
+          </div>
+
+          <!-- Live AI Grading Evaluation Output -->
+          <div class="bg-white rounded-2xl p-5 border border-morandi shadow-sm">
+            <div class="flex items-center justify-between mb-3 pb-2 border-b border-[#F0EDE8]">
+              <span class="text-xs font-bold text-[#2D312E] flex items-center">
+                <i class="fa-solid fa-brain text-[#8A9A86] mr-1.5"></i>
+                <span id="ai-result-title">Gemini AI 雅思考官精批报告</span>
+              </span>
+              <span id="ai-status-badge" class="px-2.5 py-0.5 text-[10px] font-semibold rounded-md bg-[#F8F7F4] text-[#8C867A]">就绪</span>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div id="ai-loading-spinner" class="hidden text-center py-12">
+              <i class="fa-solid fa-circle-notch fa-spin text-2xl text-[#8A9A86] mb-2"></i>
+              <p class="text-xs text-[#7A756C]" id="ai-loading-text">正在调用 Gemini AI 考官模型生成深度精批报告...</p>
+            </div>
+
+            <!-- Markdown Report Container -->
+            <div id="ai-report-content" class="markdown-body text-xs text-[#2D312E] min-h-[160px] leading-relaxed">
+              <div class="text-center py-10 text-[#8C867A]">
+                <i class="fa-solid fa-file-pen text-3xl mb-2 opacity-40"></i>
+                <p id="ai-placeholder-msg">在左侧输入题目与作文草稿，点击“直接运行 AI 导师精批”即可生成精准反馈与改写建议。</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: MY PROGRESS & ERROR MATRIX -->
+    <div id="tab-error-matrix" class="tab-content hidden space-y-6">
+      
+      <!-- Stats Summary -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-white rounded-2xl p-4 border border-morandi text-center">
+          <span class="text-2xl font-bold text-[#4A5B4C]" id="stat-tasks-done">0 / 16</span>
+          <p class="text-[11px] text-[#7A756C] mt-0.5" id="stat-lbl-tasks">已完成路线图节点</p>
+        </div>
+        <div class="bg-white rounded-2xl p-4 border border-morandi text-center">
+          <span class="text-2xl font-bold text-[#3E5268]" id="stat-error-count">0</span>
+          <p class="text-[11px] text-[#7A756C] mt-0.5" id="stat-lbl-errors">记录的错题归因项</p>
+        </div>
+        <div class="bg-white rounded-2xl p-4 border border-morandi text-center">
+          <span class="text-2xl font-bold text-[#78622E]" id="stat-top-reason">-</span>
+          <p class="text-[11px] text-[#7A756C] mt-0.5" id="stat-lbl-topreason">主要错题归因类别</p>
+        </div>
+        <div class="bg-white rounded-2xl p-4 border border-morandi text-center">
+          <span class="text-2xl font-bold text-[#51486B]" id="stat-streak-days">1</span>
+          <p class="text-[11px] text-[#7A756C] mt-0.5" id="stat-lbl-streak">连续备考打卡天数</p>
+        </div>
+      </div>
+
+      <!-- Add New Error Log Form -->
+      <div class="bg-white rounded-2xl p-5 border border-morandi shadow-sm">
+        <h3 class="text-sm font-bold text-[#2D312E] mb-3 flex items-center">
+          <i class="fa-solid fa-plus-circle text-[#8A9A86] mr-1.5"></i>
+          <span id="errform-title">添加新错题归因日志 (Metacognitive Error Entry)</span>
+        </h3>
+
+        <form id="add-error-form" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-[#524E48] mb-1" id="lbl-err-skill">技能模块:</label>
+            <select id="err-input-skill" class="w-full text-xs p-2 rounded-xl bg-[#F8F7F4] border border-[#E6E3DD] text-[#2D312E]">
+              <option value="listening">听力 (Listening)</option>
+              <option value="reading">阅读 (Reading)</option>
+              <option value="writing">写作 (Writing)</option>
+              <option value="speaking">口语 (Speaking)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-[#524E48] mb-1" id="lbl-err-source">来源 / 题号:</label>
+            <input type="text" id="err-input-source" placeholder="如：剑18 Test 2 Passage 3 Q28" class="w-full text-xs p-2 rounded-xl bg-[#F8F7F4] border border-[#E6E3DD] text-[#2D312E]">
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-[#524E48] mb-1" id="lbl-err-type">归因类别 (Root Cause):</label>
+            <select id="err-input-type" class="w-full text-xs p-2 rounded-xl bg-[#F8F7F4] border border-[#E6E3DD] text-[#2D312E]">
+              <option value="synonym">A. 同义替换未识别 (Synonym Missed)</option>
+              <option value="logic">B. 逻辑推导过度/盲目脑补 (Logic Over-inference)</option>
+              <option value="syntax">C. 长难句结构剥离失误 (Syntax Misread)</option>
+              <option value="phonetics">D. 连读吞音/语音辨析偏差 (Phonetic Linking/Weak forms)</option>
+              <option value="collocation">E. 搭配不地道/中式英语 (Unnatural Collocation)</option>
+            </select>
+          </div>
+
+          <div class="md:col-span-3">
+            <label class="block text-xs font-semibold text-[#524E48] mb-1" id="lbl-err-mywrong">错误原因与当时理解 (My Initial Misunderstanding):</label>
+            <input type="text" id="err-input-mywrong" placeholder="简述原先误判的原因..." class="w-full text-xs p-2 rounded-xl bg-[#F8F7F4] border border-[#E6E3DD] text-[#2D312E]">
+          </div>
+
+          <div class="md:col-span-3">
+            <label class="block text-xs font-semibold text-[#524E48] mb-1" id="lbl-err-correct">正确逻辑 / 地道搭配 (Correct Logic & Collocation):</label>
+            <input type="text" id="err-input-correct" placeholder="记录原文精准对应句与地道同义替换词对..." class="w-full text-xs p-2 rounded-xl bg-[#F8F7F4] border border-[#E6E3DD] text-[#2D312E]">
+          </div>
+
+          <div class="md:col-span-3 flex justify-end">
+            <button type="submit" class="px-4 py-2 text-xs font-semibold rounded-xl tag-sage hover:opacity-90 transition flex items-center space-x-1">
+              <i class="fa-solid fa-square-plus"></i>
+              <span id="btn-save-error-text">保存至错题矩阵</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Error Log Table -->
+      <div class="bg-white rounded-2xl p-5 border border-morandi shadow-sm overflow-x-auto">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-[#2D312E]" id="errtable-title">错题归因矩阵记录表</h3>
+          <button id="clear-errors-btn" class="text-xs text-[#7A4B4A] hover:underline no-export" id="btn-clear-errors">清空所有记录</button>
+        </div>
+
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="border-b border-[#E6E3DD] text-[#7A756C] bg-[#F8F7F4]">
+              <th class="p-2.5 rounded-l-lg" id="th-skill">模块</th>
+              <th class="p-2.5" id="th-source">题目来源</th>
+              <th class="p-2.5" id="th-type">归因类别</th>
+              <th class="p-2.5" id="th-mywrong">误判思考</th>
+              <th class="p-2.5" id="th-correct">正确同义替换/逻辑</th>
+              <th class="p-2.5 text-right rounded-r-lg no-export" id="th-action">操作</th>
+            </tr>
+          </thead>
+          <tbody id="error-matrix-tbody" class="divide-y divide-[#F0EDE8]">
+            <!-- Dynamically populated by JS -->
+          </tbody>
+        </table>
+        <div id="empty-error-msg" class="text-center py-8 text-[#A39E93] text-xs">
+          暂无错题记录。在上方表格添加练习中的错题，进行深度攻坚！
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Toast Notification -->
+  <div id="toast-notification" class="fixed bottom-6 right-6 z-50 bg-[#2D312E] text-white px-4 py-3 rounded-2xl shadow-xl flex items-center space-x-3 translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <i class="fa-solid fa-circle-notch fa-spin text-sm text-[#8A9A86]" id="toast-icon"></i>
+    <span class="text-xs font-medium" id="toast-msg">正在处理中...</span>
+  </div>
+
+  <script>
+    
+    // Application State
+    let currentLang = 'zh';
+    let currentTab = 'tab-roadmap';
+    let currentStage = 'all';
+    let currentSkill = 'all';
+    let searchQuery = '';
+    
+    // Local Storage Data
+    let completedItems = JSON.parse(localStorage.getItem('ielts_master_completed') || '[]');
+    let errorLogs = JSON.parse(localStorage.getItem('ielts_master_error_matrix') || '[]');
+
+    // Master Roadmap Data - Covering all 4 stages & 4 skills completely
+    const roadmapMasterData = [
+      // ================= STAGE 1: 5.0 -> 5.5 =================
+      {
+        id: 's1-listening',
+        stage: '5.0-5.5',
+        skill: 'listening',
+        tagColor: 'sage',
+        title: { zh: 'VOA Learning English & BBC 6 Minute English', en: 'VOA Learning English & BBC 6 Min English' },
+        platform: { zh: 'learningenglish.voanews.com / 剑雅 S1-S2', en: 'learningenglish.voanews.com / IELTS S1-S2' },
+        url: 'https://learningenglish.voanews.com',
+        tag: { zh: '听力基底突破', en: 'Listening Foundation' },
+        description: { 
+          zh: '语速适中（慢速英语1.2倍），标准美音/英音。重点训练音形映射与基础学术场景词汇。', 
+          en: 'Moderate speed (1.2x slow English). Build sound-to-spelling mapping for daily and basic academic contexts.' 
+        },
+        methodTitle: { zh: '1.5倍速精听与单句听写 (Dictation)', en: '1.5x Speed Dictation & Linking Fix' },
+        methodDesc: { 
+          zh: '逐句暂停写出听到内容，用红笔高亮标出连读（linking）、吞音（reduction）与弱读（weak forms）。', 
+          en: 'Pause sentence by sentence to write down text. Mark linkings, sound drops, and weak forms in red.' 
+        },
+        steps: [
+          { zh: '第一遍：盲听捕捉主题与关键动词', en: 'First pass: Listen without transcript to grasp main ideas' },
+          { zh: '第二遍：单句听写，对照文本修正连读与拼写失误', en: 'Second pass: Sentence dictation, mark missing sound links' }
+        ]
+      },
+      {
+        id: 's1-reading',
+        stage: '5.0-5.5',
+        skill: 'reading',
+        tagColor: 'blue',
+        title: { zh: 'News in Levels (L3) & ReadTheory', en: 'News in Levels (L3) & ReadTheory' },
+        platform: { zh: 'newsinlevels.com / readtheory.org / 剑雅 P1', en: 'newsinlevels.com / readtheory.org / IELTS P1' },
+        url: 'https://www.newsinlevels.com',
+        tag: { zh: '狭窄分级阅读', en: 'Graded Narrow Reading' },
+        description: { 
+          zh: '锁定 3,000 核心词汇，阅读可理解度维持在 85%-90% 的黄金 $i+1$ 吸收区间。', 
+          en: 'Targeted 3,000 core word count. Maintains 85%-90% optimal comprehensible input.' 
+        },
+        methodTitle: { zh: '狭窄阅读法 (Narrow Reading)', en: 'Narrow Reading Method' },
+        methodDesc: { 
+          zh: '连续阅读同一主题（如环境或科技）文章 3-5 篇，使核心词汇自然重复出现无痛内化。', 
+          en: 'Read 3-5 articles on the exact same topic sequentially so vocabulary repeats naturally.' 
+        },
+        steps: [
+          { zh: '遇到生词不立即查词，先根据上下文推断词义', en: 'Infer unfamiliar words from context before opening a dictionary' },
+          { zh: '整理主题相近的 10 个核心短语笔记本', en: 'Build a 10-phrase notebook for each specific topic' }
+        ]
+      },
+      {
+        id: 's1-speaking',
+        stage: '5.0-5.5',
+        skill: 'speaking',
+        tagColor: 'ochre',
+        title: { zh: 'Rachel\'s English 发音与 Part 1 基础库', en: 'Rachel\'s English & Part 1 Question Bank' },
+        platform: { zh: 'Rachel\'s English YouTube / 雅思 Part 1 题库', en: 'Rachel\'s English / IELTS Part 1 Bank' },
+        url: 'https://rachelsenglish.com',
+        tag: { zh: '发音语调重构', en: 'Phonetic Reconstruction' },
+        description: { 
+          zh: '聚焦英语重音、弱读与连读规则，纠正机械中式发音起伏与卡顿。', 
+          en: 'Focus on English stress, weak forms, and linking rules to eliminate robotic intonation.' 
+        },
+        methodTitle: { zh: '影子跟读法 (Shadowing)', en: 'Shadowing Method' },
+        methodDesc: { 
+          zh: '落后原音频 0.5 秒大声跟读，精准模仿音高起伏、节奏与停顿，形成口腔肌肉记忆。', 
+          en: 'Trail behind audio by 0.5 seconds aloud, matching pitch, rhythm, and pauses precisely.' 
+        },
+        steps: [
+          { zh: '对 1 分钟短音频重复跟读 5 遍直到肌肉记忆适应', en: 'Shadow 1-minute audio clips 5 times until mouth muscle adapts' },
+          { zh: '录音对比原音频波形与语调起伏', en: 'Record your voice and compare waveform/pitch with original' }
+        ]
+      },
+      {
+        id: 's1-writing',
+        stage: '5.0-5.5',
+        skill: 'writing',
+        tagColor: 'rose',
+        title: { zh: 'AWL Sublist 1-3 & Task 1 基础范文', en: 'AWL Sublist 1-3 & Task 1 Basic Models' },
+        platform: { zh: 'Academic Word List / 剑雅 Task 1 范文', en: 'Academic Word List / IELTS Task 1 Models' },
+        url: 'https://www.eapfoundation.com/vocab/academic/awl/',
+        tag: { zh: '学术表达积累', en: 'Academic Sentence Base' },
+        description: { 
+          zh: '掌握学术词汇表 Sublist 1-3，积累图表动态趋势动词与基础逻辑连接词。', 
+          en: 'Master AWL Sublist 1-3, chart trend verbs (surge, plunge), and basic connectors.' 
+        },
+        methodTitle: { zh: '趋势句型变换改写', en: 'Sentence Pattern Substitution' },
+        methodDesc: { 
+          zh: '练习使用不同名词/动词句式表达同一趋势（如 "A sharp increase occurred" vs "increased dramatically"）。', 
+          en: 'Rewrite trend descriptions using various noun-verb structures to expand flexibility.' 
+        },
+        steps: [
+          { zh: '背诵 15 个核心趋势动词与介词搭配 (surge by X% to Y)', en: 'Memorize 15 trend verbs and preposition pairings (e.g. rise by X%)' },
+          { zh: '每日手写 5 句不同句式的图表描述句', en: 'Write 5 varied chart summary sentences daily' }
+        ]
+      },
+
+      // ================= STAGE 2: 5.5 -> 6.0 =================
+      {
+        id: 's2-listening',
+        stage: '5.5-6.0',
+        skill: 'listening',
+        tagColor: 'sage',
+        title: { zh: 'TED-Ed 动画精选 & RNZ/NPR News', en: 'TED-Ed Lessons & RNZ / NPR News' },
+        platform: { zh: 'ed.ted.com / RNZ National 101.4 FM / 剑雅 S3', en: 'ed.ted.com / RNZ News / IELTS S3' },
+        url: 'https://ed.ted.com',
+        tag: { zh: '学术入门与多人对话', en: 'Academic Intro & Multi-speaker' },
+        description: { 
+          zh: '3-5分钟科普动画与电台新闻，过渡至学术讨论及多人转折观点提取。', 
+          en: '3-5 min science animation & radio news, transitioning to academic group discussions.' 
+        },
+        methodTitle: { zh: '康奈尔结构化笔记法 (Cornell Notes)', en: 'Cornell Structured Note-Taking' },
+        methodDesc: { 
+          zh: '将笔记划分为“主干观点”、“转折逻辑连接词”与“说话者赞同/否定态度”三栏。', 
+          en: 'Divide notes into 3 columns: Main Ideas, Transition Markers, and Speaker Attitudes.' 
+        },
+        steps: [
+          { zh: '快速捕捉否定、转折（however, whereas）与让步信号', en: 'Capture signals for negation, contrast (however, whereas) and concession' },
+          { zh: '听完在底部用 2 句话写出讨论结论总结', en: 'Summarize discussion outcome in 2 sentences at the bottom' }
+        ]
+      },
+      {
+        id: 's2-reading',
+        stage: '5.5-6.0',
+        skill: 'reading',
+        tagColor: 'blue',
+        title: { zh: 'Breaking News English (L5-6) & CommonLit', en: 'Breaking News English (L5-6) & CommonLit' },
+        platform: { zh: 'breakingnewsenglish.com / commonlit.org / 剑雅 P2', en: 'breakingnewsenglish.com / commonlit.org / IELTS P2' },
+        url: 'https://breakingnewsenglish.com',
+        tag: { zh: '长难句结构拆解', en: 'Syntax Stripping' },
+        description: { 
+          zh: '蓝思指数 900-1100 规范文章，侧重段落逻辑中心句与词汇替换匹配。', 
+          en: 'Lexile 900-1100 standard texts focusing on paragraph topic sentences and synonyms.' 
+        },
+        methodTitle: { zh: '长难句语法剥离法 (Syntax Stripping)', en: 'Syntax Stripping Method' },
+        methodDesc: { 
+          zh: '先删去介词短语、定语从句与插入语修饰，锁定主句的主谓宾核心结构。', 
+          en: 'Strip away prepositions and relative clauses in brackets to isolate core Subject-Verb-Object.' 
+        },
+        steps: [
+          { zh: '用括号括出所有修饰性介词短语与关系代词', en: 'Mark all prepositions and relative pronouns in brackets' },
+          { zh: '给主句主语、谓语动词划双下划线，改写为简单句', en: 'Underline primary Subject and Verb, rewriting into plain sentence' }
+        ]
+      },
+      {
+        id: 's2-speaking',
+        stage: '5.5-6.0',
+        skill: 'speaking',
+        tagColor: 'ochre',
+        title: { zh: '雅思口语 Part 1-2 高频题库 (雅思哥)', en: 'IELTS Part 1-2 Question Banks' },
+        platform: { zh: '雅思哥 App / 官方 Part 2 题卡', en: 'IELTS Bro App / Official Part 2 Cards' },
+        tag: { zh: '结构化口语表达', en: 'Structured Speaking' },
+        description: { 
+          zh: '全面覆盖人物、地点、物品、事件四大类卡片，搭建 2 分钟讲述逻辑。', 
+          en: 'Master People, Places, Objects, and Events story cards to sustain 2 minutes.' 
+        },
+        methodTitle: { zh: 'CARE & STAR 结构框架法', en: 'CARE & STAR Framework' },
+        methodDesc: { 
+          zh: 'Part 2 采用 STAR (Situation-Task-Action-Result)，Part 1/3 采用 CARE (Connect-Answer-Reason-Example)。', 
+          en: 'Use STAR for Part 2 story cards and CARE for Part 1/3 analytical questions.' 
+        },
+        steps: [
+          { zh: '列出 Part 2 题卡的 4 个 STAR 提纲要点', en: 'Outline Part 2 cards into 4 bullet points using STAR' },
+          { zh: '带计时器练习连续讲述 2 分钟，消除冗余停顿词', en: 'Practice speaking continuously for 2 mins with a timer' }
+        ]
+      },
+      {
+        id: 's2-writing',
+        stage: '5.5-6.0',
+        skill: 'writing',
+        tagColor: 'rose',
+        title: { zh: 'Task 1 图表拆解 & AWL Sublist 4-7', en: 'Task 1 Chart Types & AWL Sublist 4-7' },
+        platform: { zh: '剑桥雅思 Task 1 / AWL 词汇库', en: 'IELTS Task 1 / AWL Sublist 4-7' },
+        tag: { zh: '学术改写与改句', en: 'Academic Transformation' },
+        description: { 
+          zh: '熟练处理柱、线、饼、表、流程图与地图，掌握学术同义改写与被动句。', 
+          en: 'Master Charts, Diagrams, Maps, and AWL Sublist 4-7 academic paraphrasing.' 
+        },
+        methodTitle: { zh: '学术句式改写 (Academic Paraphrasing)', en: 'Academic Syntax Paraphrasing' },
+        methodDesc: { 
+          zh: '将口语化表达转化为规范学术被动语态与形式主语（如 "It is clear that..."）。', 
+          en: 'Convert informal statements into formal academic passive & dummy-subject syntax.' 
+        },
+        steps: [
+          { zh: '分析图表 Overview 段落，提取 2 个最显著特征', en: 'Identify key trends and write a 2-sentence Overview' },
+          { zh: '每周练习 2 篇 Task 1，使用 AI 检查连接词多样性', en: 'Draft 2 Task 1 responses weekly and check cohesion via AI' }
+        ]
+      },
+
+      // ================= STAGE 3: 6.0 -> 6.5 =================
+      {
+        id: 's3-listening',
+        stage: '6.0-6.5',
+        skill: 'listening',
+        tagColor: 'sage',
+        title: { zh: 'TED Talks 全长版演讲 & BBC Radio 4', en: 'TED Talks (Full Length) & BBC Radio 4' },
+        platform: { zh: 'ted.com / BBC Radio 4 / 剑雅 S4', en: 'ted.com / BBC Radio 4 / IELTS S4' },
+        url: 'https://www.ted.com',
+        tag: { zh: '高阶听力与受迫复述', en: 'Advanced Pushed Output' },
+        description: { 
+          zh: '10-18分钟现场学术演讲，适应多元口音、高语速与高密度长论证。', 
+          en: '10-18 min live academic speeches with varied global accents and high information density.' 
+        },
+        methodTitle: { zh: '受迫输出法 (Pushed Output)', en: 'Pushed Output Summary' },
+        methodDesc: { 
+          zh: '听完 10 分钟演讲后不看文本，限时 3 分钟内进行无停顿英文口头 Summary 复述。', 
+          en: 'Force an unscripted 3-minute oral summary immediately after listening.' 
+        },
+        steps: [
+          { zh: '盲听 10 分钟 TED，仅用符号记录核心观点导图', en: 'Listen with zero subtitles, noting key argument symbols' },
+          { zh: '开启录音进行 3 分钟口头总结，随后比对文本查漏', en: 'Deliver a 3-min oral summary and verify against transcript' }
+        ]
+      },
+      {
+        id: 's3-reading',
+        stage: '6.0-6.5',
+        skill: 'reading',
+        tagColor: 'blue',
+        title: { zh: 'The Guardian (Opinion) & Scientific American', en: 'The Guardian (Opinion) & SciAm' },
+        platform: { zh: 'theguardian.com / scientificamerican.com / 剑雅 P3', en: 'theguardian.com / scientificamerican.com / IELTS P3' },
+        url: 'https://www.theguardian.com',
+        tag: { zh: '长难攻坚与错题矩阵', en: 'Complex Syntax & Error Log' },
+        description: { 
+          zh: '英国卫报社论与前沿科学文章，句式严密，完美契合雅思 Passage 3 逻辑。', 
+          en: 'Opinion pieces and science features matching the depth of IELTS Passage 3.' 
+        },
+        methodTitle: { zh: '错题分类归因矩阵 (Error Log Matrix)', en: 'Error Log Matrix Analysis' },
+        methodDesc: { 
+          zh: '将每道错题归类为：A.同义词未识别 B.逻辑过度推导 C.语义误判，建立同义替换词对库。', 
+          en: 'Categorize errors into A. Synonym Missed, B. Over-inference, C. Syntax Misread.' 
+        },
+        steps: [
+          { zh: '把错题精准定位至原文对应句并写在错题矩阵中', en: 'Log exact target sentence into Error Log Matrix' },
+          { zh: '整理题目词与原文词的 3 列同义替换 (Paraphrase) 表', en: 'Build a 3-column paraphrase notebook for missed answers' }
+        ]
+      },
+      {
+        id: 's3-speaking',
+        stage: '6.0-6.5',
+        skill: 'speaking',
+        tagColor: 'ochre',
+        title: { zh: '雅思口语 Part 3 抽象议题集', en: 'IELTS Part 3 Abstract Discussion' },
+        platform: { zh: '官方 Part 3 深度论证题库', en: 'Official Part 3 Abstract Question Sets' },
+        tag: { zh: '四步论证拓展', en: '4-Step Argumentation' },
+        description: { 
+          zh: '涵盖社会、教育、科技、伦理等抽象议题，训练逻辑严密的即兴论证。', 
+          en: 'Abstract topics on society, ethics, and tech requiring structured spontaneous logic.' 
+        },
+        methodTitle: { zh: '四步论证拓展法 (Claim-Reason-Example-Concession)', en: '4-Step Argumentation Model' },
+        methodDesc: { 
+          zh: '按照“明确观点 -> 机制原因 -> 现实例证 -> 让步反驳 (Having said that...)”层层推进。', 
+          en: 'Structure answers: Claim -> Rationale -> Exemplar -> Concession (Having said that...).' 
+        },
+        steps: [
+          { zh: '针对 Part 3 抽象提问，必须给出 4 句式完整论证链', en: 'Deliver a complete 4-sentence reasoning chain for abstract queries' },
+          { zh: '使用 "On a societal level..." 等高阶限定词', en: 'Incorporate academic qualifiers like "From an institutional perspective..."' }
+        ]
+      },
+      {
+        id: 's3-writing',
+        stage: '6.0-6.5',
+        skill: 'writing',
+        tagColor: 'rose',
+        title: { zh: 'Cambridge Write & Improve & Task 2 题库', en: 'Cambridge Write & Improve & Task 2' },
+        platform: { zh: 'writeandimprove.com / 雅思 Task 2 真题', en: 'writeandimprove.com / Task 2 Past Papers' },
+        url: 'https://writeandimprove.com',
+        tag: { zh: '五步段落推演', en: '5-Step Paragraph Deduction' },
+        description: { 
+          zh: '双边讨论、同意与否、利弊分析大作文，借助 AI 进行即时语法与逻辑纠偏。', 
+          en: 'Opinion, Discussion, and Advantage essays with instant Cambridge AI feedback.' 
+        },
+        methodTitle: { zh: '五步段落推演法 (Paragraph Deduction)', en: '5-Step Deduction Model' },
+        methodDesc: { 
+          zh: '主体段按照：主题句 -> 原因阐释 -> 具象例证 -> 影响/结果 -> 总结/让步 进行严密推导。', 
+          en: 'Deduce paragraphs: Topic Sentence -> Explanation -> Example -> Impact -> Summary.' 
+        },
+        steps: [
+          { zh: '限时 35 分钟写完 250 词 Task 2，确保无逻辑跳跃', en: 'Write 250 words in 35 mins with seamless logical progression' },
+          { zh: '提交至 Cambridge Write & Improve 或 Gemini 批改迭代', en: 'Submit to Cambridge AI or Gemini to fix syntactical errors' }
+        ]
+      },
+
+      // ================= STAGE 4: 6.5 -> 7.0+ =================
+      {
+        id: 's4-listening',
+        stage: '6.5-7.0',
+        skill: 'listening',
+        tagColor: 'sage',
+        title: { zh: 'In Our Time (BBC) & The Daily (NYT)', en: 'In Our Time (BBC) & The Daily (NYT)' },
+        platform: { zh: 'BBC Sounds / NYT Podcasts / 剑雅 15-19', en: 'BBC Sounds / NYT Podcasts / Cambridge 15-19' },
+        url: 'https://www.bbc.co.uk/programmes/b006qykl',
+        tag: { zh: '原生浸润与高压模考', en: 'Native Pressure Simulation' },
+        description: { 
+          zh: '顶尖学者无脚本学术研讨，涵盖哲学、历史与科学交锋，配合全真高压模考。', 
+          en: 'Unscripted debates by top scholars on history and science, plus full pressure tests.' 
+        },
+        methodTitle: { zh: '高压全真模考与抗疲劳训练', en: 'High-Pressure Real Simulation' },
+        methodDesc: { 
+          zh: '严格按照 3 小时无中断连续做题，消除 S3/S4 后半段注意力衰减导致的低级失误。', 
+          en: 'Conduct 3-hour unbroken test simulations to combat cognitive fatigue in S3/S4.' 
+        },
+        steps: [
+          { zh: '每周六上午 9:00 准时无干扰全真模考', en: 'Simulate full exam every Saturday at 9:00 AM unbroken' },
+          { zh: '在重叠发言杂音中练习核心观点速记', en: 'Practice shorthand notes amidst overlapping scholar speech' }
+        ]
+      },
+      {
+        id: 's4-reading',
+        stage: '6.5-7.0',
+        skill: 'reading',
+        tagColor: 'blue',
+        title: { zh: 'The Economist (经济学人) & ALD & Nature', en: 'The Economist & ALD & Nature News' },
+        platform: { zh: 'economist.com / aldaily.com / nature.com', en: 'economist.com / aldaily.com / nature.com' },
+        url: 'https://www.economist.com',
+        tag: { zh: '顶尖期刊社论解析', en: 'Elite Editorial Analysis' },
+        description: { 
+          zh: '极其地道的用词、隐喻与高阶对冲语气（Hedging），掌控微观阅读与作者立场。', 
+          en: 'Sophisticated journal commentary rich in hedging, subtle stance, and metaphors.' 
+        },
+        methodTitle: { zh: '社论立场与微观对冲解析 (Editorial Hedging)', en: 'Editorial Stance Parsing' },
+        methodDesc: { 
+          zh: '识别作者微妙的对冲副词（arguably, seemingly）与隐喻，解析高阶句式重组。', 
+          en: 'Identify subtle hedging adverbs (arguably, seemingly) and rhetorical metaphors.' 
+        },
+        steps: [
+          { zh: '精读 1 篇经济学人社论，标记所有修饰立场副词', en: 'Deconstruct 1 Economist editorial daily, highlighting hedging adverbs' },
+          { zh: '建立个人“高阶同义替换与搭配库 (Collocation Bank)”', en: 'Maintain an elite Collocation and Academic Synonym Bank' }
+        ]
+      },
+      {
+        id: 's4-speaking',
+        stage: '6.5-7.0',
+        skill: 'speaking',
+        tagColor: 'ochre',
+        title: { zh: 'Ludwig 搭配词典 & 原生流利度调优', en: 'Ludwig Dictionary & Native Fluency' },
+        platform: { zh: 'ludwig.guru / 原生母语音频', en: 'ludwig.guru / Native Podcast Scripts' },
+        url: 'https://ludwig.guru',
+        tag: { zh: '地道搭配与去套话', en: 'Idiomatic De-Cliché' },
+        description: { 
+          zh: '从“正确英语”跨越至“地道学术英语”，彻底消除中式硬译与背诵模板迹象。', 
+          en: 'Elevate from basic accuracy to idiomatic phrasing with zero template clichés.' 
+        },
+        methodTitle: { zh: '地道固定搭配 polish (De-Cliché)', en: 'De-Cliché Collocation Polish' },
+        methodDesc: { 
+          zh: '使用 Ludwig 检索 NYT/BBC 真实语料库，用精准动词-名词搭配替换套话词组。', 
+          en: 'Verify collocations against NYT/BBC corpora using Ludwig to replace memorized cliches.' 
+        },
+        steps: [
+          { zh: '检查口语录音中的背诵套话 (With the development of...) 并删除', en: 'Audit oral transcripts and remove all memorized template intros' },
+          { zh: '在 Ludwig 中验证动词与名词的精准搭配', en: 'Verify natural verb-noun collocations in Ludwig before re-recording' }
+        ]
+      },
+      {
+        id: 's4-writing',
+        stage: '6.5-7.0',
+        skill: 'writing',
+        tagColor: 'rose',
+        title: { zh: 'Ludwig.guru & 考官范文微观评语', en: 'Ludwig.guru & Examiner Reports' },
+        platform: { zh: 'ludwig.guru / 官方考官范文点评', en: 'ludwig.guru / Official Examiner Reports' },
+        url: 'https://ludwig.guru',
+        tag: { zh: '微观编辑与衔接优化', en: 'Micro-Editing & Cohesion' },
+        description: { 
+          zh: '精雕细琢 Coherence & Cohesion (CC) 与 Lexical Resource (LR)，达到 7.5+ 词汇多样性。', 
+          en: 'Polishing Coherence & Lexical Resource for Band 8/9 collocation precision.' 
+        },
+        methodTitle: { zh: '三步微观编辑修正法 (Micro-Editing)', en: 'Micro-Editing 3-Pass Method' },
+        methodDesc: { 
+          zh: 'Pass 1: 删去冗余词汇；Pass 2: 升级低阶动词为精准搭配；Pass 3: 优化分词短语与倒装衔接。', 
+          en: 'Pass 1: Prune wordiness; Pass 2: Upgrade collocations; Pass 3: Enhance cohesive syntax.' 
+        },
+        steps: [
+          { zh: '35 分钟写完作文，预留 5 分钟专门进行微观三步修改', en: 'Reserve 5 mins strictly for 3-pass micro-editing' },
+          { zh: '运用分词短语 (Having considered X...) 提升句式丰富度', en: 'Utilize participle clauses and inverted structures for syntax range' }
+        ]
+      }
+    ];
+
+    // Internationalization (i18n) Dictionary
+    const i18nDict = {
+      zh: {
+        appTitle: 'IELTS Master Roadmap & AI Studio',
+        appSubtitle: '雅思高效习得路线图与 AI 智能辅导工作室',
+        searchPlaceholder: '搜索关键词 / 平台 / 方法...',
+        exportPng: '导出图片',
+        exportPdf: '导出 PDF',
+        navRoadmap: '备考路线图 & 模块',
+        navTheory: '科学习得理论基础',
+        navAiStudio: 'AI 导师 & Prompts 工作室',
+        navErrorMatrix: '我的进度 & 错题矩阵',
+        methodBannerTag: 'Krashen i+1 & Swain 受迫输出',
+        progressSummary: '已完成 {completed} / {total} 项关键任务',
+        bannerHeading: '循序渐进 · 5.0 至 7.0+ 雅思全维度习得方案',
+        bannerSubheading: '融合听、说、读、写四大技能契合阶段的 $i+1$ 语料与嵌合式科学方法',
+        progressLabel: '总体备考完成度',
+        filterStageLabel: '目标阶段:',
+        filterSkillLabel: '技能模块:',
+        allStages: '全部阶段',
+        allSkills: '全部技能',
+        skillListening: '听力',
+        skillReading: '阅读',
+        skillSpeaking: '口语',
+        skillWriting: '写作',
+        emptyTitle: '未找到匹配的资源或方法',
+        emptyDesc: '请尝试调整筛选条件或清除搜索关键字。',
+        resetFilters: '重置筛选条件',
+        recommendedMethodLabel: '推荐习得方法 (Scientific Method):',
+        actionStepsLabel: '推荐操作步骤 (Actionable Steps):',
+        visitPlatform: '访问资源',
+        stageTitles: {
+          '5.0-5.5': '第一阶段：5.0 → 5.5（巩固基底与听读突破）',
+          '5.5-6.0': '第二阶段：5.5 → 6.0（学术过渡与逻辑构建）',
+          '6.0-6.5': '第三阶段：6.0 → 6.5（长难攻坚与受迫输出）',
+          '6.5-7.0': '第四阶段：6.5 → 7.0（原生浸润与精准调优）'
+        },
+        stageSubtitles: {
+          '5.0-5.5': '核心：解决连读吞音，建立 3,000 高频词音形映射与狭窄阅读。',
+          '5.5-6.0': '核心：通用英语跨越至学术语境，掌握康奈尔笔记与 STAR/CARE 表达。',
+          '6.0-6.5': '核心：长难句剥离攻坚，强制进行受迫 Summary 输出与错题归因。',
+          '6.5-7.0': '核心：浸润原生顶尖社论，微调 Ludwig 搭配与高压全真模考抗疲劳。'
+        },
+        toastExportPng: '正在生成高清图片，请稍候...',
+        toastExportPdf: '正在生成 PDF 文档，请稍候...',
+        toastAiRunning: 'Gemini AI 考官正在生成精批报告...',
+        toastErrorSaved: '已成功保存至错题矩阵！'
+      },
+      en: {
+        appTitle: 'IELTS Master Roadmap & AI Studio',
+        appSubtitle: 'Scientific Acquisition Roadmap & AI Tutoring Studio',
+        searchPlaceholder: 'Search materials / platforms / methods...',
+        exportPng: 'Export PNG',
+        exportPdf: 'Export PDF',
+        navRoadmap: 'Roadmap & Modules',
+        navTheory: 'Acquisition Science',
+        navAiStudio: 'AI Coach & Prompts',
+        navErrorMatrix: 'Progress & Error Matrix',
+        methodBannerTag: 'Krashen i+1 & Swain Pushed Output',
+        progressSummary: 'Completed {completed} / {total} Core Tasks',
+        bannerHeading: 'Step-by-Step · Band 5.0 to 7.0+ Acquisition Plan',
+        bannerSubheading: 'Integrating targeted $i+1$ materials with embedded scientific SLA methods.',
+        progressLabel: 'Overall Progress',
+        filterStageLabel: 'Target Stage:',
+        filterSkillLabel: 'Skill Category:',
+        allStages: 'All Stages',
+        allSkills: 'All Skills',
+        skillListening: 'Listening',
+        skillReading: 'Reading',
+        skillSpeaking: 'Speaking',
+        skillWriting: 'Writing',
+        emptyTitle: 'No Matching Resources Found',
+        emptyDesc: 'Try adjusting your filter criteria or clearing search keywords.',
+        resetFilters: 'Reset Filters',
+        recommendedMethodLabel: 'Recommended Method:',
+        actionStepsLabel: 'Actionable Steps:',
+        visitPlatform: 'Visit Resource',
+        stageTitles: {
+          '5.0-5.5': 'Stage 1: 5.0 → 5.5 (Foundation & Input Breakout)',
+          '5.5-6.0': 'Stage 2: 5.5 → 6.0 (Academic Transition & Structural Logic)',
+          '6.0-6.5': 'Stage 3: 6.0 → 6.5 (Advanced Input & Pushed Output)',
+          '6.5-7.0': 'Stage 4: 6.5 → 7.0 (Native Immersion & Fine-Tuning)'
+        },
+        stageSubtitles: {
+          '5.0-5.5': 'Core: Fix phonetic linkings; build sound-form for 3,000 words & narrow reading.',
+          '5.5-6.0': 'Core: General to academic transition; Cornell notes & STAR/CARE frameworks.',
+          '6.0-6.5': 'Core: Complex syntax stripping; force oral summaries & error matrix.',
+          '6.5-7.0': 'Core: Immerse in top editorials; Ludwig collocations & fatigue simulation.'
+        },
+        toastExportPng: 'Generating high-res image...',
+        toastExportPdf: 'Generating PDF document...',
+        toastAiRunning: 'Gemini AI Examiner is generating your report...',
+        toastErrorSaved: 'Successfully saved to Error Matrix!'
+      }
+    };
+
+    // DOM Cache
+    const appContainer = document.getElementById('app-container');
+    const stagesGrid = document.getElementById('stages-grid');
+    const emptyState = document.getElementById('empty-state');
+    const searchInput = document.getElementById('search-input');
+    const langToggleBtn = document.getElementById('lang-toggle-btn');
+    const progressSummaryText = document.getElementById('progress-summary-text');
+    const progressPercentText = document.getElementById('progress-percent');
+    const progressBarInner = document.getElementById('progress-bar-inner');
+    const toastNotification = document.getElementById('toast-notification');
+    const toastMsg = document.getElementById('toast-msg');
+
+    // Language Switcher Function
+    function updateLanguageUI() {
+      const texts = i18nDict[currentLang];
+      document.title = texts.appTitle;
+      document.getElementById('app-title').textContent = texts.appTitle;
+      document.getElementById('app-subtitle').textContent = texts.appSubtitle;
+      document.getElementById('search-input').placeholder = texts.searchPlaceholder;
+      document.getElementById('export-png-text').textContent = texts.exportPng;
+      document.getElementById('export-pdf-text').textContent = texts.exportPdf;
+      
+      document.getElementById('nav-roadmap-text').textContent = texts.navRoadmap;
+      document.getElementById('nav-theory-text').textContent = texts.navTheory;
+      document.getElementById('nav-aistudio-text').textContent = texts.navAiStudio;
+      document.getElementById('nav-errormatrix-text').textContent = texts.navErrorMatrix;
+
+      document.getElementById('method-banner-tag').textContent = texts.methodBannerTag;
+      document.getElementById('banner-heading').textContent = texts.bannerHeading;
+      document.getElementById('banner-subheading').textContent = texts.bannerSubheading;
+      document.getElementById('progress-label').textContent = texts.progressLabel;
+
+      document.getElementById('filter-stage-label').textContent = texts.filterStageLabel;
+      document.getElementById('filter-skill-label').textContent = texts.filterSkillLabel;
+      document.getElementById('empty-title').textContent = texts.emptyTitle;
+      document.getElementById('empty-desc').textContent = texts.emptyDesc;
+      document.getElementById('reset-filters-btn').textContent = texts.resetFilters;
+
+      // Filter Buttons
+      document.querySelectorAll('.stage-btn[data-stage="all"]').forEach(b => b.textContent = texts.allStages);
+      document.querySelectorAll('.skill-btn[data-skill="all"]').forEach(b => b.textContent = texts.allSkills);
+      
+      document.querySelectorAll('.skill-name-listening').forEach(el => el.textContent = texts.skillListening);
+      document.querySelectorAll('.skill-name-reading').forEach(el => el.textContent = texts.skillReading);
+      document.querySelectorAll('.skill-name-speaking').forEach(el => el.textContent = texts.skillSpeaking);
+      document.querySelectorAll('.skill-name-writing').forEach(el => el.textContent = texts.skillWriting);
+
+      renderRoadmap();
+      updateProgressStats();
+      renderErrorLogsTable();
+      updateDefaultAiPromptText();
+    }
+
+    // Calculate and update progress numbers
+    function updateProgressStats() {
+      const total = roadmapMasterData.length;
+      const completed = completedItems.length;
+      const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+      const summaryStr = i18nDict[currentLang].progressSummary
+        .replace('{completed}', completed)
+        .replace('{total}', total);
+
+      progressSummaryText.textContent = summaryStr;
+      progressPercentText.textContent = `${percent}%`;
+      progressBarInner.style.width = `${percent}%`;
+
+      document.getElementById('stat-tasks-done').textContent = `${completed} / ${total}`;
+    }
+
+    // Toggle Checkbox Item
+    function toggleItemCompletion(itemId) {
+      if (completedItems.includes(itemId)) {
+        completedItems = completedItems.filter(id => id !== itemId);
+      } else {
+        completedItems.push(itemId);
+      }
+      localStorage.setItem('ielts_master_completed', JSON.stringify(completedItems));
+      
+      const card = document.querySelector(`.item-card[data-id="${itemId}"]`);
+      if (card) {
+        if (completedItems.includes(itemId)) {
+          card.classList.add('completed');
+        } else {
+          card.classList.remove('completed');
+        }
+      }
+      updateProgressStats();
+    }
+
+    // Main Renderer for Roadmap Cards
+    function renderRoadmap() {
+      stagesGrid.innerHTML = '';
+      const stages = ['5.0-5.5', '5.5-6.0', '6.0-6.5', '6.5-7.0'];
+      let totalVisibleCards = 0;
+
+      stages.forEach(stageKey => {
+        if (currentStage !== 'all' && currentStage !== stageKey) return;
+
+        const stageItems = roadmapMasterData.filter(item => {
+          if (item.stage !== stageKey) return false;
+          if (currentSkill !== 'all' && item.skill !== currentSkill) return false;
+          
+          if (searchQuery.trim() !== '') {
+            const q = searchQuery.toLowerCase();
+            const titleMatch = item.title[currentLang].toLowerCase().includes(q);
+            const platformMatch = item.platform[currentLang].toLowerCase().includes(q);
+            const descMatch = item.description[currentLang].toLowerCase().includes(q);
+            const methodMatch = item.methodTitle[currentLang].toLowerCase().includes(q) || item.methodDesc[currentLang].toLowerCase().includes(q);
+            return titleMatch || platformMatch || descMatch || methodMatch;
+          }
+          return true;
+        });
+
+        if (stageItems.length === 0) return;
+        totalVisibleCards += stageItems.length;
+
+        const stageSection = document.createElement('div');
+        stageSection.className = 'bg-white rounded-2xl p-5 sm:p-6 border border-morandi shadow-sm';
+
+        const stageTitleText = i18nDict[currentLang].stageTitles[stageKey];
+        const stageSubText = i18nDict[currentLang].stageSubtitles[stageKey];
+
+        stageSection.innerHTML = `
+          <div class="mb-5 pb-3 border-b border-[#F0EDE8] flex flex-col md:flex-row md:items-center justify-between gap-2">
+            <div>
+              <h3 class="text-base font-bold text-[#2D312E] flex items-center">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#8A9A86] mr-2 inline-block"></span>
+                ${stageTitleText}
+              </h3>
+              <p class="text-xs text-[#7A756C] mt-0.5">${stageSubText}</p>
+            </div>
+            <span class="text-xs font-semibold px-2.5 py-1 rounded-xl bg-[#F8F7F4] border border-[#E6E3DD] text-[#6E685E] self-start md:self-auto">
+              ${stageItems.length} ${currentLang === 'zh' ? '项技能突破卡' : 'Modules'}
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            ${stageItems.map(item => createItemCardHTML(item)).join('')}
+          </div>
+        `;
+
+        stagesGrid.appendChild(stageSection);
+      });
+
+      if (totalVisibleCards === 0) {
+        emptyState.classList.remove('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+      }
+    }
+
+    // Helper to generate Card HTML
+    function createItemCardHTML(item) {
+      const isDone = completedItems.includes(item.id);
+      const title = item.title[currentLang];
+      const platform = item.platform[currentLang];
+      const tag = item.tag[currentLang];
+      const description = item.description[currentLang];
+      const methodTitle = item.methodTitle[currentLang];
+      const methodDesc = item.methodDesc[currentLang];
+      const steps = item.steps || [];
+
+      let iconClass = 'fa-headphones';
+      let methodBoxClass = 'method-box-listening';
+      if (item.skill === 'reading') { iconClass = 'fa-book-open'; methodBoxClass = 'method-box-reading'; }
+      if (item.skill === 'speaking') { iconClass = 'fa-comments'; methodBoxClass = 'method-box-speaking'; }
+      if (item.skill === 'writing') { iconClass = 'fa-pen-nib'; methodBoxClass = 'method-box-writing'; }
+
+      return `
+        <div class="item-card bg-[#FAF9F7] rounded-xl p-4 sm:p-5 border border-[#EBE8E1] hover:border-[#D0C9BD] transition flex flex-col justify-between ${isDone ? 'completed' : ''}" data-id="${item.id}">
+          <div>
+            <!-- Top Tag & Checkbox -->
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="px-2.5 py-0.5 text-[11px] font-semibold rounded-md tag-${item.tagColor} flex items-center">
+                <i class="fa-solid ${iconClass} text-[10px] mr-1.5"></i>${tag}
+              </span>
+              <input type="checkbox" class="custom-checkbox" ${isDone ? 'checked' : ''} onclick="toggleItemCompletion('${item.id}')" title="标记为已学通">
+            </div>
+
+            <!-- Title & Platform Link -->
+            <h4 class="card-title text-sm sm:text-base font-bold text-[#2D312E] leading-snug mb-1">${title}</h4>
+            
+            <div class="flex items-center text-xs text-[#7A756C] mb-3 font-medium">
+              <i class="fa-solid fa-link text-[10px] mr-1.5 text-[#A39E93]"></i>
+              <span class="truncate max-w-[220px]">${platform}</span>
+              ${item.url ? `
+                <a href="${item.url}" target="_blank" rel="noopener" class="ml-1.5 text-[#4A5B4C] hover:underline flex items-center no-export" title="${i18nDict[currentLang].visitPlatform}">
+                  <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                </a>
+              ` : ''}
+            </div>
+
+            <!-- Description -->
+            <p class="text-xs text-[#524E48] leading-relaxed mb-3">${description}</p>
+
+            <!-- EMBEDDED RECOMMENDED METHOD CALLOUT BOX -->
+            <div class="${methodBoxClass} p-3 rounded-r-xl mb-3">
+              <div class="flex items-center text-xs font-bold text-[#2D312E] mb-1">
+                <i class="fa-solid fa-lightbulb text-[11px] mr-1.5 text-[#8A9A86]"></i>
+                <span>${methodTitle}</span>
+              </div>
+              <p class="text-[11px] text-[#4A463F] leading-normal">${methodDesc}</p>
+            </div>
+          </div>
+
+          <!-- Action Steps -->
+          ${steps.length > 0 ? `
+            <div class="pt-2.5 border-t border-[#EFECE6] text-[11px] text-[#6E685E] space-y-1">
+              <div class="font-semibold text-[#4A463F] mb-1 flex items-center">
+                <i class="fa-solid fa-[#list-check] text-[10px] mr-1.5 text-[#8A9A86]"></i>
+                ${i18nDict[currentLang].actionStepsLabel}
+              </div>
+              ${steps.map(step => `
+                <div class="flex items-start">
+                  <span class="inline-block w-1.5 h-1.5 rounded-full bg-[#A39E93] mt-1.5 mr-2 flex-shrink-0"></span>
+                  <span class="leading-tight">${step[currentLang]}</span>
+                </div>
+              `).join('')}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    // AI Studio Prompt Templates
+    function buildAiPromptText(preset, targetBand, topic, draft) {
+      let prompt = '';
+      if (preset === 'task2') {
+        prompt = `Act as an official senior IELTS Writing Examiner. Evaluate the following Task 2 Essay against official IELTS Band Descriptors (Task Response, Coherence & Cohesion, Lexical Resource, Grammatical Range & Accuracy). Target Band Level: ${targetBand}.\n\nQuestion Topic:\n${topic || '[No topic provided]'}\n\nStudent Essay Draft:\n${draft || '[No draft provided]'}\n\nPlease provide your feedback in the following structure:\n1. Estimated Band Score (Overall & Breakdown per criteria)\n2. Key Strengths & Critical Weaknesses\n3. Line-by-Line Micro-Editing (Highlight redundant words and suggest academic collocations)\n4. Band ${targetBand} Full Model Rewrite of Body Paragraphs`;
+      } else if (preset === 'task1') {
+        prompt = `Act as an official IELTS Writing Examiner specializing in Task 1 Academic Chart Analysis. Target Band Level: ${targetBand}.\n\nChart Description/Prompt:\n${topic || '[No topic provided]'}\n\nStudent Draft:\n${draft || '[No draft provided]'}\n\nPlease evaluate:\n1. Overview Section Accuracy & Trend Vocabulary Range\n2. Data Comparison & Cohesion\n3. Academic Tone Polish (Remove informal phrasing)\n4. Rewritten High-Score Sample Answer`;
+      } else if (preset === 'speaking') {
+        prompt = `Act as an encouraging yet rigorous IELTS Speaking Examiner. Target Band Level: ${targetBand}.\n\nSpeaking Part 2/3 Topic:\n${topic || '[No topic provided]'}\n\nStudent Spoken Response Script:\n${draft || '[No draft provided]'}\n\nPlease analyze:\n1. Estimated Fluency & Lexical Score\n2. De-cliché Polish (Identify memorized template clichés and replace with natural native idioms)\n3. Improved 4-Step Answer (Claim + Reason + Example + Concession)\n4. Follow-up Examiner Question for Part 3`;
+      } else {
+        prompt = `Act as a top-tier IELTS Master Coach. Analyze the following query for Band ${targetBand} level:\n\nTopic/Query: ${topic}\nContent/Draft: ${draft}\n\nProvide actionable strategies, native collocations, and a polished rewrite.`;
+      }
+      return prompt;
+    }
+
+    function updateDefaultAiPromptText() {
+      const preset = document.getElementById('prompt-preset-select').value;
+      const targetBand = document.querySelector('input[name="targetBand"]:checked')?.value || '7.0';
+      const topic = document.getElementById('input-topic').value;
+      const draft = document.getElementById('input-draft').value;
+
+      const generated = buildAiPromptText(preset, targetBand, topic, draft);
+      document.getElementById('prompt-output-code').value = generated;
+    }
+
+    // Execute Gemini API call for Live AI Coach Evaluation
+    async function runLiveAiEvaluation() {
+      const promptText = document.getElementById('prompt-output-code').value;
+      const spinner = document.getElementById('ai-loading-spinner');
+      const reportContainer = document.getElementById('ai-report-content');
+      const badge = document.getElementById('ai-status-badge');
+
+      if (!promptText.trim()) return;
+
+      spinner.classList.remove('hidden');
+      reportContainer.innerHTML = '';
+      badge.textContent = '分析中...';
+      badge.className = 'px-2.5 py-0.5 text-[10px] font-semibold rounded-md bg-[#FAF4E8] text-[#78622E]';
+
+      showToast(i18nDict[currentLang].toastAiRunning);
+
+      const apiKey = ""; // Canvas runtime supplies API Key
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+      const payload = {
+        contents: [{ parts: [{ text: promptText }] }],
+        systemInstruction: {
+          parts: [{ text: "You are an expert official IELTS examiner and master coach. Provide a detailed, encouragement-filled, highly structured evaluation in clean Markdown format with bold headings, bullet points, and actionable sentence rewrites." }]
+        }
+      };
+
+      // Exponential backoff helper
+      async function fetchWithRetry(url, options, maxRetries = 3) {
+        let delay = 1000;
+        for (let i = 0; i < maxRetries; i++) {
+          try {
+            const res = await fetch(url, options);
+            if (res.ok) return res;
+          } catch (err) {
+            if (i === maxRetries - 1) throw err;
+          }
+          await new Promise(r => setTimeout(r, delay));
+          delay *= 2;
+        }
+        return await fetch(url, options);
+      }
+
+      try {
+        const response = await fetchWithRetry(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+        const candidateText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+        if (candidateText) {
+          badge.textContent = '精批完成';
+          badge.className = 'px-2.5 py-0.5 text-[10px] font-semibold rounded-md bg-[#EBF0EC] text-[#4A5B4C]';
+          
+          // Simple Markdown renderer
+          let htmlResult = candidateText
+            .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+            .replace(/^## (.*$)/gim, '<h3>$1</h3>')
+            .replace(/^# (.*$)/gim, '<h2>$1</h2>')
+            .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
+            .replace(/^\* (.*$)/gim, '<ul><li>$1</li></ul>')
+            .replace(/\n\n/g, '<p></p>')
+            .replace(/<\/ul>\s*<ul>/g, '');
+
+          reportContainer.innerHTML = htmlResult;
+        } else {
+          throw new Error('API output missing');
+        }
+      } catch (err) {
+        console.error('AI Error:', err);
+        badge.textContent = '请求失败';
+        badge.className = 'px-2.5 py-0.5 text-[10px] font-semibold rounded-md bg-[#F9EFEF] text-[#7A4B4A]';
+        reportContainer.innerHTML = `
+          <div class="p-4 bg-[#F9EFEF] border border-[#EBD5D4] rounded-xl text-[#7A4B4A]">
+            <p><b>生成失败：</b> 无法连接至 AI 考官模型。请点击“复制 Prompt”按钮，将其直接粘贴至 ChatGPT 或 Gemini Web 端使用。</p>
+          </div>
+        `;
+      } finally {
+        spinner.classList.add('hidden');
+        hideToast();
+      }
+    }
+
+    // Render Saved Error Log Matrix Table
+    function renderErrorLogsTable() {
+      const tbody = document.getElementById('error-matrix-tbody');
+      const emptyMsg = document.getElementById('empty-error-msg');
+      tbody.innerHTML = '';
+
+      if (errorLogs.length === 0) {
+        emptyMsg.classList.remove('hidden');
+        document.getElementById('stat-error-count').textContent = '0';
+        document.getElementById('stat-top-reason').textContent = '-';
+        return;
+      }
+
+      emptyMsg.classList.add('hidden');
+      document.getElementById('stat-error-count').textContent = errorLogs.length;
+
+      // Calculate top error category
+      const counts = {};
+      errorLogs.forEach(log => { counts[log.type] = (counts[log.type] || 0) + 1; });
+      let topType = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b, '');
+      const typeMap = { synonym: '同义替换未识', logic: '逻辑过度推导', syntax: '长难句剥离失误', phonetics: '连读吞音偏差', collocation: '搭配不地道' };
+      document.getElementById('stat-top-reason').textContent = typeMap[topType] || '-';
+
+      errorLogs.forEach((log, index) => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-[#FAF9F7] transition';
+        tr.innerHTML = `
+          <td class="p-2.5 font-semibold text-[#4A5B4C]">${log.skill.toUpperCase()}</td>
+          <td class="p-2.5 font-medium">${log.source || '-'}</td>
+          <td class="p-2.5"><span class="px-2 py-0.5 text-[10px] font-semibold rounded tag-lavender">${log.typeLabel}</span></td>
+          <td class="p-2.5 text-[#7A756C]">${log.myWrong}</td>
+          <td class="p-2.5 font-medium text-[#2D312E]">${log.correct}</td>
+          <td class="p-2.5 text-right no-export">
+            <button onclick="deleteErrorLog(${index})" class="text-[#7A4B4A] hover:underline text-[11px]">删除</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function deleteErrorLog(index) {
+      errorLogs.splice(index, 1);
+      localStorage.setItem('ielts_master_error_matrix', JSON.stringify(errorLogs));
+      renderErrorLogsTable();
+    }
+
+    // Toast Helper
+    function showToast(msg) {
+      toastMsg.textContent = msg;
+      toastNotification.classList.remove('translate-y-20', 'opacity-0');
+      toastNotification.classList.add('translate-y-0', 'opacity-100');
+    }
+
+    function hideToast() {
+      toastNotification.classList.remove('translate-y-0', 'opacity-100');
+      toastNotification.classList.add('translate-y-20', 'opacity-0');
+    }
+
+    // PNG Export Function
+    async function exportToPNG() {
+      showToast(i18nDict[currentLang].toastExportPng);
+      document.body.classList.add('exporting');
+
+      try {
+        const canvas = await html2canvas(appContainer, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: '#F8F7F4',
+          logging: false
+        });
+
+        const image = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = image;
+        link.download = `IELTS_Master_Roadmap_${currentLang.toUpperCase()}.png`;
+        link.click();
+      } catch (err) {
+        console.error('PNG Export Failed:', err);
+      } finally {
+        document.body.classList.remove('exporting');
+        hideToast();
+      }
+    }
+
+    // PDF Export Function
+    async function exportToPDF() {
+      showToast(i18nDict[currentLang].toastExportPdf);
+      document.body.classList.add('exporting');
+
+      try {
+        const { jsPDF } = window.jspdf;
+        const canvas = await html2canvas(appContainer, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: '#F8F7F4',
+          logging: false
+        });
+
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgWidth = 210;
+        const pageHeight = 297;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        let heightLeft = imgHeight;
+        let position = 0;
+
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+
+        while (heightLeft >= 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+
+        pdf.save(`IELTS_Master_Roadmap_${currentLang.toUpperCase()}.pdf`);
+      } catch (err) {
+        console.error('PDF Export Failed:', err);
+      } finally {
+        document.body.classList.remove('exporting');
+        hideToast();
+      }
+    }
+
+    // Initialize All Event Listeners
+    function initEventListeners() {
+      // Search
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value;
+        renderRoadmap();
+      });
+
+      // Language Switcher
+      langToggleBtn.addEventListener('click', () => {
+        currentLang = currentLang === 'zh' ? 'en' : 'zh';
+        updateLanguageUI();
+      });
+
+      // Tab Buttons
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const tabId = btn.dataset.tab;
+          document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+          document.getElementById(tabId).classList.remove('hidden');
+          currentTab = tabId;
+        });
+      });
+
+      // Stage Filter Buttons
+      document.querySelectorAll('.stage-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.stage-btn').forEach(b => {
+            b.classList.remove('active', 'tag-sage', 'font-medium');
+            b.classList.add('bg-white', 'text-[#6E685E]');
+          });
+          btn.classList.add('active', 'tag-sage', 'font-medium');
+          btn.classList.remove('bg-white', 'text-[#6E685E]');
+          currentStage = btn.dataset.stage;
+          renderRoadmap();
+        });
+      });
+
+      // Skill Filter Buttons
+      document.querySelectorAll('.skill-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.skill-btn').forEach(b => {
+            b.classList.remove('active', 'tag-blue', 'font-medium');
+            b.classList.add('bg-white', 'text-[#6E685E]');
+          });
+          btn.classList.add('active', 'tag-blue', 'font-medium');
+          btn.classList.remove('bg-white', 'text-[#6E685E]');
+          currentSkill = btn.dataset.skill;
+          renderRoadmap();
+        });
+      });
+
+      // Reset Filters
+      document.getElementById('reset-filters-btn').addEventListener('click', () => {
+        currentStage = 'all';
+        currentSkill = 'all';
+        searchQuery = '';
+        searchInput.value = '';
+
+        document.querySelectorAll('.stage-btn').forEach(b => {
+          b.classList.remove('active', 'tag-sage', 'font-medium');
+          if (b.dataset.stage === 'all') b.classList.add('active', 'tag-sage', 'font-medium');
+          else b.classList.add('bg-white', 'text-[#6E685E]');
+        });
+
+        document.querySelectorAll('.skill-btn').forEach(b => {
+          b.classList.remove('active', 'tag-blue', 'font-medium');
+          if (b.dataset.skill === 'all') b.classList.add('active', 'tag-blue', 'font-medium');
+          else b.classList.add('bg-white', 'text-[#6E685E]');
+        });
+
+        renderRoadmap();
+      });
+
+      // AI Studio Prompt Form Events
+      document.getElementById('prompt-preset-select').addEventListener('change', updateDefaultAiPromptText);
+      document.querySelectorAll('input[name="targetBand"]').forEach(r => r.addEventListener('change', updateDefaultAiPromptText));
+      document.getElementById('input-topic').addEventListener('input', updateDefaultAiPromptText);
+      document.getElementById('input-draft').addEventListener('input', updateDefaultAiPromptText);
+
+      document.getElementById('generate-prompt-btn').addEventListener('click', () => {
+        updateDefaultAiPromptText();
+        showToast('Prompt 已成功更新！');
+        setTimeout(hideToast, 1500);
+      });
+
+      document.getElementById('run-ai-btn').addEventListener('click', runLiveAiEvaluation);
+
+      // Copy Prompt Code
+      document.getElementById('copy-prompt-btn').addEventListener('click', () => {
+        const codeText = document.getElementById('prompt-output-code').value;
+        const tempTex = document.createElement('textarea');
+        tempTex.value = codeText;
+        document.body.appendChild(tempTex);
+        tempTex.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempTex);
+
+        showToast('Prompt 代码已复制至剪贴板！');
+        setTimeout(hideToast, 2000);
+      });
+
+      // Add Error Entry Form
+      document.getElementById('add-error-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const skill = document.getElementById('err-input-skill').value;
+        const source = document.getElementById('err-input-source').value;
+        const typeSelect = document.getElementById('err-input-type');
+        const type = typeSelect.value;
+        const typeLabel = typeSelect.options[typeSelect.selectedIndex].text;
+        const myWrong = document.getElementById('err-input-mywrong').value;
+        const correct = document.getElementById('err-input-correct').value;
+
+        if (!myWrong || !correct) return;
+
+        errorLogs.unshift({ skill, source, type, typeLabel, myWrong, correct });
+        localStorage.setItem('ielts_master_error_matrix', JSON.stringify(errorLogs));
+        
+        document.getElementById('err-input-source').value = '';
+        document.getElementById('err-input-mywrong').value = '';
+        document.getElementById('err-input-correct').value = '';
+
+        renderErrorLogsTable();
+        showToast(i18nDict[currentLang].toastErrorSaved);
+        setTimeout(hideToast, 1500);
+      });
+
+      // Clear all errors
+      document.getElementById('clear-errors-btn').addEventListener('click', () => {
+        if (confirm('确定要清空所有错题归因记录吗？')) {
+          errorLogs = [];
+          localStorage.setItem('ielts_master_error_matrix', JSON.stringify(errorLogs));
+          renderErrorLogsTable();
+        }
+      });
+
+      // Exports
+      document.getElementById('export-png-btn').addEventListener('click', exportToPNG);
+      document.getElementById('export-pdf-btn').addEventListener('click', exportToPDF);
+    }
+
+    // App Initialize
+    window.onload = function() {
+      initEventListeners();
+      updateLanguageUI();
+    };
+  </script>
+</body>
+</html>
