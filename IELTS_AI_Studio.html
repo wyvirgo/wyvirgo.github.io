@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IELTS Master Roadmap & AI Studio | 雅思高效习得路线图与AI辅导工作室</title>
+  <title>IELTS AI Studio</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -16,86 +16,50 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap');
     
     body {
       font-family: 'Plus Jakarta Sans', 'Noto Sans SC', sans-serif;
-      background-color: #F8F7F4;
-      color: #2D312E;
+      background-color: #FAF8F5;
+      color: #23272F;
     }
 
-    /* Morandi Color Palette Tokens */
-    .bg-morandi-base { background-color: #F8F7F4; }
+    /* Uplifting Bright Morandi Tokens */
+    .bg-morandi-base { background-color: #FAF8F5; }
     .bg-morandi-card { background-color: #FFFFFF; }
-    .border-morandi { border-color: #E6E3DD; }
+    .border-morandi { border-color: #ECE7E0; }
 
-    /* Tags & Accent Callouts */
-    .tag-sage { background-color: #EBF0EC; color: #4A5B4C; border: 1px solid #D2DDD4; }
-    .tag-blue { background-color: #EBF2F7; color: #3E5268; border: 1px solid #D0DFEA; }
-    .tag-ochre { background-color: #FAF4E8; color: #78622E; border: 1px solid #EFE2C8; }
-    .tag-rose { background-color: #F9EFEF; color: #7A4B4A; border: 1px solid #EBD5D4; }
-    .tag-lavender { background-color: #F1EFF7; color: #51486B; border: 1px solid #DAD5E8; }
+    /* Cheerful Bright Morandi Tags */
+    .tag-sage { background-color: #EAF7F0; color: #1D8A58; border: 1px solid #B8E8D0; }
+    .tag-blue { background-color: #EDF5FF; color: #1E64D4; border: 1px solid #BFDBFE; }
+    .tag-ochre { background-color: #FFF9E6; color: #C27803; border: 1px solid #FDE68A; }
+    .tag-rose { background-color: #FFF2EF; color: #E04832; border: 1px solid #FCD3C9; }
+    .tag-lavender { background-color: #F5F0FF; color: #7C3AED; border: 1px solid #DDD6FE; }
 
-    /* Embedded Method Box Highlight */
-    .method-box-listening { background-color: #F2F6F3; border-left: 4px solid #6B7C69; }
-    .method-box-reading { background-color: #F0F5F9; border-left: 4px solid #4B637D; }
-    .method-box-speaking { background-color: #FCF8F2; border-left: 4px solid #9C824A; }
-    .method-box-writing { background-color: #FAF2F2; border-left: 4px solid #915E5D; }
-
-    /* Custom Checkbox */
-    .custom-checkbox {
-      appearance: none;
-      width: 1.25rem;
-      height: 1.25rem;
-      border: 1.5px solid #C4BEB4;
-      border-radius: 0.375rem;
-      outline: none;
-      transition: all 0.2s ease;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #FFFFFF;
-    }
-    .custom-checkbox:checked {
-      background-color: #6B7C69;
-      border-color: #6B7C69;
-    }
-    .custom-checkbox:checked::after {
-      content: '✓';
-      color: white;
-      font-size: 0.85rem;
-      font-weight: bold;
-    }
-
-    /* Completed Card Visual Effect */
-    .item-card.completed {
-      opacity: 0.72;
-      background-color: #F3F2EE;
-    }
-    .item-card.completed .card-title {
-      text-decoration: line-through;
-      color: #8C867A;
-    }
+    /* Bright Highlight Method Boxes */
+    .method-box-listening { background-color: #F0FBF6; border-left: 4px solid #1D8A58; }
+    .method-box-reading { background-color: #F0F7FF; border-left: 4px solid #1E64D4; }
+    .method-box-speaking { background-color: #FFFDF0; border-left: 4px solid #C27803; }
+    .method-box-writing { background-color: #FFF5F3; border-left: 4px solid #E04832; }
 
     /* Tab active state */
     .tab-btn.active {
-      background-color: #2D312E;
+      background-color: #23272F;
       color: #FFFFFF;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 12px rgba(35, 39, 47, 0.15);
     }
 
     /* Filter button active state */
     .filter-btn.active {
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
 
     /* Markdown output container styling */
-    .markdown-body h3 { font-weight: 700; font-size: 1.05rem; margin-top: 1rem; margin-bottom: 0.5rem; color: #2D312E; }
-    .markdown-body h4 { font-weight: 600; font-size: 0.95rem; margin-top: 0.75rem; margin-bottom: 0.25rem; color: #4A5B4C; }
+    .markdown-body h3 { font-weight: 700; font-size: 1.05rem; margin-top: 1rem; margin-bottom: 0.5rem; color: #23272F; }
+    .markdown-body h4 { font-weight: 600; font-size: 0.95rem; margin-top: 0.75rem; margin-bottom: 0.25rem; color: #1D8A58; }
     .markdown-body ul { list-style-type: disc; padding-left: 1.25rem; margin-bottom: 0.75rem; }
     .markdown-body p { margin-bottom: 0.5rem; line-height: 1.6; }
-    .markdown-body code { background-color: #EFECE6; padding: 0.1rem 0.3rem; border-radius: 0.25rem; font-size: 0.85em; }
+    .markdown-body code { background-color: #F3EFEA; padding: 0.1rem 0.3rem; border-radius: 0.25rem; font-size: 0.85em; }
 
     /* Hide export artifacts */
     body.exporting .no-export { display: none !important; }
@@ -105,16 +69,23 @@
 <body class="min-h-full pb-12 flex flex-col">
 
   <!-- Top Navigation Header -->
-  <header class="bg-white/80 backdrop-blur-md sticky top-0 z-30 border-b border-morandi no-export">
+  <header class="bg-white/90 backdrop-blur-md sticky top-0 z-30 border-b border-morandi no-export shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
-      <!-- Brand & Title -->
+      
+      <!-- Brand & Title & Logo -->
       <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-2xl bg-[#EBF0EC] border border-[#D2DDD4] flex items-center justify-center text-[#4A5B4C] shadow-sm">
-          <i class="fa-solid fa-compass-drafting text-lg"></i>
+        <!-- Modern Bright Morandi Logo -->
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#FFF2EF] via-[#EAF7F0] to-[#EDF5FF] border border-[#E2ECE9] flex items-center justify-center shadow-sm flex-shrink-0">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 3L2 8L12 13L22 8L12 3Z" stroke="#1E64D4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M5 9.5V16.5C5 16.5 8.5 18.5 12 18.5C15.5 18.5 19 16.5 19 16.5V9.5" stroke="#E04832" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M22 8V14" stroke="#1D8A58" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="19" cy="4.5" r="1.5" fill="#C27803"/>
+          </svg>
         </div>
         <div>
-          <h1 class="text-base sm:text-lg font-bold text-[#2D312E] tracking-tight" id="app-title">IELTS Master Roadmap & AI Studio</h1>
-          <p class="text-[11px] text-[#7A756C]" id="app-subtitle">雅思高效习得路线图与 AI 智能辅导工作室</p>
+          <h1 class="text-base sm:text-xl font-extrabold text-[#23272F] tracking-tight" id="app-title">IELTS AI Studio</h1>
+          <p class="text-[11px] font-medium text-[#646E78]" id="app-subtitle">雅思高效习得路线图与 AI 智能辅导工作室</p>
         </div>
       </div>
 
@@ -122,23 +93,23 @@
       <div class="flex flex-wrap items-center gap-2">
         <!-- Search Box -->
         <div class="relative">
-          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-[#A39E93] text-xs"></i>
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-[#A0AAB2] text-xs"></i>
           <input type="text" id="search-input" placeholder="搜索关键词 / 平台 / 方法..." 
-            class="w-36 sm:w-48 pl-8 pr-3 py-1.5 text-xs rounded-xl bg-[#F8F7F4] border border-[#E6E3DD] focus:outline-none focus:ring-2 focus:ring-[#8A9A86] text-[#2D312E] placeholder-[#A39E93]">
+            class="w-36 sm:w-48 pl-8 pr-3 py-1.5 text-xs rounded-xl bg-[#FAF8F5] border border-[#E2DCD5] focus:outline-none focus:ring-2 focus:ring-[#1E64D4] text-[#23272F] placeholder-[#A0AAB2]">
         </div>
 
         <!-- Language Toggle -->
-        <button id="lang-toggle-btn" class="px-3 py-1.5 text-xs font-semibold rounded-xl bg-[#F1EFF7] text-[#51486B] border border-[#DAD5E8] hover:bg-[#E5E1F0] transition flex items-center space-x-1.5">
+        <button id="lang-toggle-btn" class="px-3 py-1.5 text-xs font-semibold rounded-xl bg-[#F5F0FF] text-[#7C3AED] border border-[#DDD6FE] hover:bg-[#EDE5FF] transition flex items-center space-x-1.5">
           <i class="fa-solid fa-globe text-xs"></i>
           <span id="lang-toggle-text">EN / 中文</span>
         </button>
 
         <!-- Export Buttons -->
-        <button id="export-png-btn" class="px-3 py-1.5 text-xs font-medium rounded-xl bg-[#EBF2F7] text-[#3E5268] border border-[#D0DFEA] hover:bg-[#DEE9F2] transition flex items-center space-x-1">
+        <button id="export-png-btn" class="px-3 py-1.5 text-xs font-medium rounded-xl bg-[#EDF5FF] text-[#1E64D4] border border-[#BFDBFE] hover:bg-[#DCEBFF] transition flex items-center space-x-1">
           <i class="fa-solid fa-image text-xs"></i>
           <span id="export-png-text">导出图片</span>
         </button>
-        <button id="export-pdf-btn" class="px-3 py-1.5 text-xs font-medium rounded-xl bg-[#FAF4E8] text-[#78622E] border border-[#EFE2C8] hover:bg-[#F3E7CF] transition flex items-center space-x-1">
+        <button id="export-pdf-btn" class="px-3 py-1.5 text-xs font-medium rounded-xl bg-[#FFF9E6] text-[#C27803] border border-[#FDE68A] hover:bg-[#FFF2C6] transition flex items-center space-x-1">
           <i class="fa-solid fa-file-pdf text-xs"></i>
           <span id="export-pdf-text">导出 PDF</span>
         </button>
@@ -146,53 +117,24 @@
     </div>
 
     <!-- Navigation Tabs Bar -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-[#F0EDE8] py-2 flex overflow-x-auto gap-2 no-export">
-      <button class="tab-btn active px-4 py-1.5 text-xs font-semibold rounded-xl text-[#6E685E] hover:bg-[#F8F7F4] transition flex items-center space-x-1.5 whitespace-nowrap" data-tab="tab-roadmap">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-[#F5F0EA] py-2 flex overflow-x-auto gap-2 no-export">
+      <button class="tab-btn active px-4 py-1.5 text-xs font-semibold rounded-xl text-[#646E78] hover:bg-[#FAF8F5] transition flex items-center space-x-1.5 whitespace-nowrap" data-tab="tab-roadmap">
         <i class="fa-solid fa-map-location-dot"></i>
         <span id="nav-roadmap-text">备考路线图 & 模块</span>
       </button>
-      <button class="tab-btn px-4 py-1.5 text-xs font-semibold rounded-xl text-[#6E685E] hover:bg-[#F8F7F4] transition flex items-center space-x-1.5 whitespace-nowrap" data-tab="tab-theory">
+      <button class="tab-btn px-4 py-1.5 text-xs font-semibold rounded-xl text-[#646E78] hover:bg-[#FAF8F5] transition flex items-center space-x-1.5 whitespace-nowrap" data-tab="tab-theory">
         <i class="fa-solid fa-brain"></i>
         <span id="nav-theory-text">科学习得理论基础</span>
       </button>
-      <button class="tab-btn px-4 py-1.5 text-xs font-semibold rounded-xl text-[#6E685E] hover:bg-[#F8F7F4] transition flex items-center space-x-1.5 whitespace-nowrap" data-tab="tab-ai-studio">
-        <i class="fa-solid fa-robot text-[#8A9A86]"></i>
+      <button class="tab-btn px-4 py-1.5 text-xs font-semibold rounded-xl text-[#646E78] hover:bg-[#FAF8F5] transition flex items-center space-x-1.5 whitespace-nowrap" data-tab="tab-ai-studio">
+        <i class="fa-solid fa-robot text-[#1E64D4]"></i>
         <span id="nav-aistudio-text">AI 导师 & Prompts 工作室</span>
-      </button>
-      <button class="tab-btn px-4 py-1.5 text-xs font-semibold rounded-xl text-[#6E685E] hover:bg-[#F8F7F4] transition flex items-center space-x-1.5 whitespace-nowrap" data-tab="tab-error-matrix">
-        <i class="fa-solid fa-table-list"></i>
-        <span id="nav-errormatrix-text">我的进度 & 错题矩阵</span>
       </button>
     </div>
   </header>
 
   <!-- Main Application Container -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 flex-1 w-full" id="app-container">
-
-    <!-- Global Progress Summary Banner -->
-    <div class="bg-white rounded-2xl p-4 sm:p-5 border border-morandi shadow-sm mb-6">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div class="flex items-center space-x-2">
-            <span class="px-2.5 py-0.5 text-[11px] font-semibold rounded-lg tag-sage" id="method-banner-tag">Krashen i+1 & Swain 受迫输出</span>
-            <span class="text-xs text-[#8C867A]" id="progress-summary-text">已完成 0 / 16 项关键任务</span>
-          </div>
-          <h2 class="text-lg sm:text-xl font-bold text-[#2D312E] mt-1" id="banner-heading">循序渐进 · 5.0 至 7.0+ 雅思全维度习得方案</h2>
-          <p class="text-xs text-[#7A756C] mt-0.5" id="banner-subheading">融合听、说、读、写四大技能契合阶段的 $i+1$ 语料与嵌合式科学方法</p>
-        </div>
-
-        <!-- Progress Bar -->
-        <div class="w-full md:w-64 flex flex-col justify-center">
-          <div class="flex justify-between text-xs font-semibold mb-1">
-            <span class="text-[#7A756C]" id="progress-label">总体备考完成度</span>
-            <span class="text-[#4A5B4C]" id="progress-percent">0%</span>
-          </div>
-          <div class="w-full h-2.5 bg-[#F8F7F4] rounded-full overflow-hidden border border-[#E6E3DD]">
-            <div id="progress-bar-inner" class="h-full bg-[#8A9A86] transition-all duration-500 rounded-full" style="width: 0%"></div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- TAB 1: ROADMAP & PRACTICE MODULES -->
     <div id="tab-roadmap" class="tab-content space-y-6">
@@ -201,29 +143,29 @@
       <div class="bg-white rounded-2xl p-4 border border-morandi shadow-sm space-y-3 no-export">
         <!-- Stage Filters -->
         <div class="flex flex-wrap items-center gap-2">
-          <span class="text-xs font-bold text-[#6E685E] w-20 flex-shrink-0" id="filter-stage-label">目标阶段:</span>
+          <span class="text-xs font-bold text-[#646E78] w-20 flex-shrink-0" id="filter-stage-label">目标阶段:</span>
           <button class="filter-btn stage-btn active px-3 py-1 text-xs rounded-xl tag-sage font-medium" data-stage="all">全部阶段</button>
-          <button class="filter-btn stage-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E6E3DD] text-[#6E685E] hover:bg-[#F8F7F4]" data-stage="5.0-5.5">5.0 → 5.5</button>
-          <button class="filter-btn stage-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E6E3DD] text-[#6E685E] hover:bg-[#F8F7F4]" data-stage="5.5-6.0">5.5 → 6.0</button>
-          <button class="filter-btn stage-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E6E3DD] text-[#6E685E] hover:bg-[#F8F7F4]" data-stage="6.0-6.5">6.0 → 6.5</button>
-          <button class="filter-btn stage-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E6E3DD] text-[#6E685E] hover:bg-[#F8F7F4]" data-stage="6.5-7.0">6.5 → 7.0</button>
+          <button class="filter-btn stage-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E2DCD5] text-[#646E78] hover:bg-[#FAF8F5]" data-stage="5.0-5.5">5.0 → 5.5</button>
+          <button class="filter-btn stage-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E2DCD5] text-[#646E78] hover:bg-[#FAF8F5]" data-stage="5.5-6.0">5.5 → 6.0</button>
+          <button class="filter-btn stage-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E2DCD5] text-[#646E78] hover:bg-[#FAF8F5]" data-stage="6.0-6.5">6.0 → 6.5</button>
+          <button class="filter-btn stage-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E2DCD5] text-[#646E78] hover:bg-[#FAF8F5]" data-stage="6.5-7.0">6.5 → 7.0</button>
         </div>
 
         <!-- Skill Filters -->
-        <div class="flex flex-wrap items-center gap-2 pt-1 border-t border-[#F0EDE8]">
-          <span class="text-xs font-bold text-[#6E685E] w-20 flex-shrink-0" id="filter-skill-label">技能模块:</span>
+        <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-[#F5F0EA]">
+          <span class="text-xs font-bold text-[#646E78] w-20 flex-shrink-0" id="filter-skill-label">技能模块:</span>
           <button class="filter-btn skill-btn active px-3 py-1 text-xs rounded-xl tag-blue font-medium" data-skill="all">全部技能</button>
-          <button class="filter-btn skill-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E6E3DD] text-[#6E685E] hover:bg-[#F8F7F4]" data-skill="listening">
-            <i class="fa-solid fa-headphones text-[10px] mr-1 text-[#4A5B4C]"></i><span class="skill-name-listening">听力</span>
+          <button class="filter-btn skill-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E2DCD5] text-[#646E78] hover:bg-[#FAF8F5]" data-skill="listening">
+            <i class="fa-solid fa-headphones text-[10px] mr-1 text-[#1D8A58]"></i><span class="skill-name-listening">听力</span>
           </button>
-          <button class="filter-btn skill-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E6E3DD] text-[#6E685E] hover:bg-[#F8F7F4]" data-skill="reading">
-            <i class="fa-solid fa-book-open text-[10px] mr-1 text-[#3E5268]"></i><span class="skill-name-reading">阅读</span>
+          <button class="filter-btn skill-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E2DCD5] text-[#646E78] hover:bg-[#FAF8F5]" data-skill="reading">
+            <i class="fa-solid fa-book-open text-[10px] mr-1 text-[#1E64D4]"></i><span class="skill-name-reading">阅读</span>
           </button>
-          <button class="filter-btn skill-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E6E3DD] text-[#6E685E] hover:bg-[#F8F7F4]" data-skill="speaking">
-            <i class="fa-solid fa-comments text-[10px] mr-1 text-[#78622E]"></i><span class="skill-name-speaking">口语</span>
+          <button class="filter-btn skill-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E2DCD5] text-[#646E78] hover:bg-[#FAF8F5]" data-skill="speaking">
+            <i class="fa-solid fa-comments text-[10px] mr-1 text-[#C27803]"></i><span class="skill-name-speaking">口语</span>
           </button>
-          <button class="filter-btn skill-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E6E3DD] text-[#6E685E] hover:bg-[#F8F7F4]" data-skill="writing">
-            <i class="fa-solid fa-pen-nib text-[10px] mr-1 text-[#7A4B4A]"></i><span class="skill-name-writing">写作</span>
+          <button class="filter-btn skill-btn px-3 py-1 text-xs rounded-xl bg-white border border-[#E2DCD5] text-[#646E78] hover:bg-[#FAF8F5]" data-skill="writing">
+            <i class="fa-solid fa-pen-nib text-[10px] mr-1 text-[#E04832]"></i><span class="skill-name-writing">写作</span>
           </button>
         </div>
       </div>
@@ -235,9 +177,9 @@
 
       <!-- Empty State -->
       <div id="empty-state" class="hidden text-center py-16 bg-white rounded-2xl border border-morandi">
-        <i class="fa-solid fa-filter-circle-xmark text-4xl text-[#C4BEB4] mb-3"></i>
-        <h3 class="text-base font-bold text-[#2D312E]" id="empty-title">未找到匹配的资源或方法</h3>
-        <p class="text-xs text-[#7A756C] mt-1" id="empty-desc">请尝试调整筛选条件或清除搜索关键字。</p>
+        <i class="fa-solid fa-filter-circle-xmark text-4xl text-[#C0C8D0] mb-3"></i>
+        <h3 class="text-base font-bold text-[#23272F]" id="empty-title">未找到匹配的资源或方法</h3>
+        <p class="text-xs text-[#646E78] mt-1" id="empty-desc">请尝试调整筛选条件或清除搜索关键字。</p>
         <button id="reset-filters-btn" class="mt-4 px-4 py-2 text-xs font-semibold rounded-xl tag-sage hover:opacity-90 transition">重置筛选条件</button>
       </div>
     </div>
@@ -245,97 +187,97 @@
     <!-- TAB 2: SCIENTIFIC METHODOLOGY -->
     <div id="tab-theory" class="tab-content hidden space-y-6">
       <div class="bg-white rounded-2xl p-6 border border-morandi shadow-sm">
-        <h3 class="text-lg font-bold text-[#2D312E] mb-1" id="theory-title">科学习得核心理论体系</h3>
-        <p class="text-xs text-[#7A756C] mb-6" id="theory-subtitle">摒弃传统死记硬背，基于二语习得 (SLA) 权威理论构建的高效突破模型</p>
+        <h3 class="text-lg font-bold text-[#23272F] mb-1" id="theory-title">科学习得核心理论体系</h3>
+        <p class="text-xs text-[#646E78] mb-6" id="theory-subtitle">摒弃传统死记硬背，基于二语习得 (SLA) 权威理论构建的高效突破模型</p>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           
           <!-- Theory 1 -->
-          <div class="bg-[#FAF9F7] rounded-xl p-5 border border-[#E6E3DD]">
-            <div class="w-9 h-9 rounded-xl bg-[#EBF0EC] border border-[#D2DDD4] flex items-center justify-center text-[#4A5B4C] mb-3 font-bold text-sm">
+          <div class="bg-[#FAF8F5] rounded-xl p-5 border border-[#ECE7E0]">
+            <div class="w-9 h-9 rounded-xl bg-[#EAF7F0] border border-[#B8E8D0] flex items-center justify-center text-[#1D8A58] mb-3 font-bold text-sm">
               i+1
             </div>
-            <h4 class="text-sm font-bold text-[#2D312E] mb-1">Krashen 可理解性输入假说</h4>
+            <h4 class="text-sm font-bold text-[#23272F] mb-1">Krashen 可理解性输入假说</h4>
             <span class="text-[10px] font-semibold px-2 py-0.5 rounded tag-sage inline-block mb-2">Comprehensible Input</span>
-            <p class="text-xs text-[#524E48] leading-relaxed mb-3">
+            <p class="text-xs text-[#4E5660] leading-relaxed mb-3">
               语言习得发生在理解略高于当前水平 ($i+1$) 的输入时。材料难度保持在 85%-90% 可理解度，既无挫败感，又能实现自然吸收。
             </p>
-            <div class="text-[11px] text-[#4A5B4C] bg-white p-2.5 rounded-lg border border-[#E0E7E2] font-medium">
+            <div class="text-[11px] text-[#1D8A58] bg-white p-2.5 rounded-lg border border-[#D5EFE2] font-medium">
               💡 <b>雅思应用:</b> 5.0选 News in Levels，6.5+选 The Economist，精准对标 $i+1$。
             </div>
           </div>
 
           <!-- Theory 2 -->
-          <div class="bg-[#FAF9F7] rounded-xl p-5 border border-[#E6E3DD]">
-            <div class="w-9 h-9 rounded-xl bg-[#F9EFEF] border border-[#EBD5D4] flex items-center justify-center text-[#7A4B4A] mb-3 font-bold text-sm">
-              <i class="fa-solid fa-[#bullhorn]"></i>
+          <div class="bg-[#FAF8F5] rounded-xl p-5 border border-[#ECE7E0]">
+            <div class="w-9 h-9 rounded-xl bg-[#FFF2EF] border border-[#FCD3C9] flex items-center justify-center text-[#E04832] mb-3 font-bold text-sm">
+              <i class="fa-solid fa-bullhorn"></i>
             </div>
-            <h4 class="text-sm font-bold text-[#2D312E] mb-1">Swain 受迫输出假说</h4>
+            <h4 class="text-sm font-bold text-[#23272F] mb-1">Swain 受迫输出假说</h4>
             <span class="text-[10px] font-semibold px-2 py-0.5 rounded tag-rose inline-block mb-2">Pushed Output Hypothesis</span>
-            <p class="text-xs text-[#524E48] leading-relaxed mb-3">
+            <p class="text-xs text-[#4E5660] leading-relaxed mb-3">
               单纯听读输入无法自动转化为高分口笔头表达。必须通过“受迫”输出，促使大脑注意到表达缺口（Noticing Gap），从而重构语法与词汇。
             </p>
-            <div class="text-[11px] text-[#7A4B4A] bg-white p-2.5 rounded-lg border border-[#F2E5E5] font-medium">
+            <div class="text-[11px] text-[#E04832] bg-white p-2.5 rounded-lg border border-[#FDE3DC] font-medium">
               💡 <b>雅思应用:</b> 听完 TED 或读完卫报后，限时 3 分钟进行口头或书面 150 词 Summary。
             </div>
           </div>
 
           <!-- Theory 3 -->
-          <div class="bg-[#FAF9F7] rounded-xl p-5 border border-[#E6E3DD]">
-            <div class="w-9 h-9 rounded-xl bg-[#EBF2F7] border border-[#D0DFEA] flex items-center justify-center text-[#3E5268] mb-3 font-bold text-sm">
+          <div class="bg-[#FAF8F5] rounded-xl p-5 border border-[#ECE7E0]">
+            <div class="w-9 h-9 rounded-xl bg-[#EDF5FF] border border-[#BFDBFE] flex items-center justify-center text-[#1E64D4] mb-3 font-bold text-sm">
               <i class="fa-solid fa-filter"></i>
             </div>
-            <h4 class="text-sm font-bold text-[#2D312E] mb-1">Narrow Input 狭窄输入法</h4>
+            <h4 class="text-sm font-bold text-[#23272F] mb-1">Narrow Input 狭窄输入法</h4>
             <span class="text-[10px] font-semibold px-2 py-0.5 rounded tag-blue inline-block mb-2">Narrow Reading / Listening</span>
-            <p class="text-xs text-[#524E48] leading-relaxed mb-3">
+            <p class="text-xs text-[#4E5660] leading-relaxed mb-3">
               集中在同一话题（如“环境保护”或“人工智能”）连续阅读/收听 5-8 篇文章。核心术语重复出现，实现高频无痛词汇内化。
             </p>
-            <div class="text-[11px] text-[#3E5268] bg-white p-2.5 rounded-lg border border-[#E1EBF2] font-medium">
+            <div class="text-[11px] text-[#1E64D4] bg-white p-2.5 rounded-lg border border-[#D2E4FF] font-medium">
               💡 <b>雅思应用:</b> 连续3天攻克“科技与社会”类阅读/口语题，建立主题搭配库。
             </div>
           </div>
 
           <!-- Theory 4 -->
-          <div class="bg-[#FAF9F7] rounded-xl p-5 border border-[#E6E3DD]">
-            <div class="w-9 h-9 rounded-xl bg-[#FAF4E8] border border-[#EFE2C8] flex items-center justify-center text-[#78622E] mb-3 font-bold text-sm">
-              <i class="fa-solid fa-[#arrows-rotate]"></i>
+          <div class="bg-[#FAF8F5] rounded-xl p-5 border border-[#ECE7E0]">
+            <div class="w-9 h-9 rounded-xl bg-[#FFF9E6] border border-[#FDE68A] flex items-center justify-center text-[#C27803] mb-3 font-bold text-sm">
+              <i class="fa-solid fa-arrows-rotate"></i>
             </div>
-            <h4 class="text-sm font-bold text-[#2D312E] mb-1">间隔重复与主动检索</h4>
+            <h4 class="text-sm font-bold text-[#23272F] mb-1">间隔重复与主动检索</h4>
             <span class="text-[10px] font-semibold px-2 py-0.5 rounded tag-ochre inline-block mb-2">Spaced Repetition & Active Recall</span>
-            <p class="text-xs text-[#524E48] leading-relaxed mb-3">
+            <p class="text-xs text-[#4E5660] leading-relaxed mb-3">
               拒绝被动看书，采用“线索卡提取”与“听写提炼”。在遗忘临界点（第1/3/7/14天）主动提取回忆，巩固长期记忆。
             </p>
-            <div class="text-[11px] text-[#78622E] bg-white p-2.5 rounded-lg border border-[#F5ECCF] font-medium">
+            <div class="text-[11px] text-[#C27803] bg-white p-2.5 rounded-lg border border-[#FEF0B2] font-medium">
               💡 <b>雅思应用:</b> 精听单句听写（Dictation）+ 雅思听力错词间隔复习卡。
             </div>
           </div>
 
           <!-- Theory 5 -->
-          <div class="bg-[#FAF9F7] rounded-xl p-5 border border-[#E6E3DD]">
-            <div class="w-9 h-9 rounded-xl bg-[#F1EFF7] border border-[#DAD5E8] flex items-center justify-center text-[#51486B] mb-3 font-bold text-sm">
+          <div class="bg-[#FAF8F5] rounded-xl p-5 border border-[#ECE7E0]">
+            <div class="w-9 h-9 rounded-xl bg-[#F5F0FF] border border-[#DDD6FE] flex items-center justify-center text-[#7C3AED] mb-3 font-bold text-sm">
               <i class="fa-solid fa-square-poll-vertical"></i>
             </div>
-            <h4 class="text-sm font-bold text-[#2D312E] mb-1">错题归因矩阵 (Error Log Matrix)</h4>
+            <h4 class="text-sm font-bold text-[#23272F] mb-1">错题归因矩阵 (Error Log Matrix)</h4>
             <span class="text-[10px] font-semibold px-2 py-0.5 rounded tag-lavender inline-block mb-2">Metacognitive Error Analysis</span>
-            <p class="text-xs text-[#524E48] leading-relaxed mb-3">
+            <p class="text-xs text-[#4E5660] leading-relaxed mb-3">
               盲目刷题收益极低！将每道错题归纳为“同义替换未识别”、“长难句逻辑误判”、“盲目过度推导”或“连读吞音听辨失误”。
             </p>
-            <div class="text-[11px] text-[#51486B] bg-white p-2.5 rounded-lg border border-[#E6E1F2] font-medium">
-              💡 <b>雅思应用:</b> 使用本应用【错题矩阵】功能，记录并进行针对性微观修正。
+            <div class="text-[11px] text-[#7C3AED] bg-white p-2.5 rounded-lg border border-[#E9E1FE] font-medium">
+              💡 <b>雅思应用:</b> 建立个人错题日志，对听力/阅读错题进行归因分析与微观修正。
             </div>
           </div>
 
           <!-- Theory 6 -->
-          <div class="bg-[#FAF9F7] rounded-xl p-5 border border-[#E6E3DD]">
-            <div class="w-9 h-9 rounded-xl bg-[#EBF0EC] border border-[#D2DDD4] flex items-center justify-center text-[#4A5B4C] mb-3 font-bold text-sm">
+          <div class="bg-[#FAF8F5] rounded-xl p-5 border border-[#ECE7E0]">
+            <div class="w-9 h-9 rounded-xl bg-[#EAF7F0] border border-[#B8E8D0] flex items-center justify-center text-[#1D8A58] mb-3 font-bold text-sm">
               <i class="fa-solid fa-feather-pointed"></i>
             </div>
-            <h4 class="text-sm font-bold text-[#2D312E] mb-1">微观编辑与去套话化</h4>
+            <h4 class="text-sm font-bold text-[#23272F] mb-1">微观编辑与去套话化</h4>
             <span class="text-[10px] font-semibold px-2 py-0.5 rounded tag-sage inline-block mb-2">Micro-Editing & De-Cliché</span>
-            <p class="text-xs text-[#524E48] leading-relaxed mb-3">
+            <p class="text-xs text-[#4E5660] leading-relaxed mb-3">
               突破 6.5 分瓶颈的核心：彻底摒弃模板套话（如 "With the rapid development..."），通过三步微观修辞精简冗余、升级搭配。
             </p>
-            <div class="text-[11px] text-[#4A5B4C] bg-white p-2.5 rounded-lg border border-[#E0E7E2] font-medium">
+            <div class="text-[11px] text-[#1D8A58] bg-white p-2.5 rounded-lg border border-[#D5EFE2] font-medium">
               💡 <b>雅思应用:</b> 使用 Ludwig 语料库核对地道 Academic Collocations。
             </div>
           </div>
@@ -352,20 +294,20 @@
         <div class="lg:col-span-5 space-y-4">
           <div class="bg-white rounded-2xl p-5 border border-morandi shadow-sm">
             <div class="flex items-center space-x-2 mb-3">
-              <div class="w-8 h-8 rounded-xl bg-[#F1EFF7] text-[#51486B] flex items-center justify-center font-bold">
+              <div class="w-8 h-8 rounded-xl bg-[#F5F0FF] text-[#7C3AED] flex items-center justify-center font-bold">
                 <i class="fa-solid fa-wand-magic-sparkles text-sm"></i>
               </div>
               <div>
-                <h3 class="text-sm font-bold text-[#2D312E]" id="aistudio-config-title">AI 精批 Prompt 生成器</h3>
-                <p class="text-[11px] text-[#7A756C]" id="aistudio-config-sub">专为 Gemini / ChatGPT 打造的考官级 Prompt</p>
+                <h3 class="text-sm font-bold text-[#23272F]" id="aistudio-config-title">AI 精批 Prompt 生成器</h3>
+                <p class="text-[11px] text-[#646E78]" id="aistudio-config-sub">专为 Gemini / ChatGPT 打造的考官级 Prompt</p>
               </div>
             </div>
 
             <form id="ai-prompt-form" class="space-y-3">
               <!-- Preset Selector -->
               <div>
-                <label class="block text-xs font-semibold text-[#524E48] mb-1" id="lbl-prompt-type">精批场景模式:</label>
-                <select id="prompt-preset-select" class="w-full text-xs p-2.5 rounded-xl bg-[#F8F7F4] border border-[#E6E3DD] focus:outline-none focus:ring-2 focus:ring-[#8A9A86] text-[#2D312E]">
+                <label class="block text-xs font-semibold text-[#4E5660] mb-1" id="lbl-prompt-type">精批场景模式:</label>
+                <select id="prompt-preset-select" class="w-full text-xs p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E2DCD5] focus:outline-none focus:ring-2 focus:ring-[#1E64D4] text-[#23272F]">
                   <option value="task2">写作 Task 2 大作文深度精批与微观重写</option>
                   <option value="task1">写作 Task 1 图表学术语气与趋势词精批</option>
                   <option value="speaking">口语 Part 2/3 考官提问与流利度表达重构</option>
@@ -375,18 +317,18 @@
 
               <!-- Target Score -->
               <div>
-                <label class="block text-xs font-semibold text-[#524E48] mb-1" id="lbl-target-band">目标雅思分数:</label>
+                <label class="block text-xs font-semibold text-[#4E5660] mb-1" id="lbl-target-band">目标雅思分数:</label>
                 <div class="grid grid-cols-3 gap-2">
-                  <label class="cursor-pointer border border-[#E6E3DD] rounded-xl p-2 text-center hover:bg-[#F8F7F4] transition flex items-center justify-center space-x-1">
-                    <input type="radio" name="targetBand" value="6.5" class="text-[#8A9A86]">
+                  <label class="cursor-pointer border border-[#E2DCD5] rounded-xl p-2 text-center hover:bg-[#FAF8F5] transition flex items-center justify-center space-x-1">
+                    <input type="radio" name="targetBand" value="6.5" class="text-[#1E64D4]">
                     <span class="text-xs font-medium">Band 6.5</span>
                   </label>
-                  <label class="cursor-pointer border border-[#E6E3DD] rounded-xl p-2 text-center bg-[#EBF0EC] border-[#D2DDD4] transition flex items-center justify-center space-x-1">
-                    <input type="radio" name="targetBand" value="7.0" checked class="text-[#8A9A86]">
-                    <span class="text-xs font-bold text-[#4A5B4C]">Band 7.0</span>
+                  <label class="cursor-pointer border border-[#B8E8D0] rounded-xl p-2 text-center bg-[#EAF7F0] transition flex items-center justify-center space-x-1">
+                    <input type="radio" name="targetBand" value="7.0" checked class="text-[#1D8A58]">
+                    <span class="text-xs font-bold text-[#1D8A58]">Band 7.0</span>
                   </label>
-                  <label class="cursor-pointer border border-[#E6E3DD] rounded-xl p-2 text-center hover:bg-[#F8F7F4] transition flex items-center justify-center space-x-1">
-                    <input type="radio" name="targetBand" value="7.5+" class="text-[#8A9A86]">
+                  <label class="cursor-pointer border border-[#E2DCD5] rounded-xl p-2 text-center hover:bg-[#FAF8F5] transition flex items-center justify-center space-x-1">
+                    <input type="radio" name="targetBand" value="7.5+" class="text-[#1E64D4]">
                     <span class="text-xs font-medium">Band 7.5+</span>
                   </label>
                 </div>
@@ -394,16 +336,16 @@
 
               <!-- Question / Topic -->
               <div>
-                <label class="block text-xs font-semibold text-[#524E48] mb-1" id="lbl-question-title">题目 / 话题 (Question Prompt):</label>
+                <label class="block text-xs font-semibold text-[#4E5660] mb-1" id="lbl-question-title">题目 / 话题 (Question Prompt):</label>
                 <textarea id="input-topic" rows="2" placeholder="如：Some people think that universities should provide graduates with the knowledge and skills needed in the workplace. To what extent do you agree or disagree?" 
-                  class="w-full text-xs p-2.5 rounded-xl bg-[#F8F7F4] border border-[#E6E3DD] focus:outline-none focus:ring-2 focus:ring-[#8A9A86] text-[#2D312E] placeholder-[#A39E93]"></textarea>
+                  class="w-full text-xs p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E2DCD5] focus:outline-none focus:ring-2 focus:ring-[#1E64D4] text-[#23272F] placeholder-[#A0AAB2]"></textarea>
               </div>
 
               <!-- Student Response / Text -->
               <div>
-                <label class="block text-xs font-semibold text-[#524E48] mb-1" id="lbl-student-draft">学生原始作文 / 口语草稿 (Your Draft):</label>
+                <label class="block text-xs font-semibold text-[#4E5660] mb-1" id="lbl-student-draft">学生原始作文 / 口语草稿 (Your Draft):</label>
                 <textarea id="input-draft" rows="5" placeholder="在此粘贴你的作文文本或口语转述文字..." 
-                  class="w-full text-xs p-2.5 rounded-xl bg-[#F8F7F4] border border-[#E6E3DD] focus:outline-none focus:ring-2 focus:ring-[#8A9A86] text-[#2D312E] placeholder-[#A39E93]"></textarea>
+                  class="w-full text-xs p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E2DCD5] focus:outline-none focus:ring-2 focus:ring-[#1E64D4] text-[#23272F] placeholder-[#A0AAB2]"></textarea>
               </div>
 
               <!-- Action Buttons -->
@@ -412,8 +354,8 @@
                   <i class="fa-solid fa-code text-xs"></i>
                   <span id="btn-generate-text">生成 Prompt 代码</span>
                 </button>
-                <button type="button" id="run-ai-btn" class="flex-1 py-2.5 px-3 text-xs font-semibold rounded-xl bg-[#4A5B4C] text-white hover:bg-[#3B4A3D] transition flex items-center justify-center space-x-1.5 shadow-sm">
-                  <i class="fa-solid fa-bolt text-xs text-[#EBF0EC]"></i>
+                <button type="button" id="run-ai-btn" class="flex-1 py-2.5 px-3 text-xs font-semibold rounded-xl bg-[#1D8A58] text-white hover:bg-[#166E46] transition flex items-center justify-center space-x-1.5 shadow-sm">
+                  <i class="fa-solid fa-bolt text-xs text-[#EAF7F0]"></i>
                   <span id="btn-runai-text">直接运行 AI 导师精批</span>
                 </button>
               </div>
@@ -427,8 +369,8 @@
           <!-- Prompt Code Output Box -->
           <div class="bg-white rounded-2xl p-5 border border-morandi shadow-sm">
             <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-[#2D312E] flex items-center">
-                <i class="fa-solid fa-terminal mr-1.5 text-[#51486B]"></i>
+              <span class="text-xs font-bold text-[#23272F] flex items-center">
+                <i class="fa-solid fa-terminal mr-1.5 text-[#7C3AED]"></i>
                 <span id="prompt-box-title">生成的 Copied Prompt 文本</span>
               </span>
               <button id="copy-prompt-btn" class="px-3 py-1 text-[11px] font-semibold rounded-lg tag-sage hover:opacity-90 transition flex items-center space-x-1">
@@ -436,28 +378,28 @@
                 <span id="copy-prompt-text">复制 Prompt</span>
               </button>
             </div>
-            <textarea id="prompt-output-code" rows="6" readonly class="w-full text-xs p-3 rounded-xl bg-[#2D312E] text-[#E6E3DD] font-mono leading-relaxed focus:outline-none resize-y"></textarea>
+            <textarea id="prompt-output-code" rows="6" readonly class="w-full text-xs p-3 rounded-xl bg-[#23272F] text-[#ECE7E0] font-mono leading-relaxed focus:outline-none resize-y"></textarea>
           </div>
 
           <!-- Live AI Grading Evaluation Output -->
           <div class="bg-white rounded-2xl p-5 border border-morandi shadow-sm">
-            <div class="flex items-center justify-between mb-3 pb-2 border-b border-[#F0EDE8]">
-              <span class="text-xs font-bold text-[#2D312E] flex items-center">
-                <i class="fa-solid fa-brain text-[#8A9A86] mr-1.5"></i>
+            <div class="flex items-center justify-between mb-3 pb-2 border-b border-[#F5F0EA]">
+              <span class="text-xs font-bold text-[#23272F] flex items-center">
+                <i class="fa-solid fa-brain text-[#1E64D4] mr-1.5"></i>
                 <span id="ai-result-title">Gemini AI 雅思考官精批报告</span>
               </span>
-              <span id="ai-status-badge" class="px-2.5 py-0.5 text-[10px] font-semibold rounded-md bg-[#F8F7F4] text-[#8C867A]">就绪</span>
+              <span id="ai-status-badge" class="px-2.5 py-0.5 text-[10px] font-semibold rounded-md bg-[#FAF8F5] text-[#808A94]">就绪</span>
             </div>
 
             <!-- Loading Spinner -->
             <div id="ai-loading-spinner" class="hidden text-center py-12">
-              <i class="fa-solid fa-circle-notch fa-spin text-2xl text-[#8A9A86] mb-2"></i>
-              <p class="text-xs text-[#7A756C]" id="ai-loading-text">正在调用 Gemini AI 考官模型生成深度精批报告...</p>
+              <i class="fa-solid fa-circle-notch fa-spin text-2xl text-[#1E64D4] mb-2"></i>
+              <p class="text-xs text-[#646E78]" id="ai-loading-text">正在调用 Gemini AI 考官模型生成深度精批报告...</p>
             </div>
 
             <!-- Markdown Report Container -->
-            <div id="ai-report-content" class="markdown-body text-xs text-[#2D312E] min-h-[160px] leading-relaxed">
-              <div class="text-center py-10 text-[#8C867A]">
+            <div id="ai-report-content" class="markdown-body text-xs text-[#23272F] min-h-[160px] leading-relaxed">
+              <div class="text-center py-10 text-[#808A94]">
                 <i class="fa-solid fa-file-pen text-3xl mb-2 opacity-40"></i>
                 <p id="ai-placeholder-msg">在左侧输入题目与作文草稿，点击“直接运行 AI 导师精批”即可生成精准反馈与改写建议。</p>
               </div>
@@ -468,116 +410,11 @@
       </div>
     </div>
 
-    <!-- TAB 4: MY PROGRESS & ERROR MATRIX -->
-    <div id="tab-error-matrix" class="tab-content hidden space-y-6">
-      
-      <!-- Stats Summary -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="bg-white rounded-2xl p-4 border border-morandi text-center">
-          <span class="text-2xl font-bold text-[#4A5B4C]" id="stat-tasks-done">0 / 16</span>
-          <p class="text-[11px] text-[#7A756C] mt-0.5" id="stat-lbl-tasks">已完成路线图节点</p>
-        </div>
-        <div class="bg-white rounded-2xl p-4 border border-morandi text-center">
-          <span class="text-2xl font-bold text-[#3E5268]" id="stat-error-count">0</span>
-          <p class="text-[11px] text-[#7A756C] mt-0.5" id="stat-lbl-errors">记录的错题归因项</p>
-        </div>
-        <div class="bg-white rounded-2xl p-4 border border-morandi text-center">
-          <span class="text-2xl font-bold text-[#78622E]" id="stat-top-reason">-</span>
-          <p class="text-[11px] text-[#7A756C] mt-0.5" id="stat-lbl-topreason">主要错题归因类别</p>
-        </div>
-        <div class="bg-white rounded-2xl p-4 border border-morandi text-center">
-          <span class="text-2xl font-bold text-[#51486B]" id="stat-streak-days">1</span>
-          <p class="text-[11px] text-[#7A756C] mt-0.5" id="stat-lbl-streak">连续备考打卡天数</p>
-        </div>
-      </div>
-
-      <!-- Add New Error Log Form -->
-      <div class="bg-white rounded-2xl p-5 border border-morandi shadow-sm">
-        <h3 class="text-sm font-bold text-[#2D312E] mb-3 flex items-center">
-          <i class="fa-solid fa-plus-circle text-[#8A9A86] mr-1.5"></i>
-          <span id="errform-title">添加新错题归因日志 (Metacognitive Error Entry)</span>
-        </h3>
-
-        <form id="add-error-form" class="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div>
-            <label class="block text-xs font-semibold text-[#524E48] mb-1" id="lbl-err-skill">技能模块:</label>
-            <select id="err-input-skill" class="w-full text-xs p-2 rounded-xl bg-[#F8F7F4] border border-[#E6E3DD] text-[#2D312E]">
-              <option value="listening">听力 (Listening)</option>
-              <option value="reading">阅读 (Reading)</option>
-              <option value="writing">写作 (Writing)</option>
-              <option value="speaking">口语 (Speaking)</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold text-[#524E48] mb-1" id="lbl-err-source">来源 / 题号:</label>
-            <input type="text" id="err-input-source" placeholder="如：剑18 Test 2 Passage 3 Q28" class="w-full text-xs p-2 rounded-xl bg-[#F8F7F4] border border-[#E6E3DD] text-[#2D312E]">
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold text-[#524E48] mb-1" id="lbl-err-type">归因类别 (Root Cause):</label>
-            <select id="err-input-type" class="w-full text-xs p-2 rounded-xl bg-[#F8F7F4] border border-[#E6E3DD] text-[#2D312E]">
-              <option value="synonym">A. 同义替换未识别 (Synonym Missed)</option>
-              <option value="logic">B. 逻辑推导过度/盲目脑补 (Logic Over-inference)</option>
-              <option value="syntax">C. 长难句结构剥离失误 (Syntax Misread)</option>
-              <option value="phonetics">D. 连读吞音/语音辨析偏差 (Phonetic Linking/Weak forms)</option>
-              <option value="collocation">E. 搭配不地道/中式英语 (Unnatural Collocation)</option>
-            </select>
-          </div>
-
-          <div class="md:col-span-3">
-            <label class="block text-xs font-semibold text-[#524E48] mb-1" id="lbl-err-mywrong">错误原因与当时理解 (My Initial Misunderstanding):</label>
-            <input type="text" id="err-input-mywrong" placeholder="简述原先误判的原因..." class="w-full text-xs p-2 rounded-xl bg-[#F8F7F4] border border-[#E6E3DD] text-[#2D312E]">
-          </div>
-
-          <div class="md:col-span-3">
-            <label class="block text-xs font-semibold text-[#524E48] mb-1" id="lbl-err-correct">正确逻辑 / 地道搭配 (Correct Logic & Collocation):</label>
-            <input type="text" id="err-input-correct" placeholder="记录原文精准对应句与地道同义替换词对..." class="w-full text-xs p-2 rounded-xl bg-[#F8F7F4] border border-[#E6E3DD] text-[#2D312E]">
-          </div>
-
-          <div class="md:col-span-3 flex justify-end">
-            <button type="submit" class="px-4 py-2 text-xs font-semibold rounded-xl tag-sage hover:opacity-90 transition flex items-center space-x-1">
-              <i class="fa-solid fa-square-plus"></i>
-              <span id="btn-save-error-text">保存至错题矩阵</span>
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <!-- Error Log Table -->
-      <div class="bg-white rounded-2xl p-5 border border-morandi shadow-sm overflow-x-auto">
-        <div class="flex items-center justify-between mb-3">
-          <h3 class="text-sm font-bold text-[#2D312E]" id="errtable-title">错题归因矩阵记录表</h3>
-          <button id="clear-errors-btn" class="text-xs text-[#7A4B4A] hover:underline no-export" id="btn-clear-errors">清空所有记录</button>
-        </div>
-
-        <table class="w-full text-left text-xs border-collapse">
-          <thead>
-            <tr class="border-b border-[#E6E3DD] text-[#7A756C] bg-[#F8F7F4]">
-              <th class="p-2.5 rounded-l-lg" id="th-skill">模块</th>
-              <th class="p-2.5" id="th-source">题目来源</th>
-              <th class="p-2.5" id="th-type">归因类别</th>
-              <th class="p-2.5" id="th-mywrong">误判思考</th>
-              <th class="p-2.5" id="th-correct">正确同义替换/逻辑</th>
-              <th class="p-2.5 text-right rounded-r-lg no-export" id="th-action">操作</th>
-            </tr>
-          </thead>
-          <tbody id="error-matrix-tbody" class="divide-y divide-[#F0EDE8]">
-            <!-- Dynamically populated by JS -->
-          </tbody>
-        </table>
-        <div id="empty-error-msg" class="text-center py-8 text-[#A39E93] text-xs">
-          暂无错题记录。在上方表格添加练习中的错题，进行深度攻坚！
-        </div>
-      </div>
-
-    </div>
-
   </main>
 
   <!-- Toast Notification -->
-  <div id="toast-notification" class="fixed bottom-6 right-6 z-50 bg-[#2D312E] text-white px-4 py-3 rounded-2xl shadow-xl flex items-center space-x-3 translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
-    <i class="fa-solid fa-circle-notch fa-spin text-sm text-[#8A9A86]" id="toast-icon"></i>
+  <div id="toast-notification" class="fixed bottom-6 right-6 z-50 bg-[#23272F] text-white px-4 py-3 rounded-2xl shadow-xl flex items-center space-x-3 translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <i class="fa-solid fa-circle-notch fa-spin text-sm text-[#1D8A58]" id="toast-icon"></i>
     <span class="text-xs font-medium" id="toast-msg">正在处理中...</span>
   </div>
 
@@ -589,12 +426,8 @@
     let currentStage = 'all';
     let currentSkill = 'all';
     let searchQuery = '';
-    
-    // Local Storage Data
-    let completedItems = JSON.parse(localStorage.getItem('ielts_master_completed') || '[]');
-    let errorLogs = JSON.parse(localStorage.getItem('ielts_master_error_matrix') || '[]');
 
-    // Master Roadmap Data - Covering all 4 stages & 4 skills completely
+    // Master Roadmap Data - All 16 Modules Across 4 Stages Completely Intact
     const roadmapMasterData = [
       // ================= STAGE 1: 5.0 -> 5.5 =================
       {
@@ -825,7 +658,7 @@
           en: 'Categorize errors into A. Synonym Missed, B. Over-inference, C. Syntax Misread.' 
         },
         steps: [
-          { zh: '把错题精准定位至原文对应句并写在错题矩阵中', en: 'Log exact target sentence into Error Log Matrix' },
+          { zh: '把错题精准定位至原文对应句并进行分析', en: 'Locate exact target sentence in text for root cause analysis' },
           { zh: '整理题目词与原文词的 3 列同义替换 (Paraphrase) 表', en: 'Build a 3-column paraphrase notebook for missed answers' }
         ]
       },
@@ -973,7 +806,7 @@
     // Internationalization (i18n) Dictionary
     const i18nDict = {
       zh: {
-        appTitle: 'IELTS Master Roadmap & AI Studio',
+        appTitle: 'IELTS AI Studio',
         appSubtitle: '雅思高效习得路线图与 AI 智能辅导工作室',
         searchPlaceholder: '搜索关键词 / 平台 / 方法...',
         exportPng: '导出图片',
@@ -981,12 +814,6 @@
         navRoadmap: '备考路线图 & 模块',
         navTheory: '科学习得理论基础',
         navAiStudio: 'AI 导师 & Prompts 工作室',
-        navErrorMatrix: '我的进度 & 错题矩阵',
-        methodBannerTag: 'Krashen i+1 & Swain 受迫输出',
-        progressSummary: '已完成 {completed} / {total} 项关键任务',
-        bannerHeading: '循序渐进 · 5.0 至 7.0+ 雅思全维度习得方案',
-        bannerSubheading: '融合听、说、读、写四大技能契合阶段的 $i+1$ 语料与嵌合式科学方法',
-        progressLabel: '总体备考完成度',
         filterStageLabel: '目标阶段:',
         filterSkillLabel: '技能模块:',
         allStages: '全部阶段',
@@ -1015,11 +842,10 @@
         },
         toastExportPng: '正在生成高清图片，请稍候...',
         toastExportPdf: '正在生成 PDF 文档，请稍候...',
-        toastAiRunning: 'Gemini AI 考官正在生成精批报告...',
-        toastErrorSaved: '已成功保存至错题矩阵！'
+        toastAiRunning: 'Gemini AI 考官正在生成精批报告...'
       },
       en: {
-        appTitle: 'IELTS Master Roadmap & AI Studio',
+        appTitle: 'IELTS AI Studio',
         appSubtitle: 'Scientific Acquisition Roadmap & AI Tutoring Studio',
         searchPlaceholder: 'Search materials / platforms / methods...',
         exportPng: 'Export PNG',
@@ -1027,12 +853,6 @@
         navRoadmap: 'Roadmap & Modules',
         navTheory: 'Acquisition Science',
         navAiStudio: 'AI Coach & Prompts',
-        navErrorMatrix: 'Progress & Error Matrix',
-        methodBannerTag: 'Krashen i+1 & Swain Pushed Output',
-        progressSummary: 'Completed {completed} / {total} Core Tasks',
-        bannerHeading: 'Step-by-Step · Band 5.0 to 7.0+ Acquisition Plan',
-        bannerSubheading: 'Integrating targeted $i+1$ materials with embedded scientific SLA methods.',
-        progressLabel: 'Overall Progress',
         filterStageLabel: 'Target Stage:',
         filterSkillLabel: 'Skill Category:',
         allStages: 'All Stages',
@@ -1056,25 +876,21 @@
         stageSubtitles: {
           '5.0-5.5': 'Core: Fix phonetic linkings; build sound-form for 3,000 words & narrow reading.',
           '5.5-6.0': 'Core: General to academic transition; Cornell notes & STAR/CARE frameworks.',
-          '6.0-6.5': 'Core: Complex syntax stripping; force oral summaries & error matrix.',
+          '6.0-6.5': 'Core: Complex syntax stripping; force oral summaries & error log.',
           '6.5-7.0': 'Core: Immerse in top editorials; Ludwig collocations & fatigue simulation.'
         },
         toastExportPng: 'Generating high-res image...',
         toastExportPdf: 'Generating PDF document...',
-        toastAiRunning: 'Gemini AI Examiner is generating your report...',
-        toastErrorSaved: 'Successfully saved to Error Matrix!'
+        toastAiRunning: 'Gemini AI Examiner is generating your report...'
       }
     };
 
-    // DOM Cache
+    // DOM Elements
     const appContainer = document.getElementById('app-container');
     const stagesGrid = document.getElementById('stages-grid');
     const emptyState = document.getElementById('empty-state');
     const searchInput = document.getElementById('search-input');
     const langToggleBtn = document.getElementById('lang-toggle-btn');
-    const progressSummaryText = document.getElementById('progress-summary-text');
-    const progressPercentText = document.getElementById('progress-percent');
-    const progressBarInner = document.getElementById('progress-bar-inner');
     const toastNotification = document.getElementById('toast-notification');
     const toastMsg = document.getElementById('toast-msg');
 
@@ -1091,12 +907,6 @@
       document.getElementById('nav-roadmap-text').textContent = texts.navRoadmap;
       document.getElementById('nav-theory-text').textContent = texts.navTheory;
       document.getElementById('nav-aistudio-text').textContent = texts.navAiStudio;
-      document.getElementById('nav-errormatrix-text').textContent = texts.navErrorMatrix;
-
-      document.getElementById('method-banner-tag').textContent = texts.methodBannerTag;
-      document.getElementById('banner-heading').textContent = texts.bannerHeading;
-      document.getElementById('banner-subheading').textContent = texts.bannerSubheading;
-      document.getElementById('progress-label').textContent = texts.progressLabel;
 
       document.getElementById('filter-stage-label').textContent = texts.filterStageLabel;
       document.getElementById('filter-skill-label').textContent = texts.filterSkillLabel;
@@ -1114,46 +924,7 @@
       document.querySelectorAll('.skill-name-writing').forEach(el => el.textContent = texts.skillWriting);
 
       renderRoadmap();
-      updateProgressStats();
-      renderErrorLogsTable();
       updateDefaultAiPromptText();
-    }
-
-    // Calculate and update progress numbers
-    function updateProgressStats() {
-      const total = roadmapMasterData.length;
-      const completed = completedItems.length;
-      const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
-
-      const summaryStr = i18nDict[currentLang].progressSummary
-        .replace('{completed}', completed)
-        .replace('{total}', total);
-
-      progressSummaryText.textContent = summaryStr;
-      progressPercentText.textContent = `${percent}%`;
-      progressBarInner.style.width = `${percent}%`;
-
-      document.getElementById('stat-tasks-done').textContent = `${completed} / ${total}`;
-    }
-
-    // Toggle Checkbox Item
-    function toggleItemCompletion(itemId) {
-      if (completedItems.includes(itemId)) {
-        completedItems = completedItems.filter(id => id !== itemId);
-      } else {
-        completedItems.push(itemId);
-      }
-      localStorage.setItem('ielts_master_completed', JSON.stringify(completedItems));
-      
-      const card = document.querySelector(`.item-card[data-id="${itemId}"]`);
-      if (card) {
-        if (completedItems.includes(itemId)) {
-          card.classList.add('completed');
-        } else {
-          card.classList.remove('completed');
-        }
-      }
-      updateProgressStats();
     }
 
     // Main Renderer for Roadmap Cards
@@ -1190,16 +961,16 @@
         const stageSubText = i18nDict[currentLang].stageSubtitles[stageKey];
 
         stageSection.innerHTML = `
-          <div class="mb-5 pb-3 border-b border-[#F0EDE8] flex flex-col md:flex-row md:items-center justify-between gap-2">
+          <div class="mb-5 pb-3 border-b border-[#F5F0EA] flex flex-col md:flex-row md:items-center justify-between gap-2">
             <div>
-              <h3 class="text-base font-bold text-[#2D312E] flex items-center">
-                <span class="w-2.5 h-2.5 rounded-full bg-[#8A9A86] mr-2 inline-block"></span>
+              <h3 class="text-base font-bold text-[#23272F] flex items-center">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#1D8A58] mr-2 inline-block"></span>
                 ${stageTitleText}
               </h3>
-              <p class="text-xs text-[#7A756C] mt-0.5">${stageSubText}</p>
+              <p class="text-xs text-[#646E78] mt-0.5">${stageSubText}</p>
             </div>
-            <span class="text-xs font-semibold px-2.5 py-1 rounded-xl bg-[#F8F7F4] border border-[#E6E3DD] text-[#6E685E] self-start md:self-auto">
-              ${stageItems.length} ${currentLang === 'zh' ? '项技能突破卡' : 'Modules'}
+            <span class="text-xs font-semibold px-2.5 py-1 rounded-xl bg-[#FAF8F5] border border-[#E2DCD5] text-[#646E78] self-start md:self-auto">
+              ${stageItems.length} ${currentLang === 'zh' ? '项技能模块' : 'Modules'}
             </span>
           </div>
 
@@ -1220,7 +991,6 @@
 
     // Helper to generate Card HTML
     function createItemCardHTML(item) {
-      const isDone = completedItems.includes(item.id);
       const title = item.title[currentLang];
       const platform = item.platform[currentLang];
       const tag = item.tag[currentLang];
@@ -1236,52 +1006,51 @@
       if (item.skill === 'writing') { iconClass = 'fa-pen-nib'; methodBoxClass = 'method-box-writing'; }
 
       return `
-        <div class="item-card bg-[#FAF9F7] rounded-xl p-4 sm:p-5 border border-[#EBE8E1] hover:border-[#D0C9BD] transition flex flex-col justify-between ${isDone ? 'completed' : ''}" data-id="${item.id}">
+        <div class="item-card bg-[#FAF8F5] rounded-xl p-4 sm:p-5 border border-[#ECE7E0] hover:border-[#CBD5E1] transition flex flex-col justify-between" data-id="${item.id}">
           <div>
-            <!-- Top Tag & Checkbox -->
+            <!-- Top Tag -->
             <div class="flex items-center justify-between mb-2.5">
               <span class="px-2.5 py-0.5 text-[11px] font-semibold rounded-md tag-${item.tagColor} flex items-center">
                 <i class="fa-solid ${iconClass} text-[10px] mr-1.5"></i>${tag}
               </span>
-              <input type="checkbox" class="custom-checkbox" ${isDone ? 'checked' : ''} onclick="toggleItemCompletion('${item.id}')" title="标记为已学通">
             </div>
 
             <!-- Title & Platform Link -->
-            <h4 class="card-title text-sm sm:text-base font-bold text-[#2D312E] leading-snug mb-1">${title}</h4>
+            <h4 class="card-title text-sm sm:text-base font-bold text-[#23272F] leading-snug mb-1">${title}</h4>
             
-            <div class="flex items-center text-xs text-[#7A756C] mb-3 font-medium">
-              <i class="fa-solid fa-link text-[10px] mr-1.5 text-[#A39E93]"></i>
+            <div class="flex items-center text-xs text-[#646E78] mb-3 font-medium">
+              <i class="fa-solid fa-link text-[10px] mr-1.5 text-[#A0AAB2]"></i>
               <span class="truncate max-w-[220px]">${platform}</span>
               ${item.url ? `
-                <a href="${item.url}" target="_blank" rel="noopener" class="ml-1.5 text-[#4A5B4C] hover:underline flex items-center no-export" title="${i18nDict[currentLang].visitPlatform}">
+                <a href="${item.url}" target="_blank" rel="noopener" class="ml-1.5 text-[#1E64D4] hover:underline flex items-center no-export" title="${i18nDict[currentLang].visitPlatform}">
                   <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                 </a>
               ` : ''}
             </div>
 
             <!-- Description -->
-            <p class="text-xs text-[#524E48] leading-relaxed mb-3">${description}</p>
+            <p class="text-xs text-[#4E5660] leading-relaxed mb-3">${description}</p>
 
             <!-- EMBEDDED RECOMMENDED METHOD CALLOUT BOX -->
             <div class="${methodBoxClass} p-3 rounded-r-xl mb-3">
-              <div class="flex items-center text-xs font-bold text-[#2D312E] mb-1">
-                <i class="fa-solid fa-lightbulb text-[11px] mr-1.5 text-[#8A9A86]"></i>
+              <div class="flex items-center text-xs font-bold text-[#23272F] mb-1">
+                <i class="fa-solid fa-lightbulb text-[11px] mr-1.5 text-[#C27803]"></i>
                 <span>${methodTitle}</span>
               </div>
-              <p class="text-[11px] text-[#4A463F] leading-normal">${methodDesc}</p>
+              <p class="text-[11px] text-[#4E5660] leading-normal">${methodDesc}</p>
             </div>
           </div>
 
           <!-- Action Steps -->
           ${steps.length > 0 ? `
-            <div class="pt-2.5 border-t border-[#EFECE6] text-[11px] text-[#6E685E] space-y-1">
-              <div class="font-semibold text-[#4A463F] mb-1 flex items-center">
-                <i class="fa-solid fa-[#list-check] text-[10px] mr-1.5 text-[#8A9A86]"></i>
+            <div class="pt-2.5 border-t border-[#EAE3DA] text-[11px] text-[#646E78] space-y-1">
+              <div class="font-semibold text-[#23272F] mb-1 flex items-center">
+                <i class="fa-solid fa-list-check text-[10px] mr-1.5 text-[#1D8A58]"></i>
                 ${i18nDict[currentLang].actionStepsLabel}
               </div>
               ${steps.map(step => `
                 <div class="flex items-start">
-                  <span class="inline-block w-1.5 h-1.5 rounded-full bg-[#A39E93] mt-1.5 mr-2 flex-shrink-0"></span>
+                  <span class="inline-block w-1.5 h-1.5 rounded-full bg-[#A0AAB2] mt-1.5 mr-2 flex-shrink-0"></span>
                   <span class="leading-tight">${step[currentLang]}</span>
                 </div>
               `).join('')}
@@ -1316,6 +1085,18 @@
       document.getElementById('prompt-output-code').value = generated;
     }
 
+    // Toast Message Helper
+    function showToast(msg) {
+      toastMsg.textContent = msg;
+      toastNotification.classList.remove('translate-y-20', 'opacity-0');
+      toastNotification.classList.add('translate-y-0', 'opacity-100');
+    }
+
+    function hideToast() {
+      toastNotification.classList.remove('translate-y-0', 'opacity-100');
+      toastNotification.classList.add('translate-y-20', 'opacity-0');
+    }
+
     // Execute Gemini API call for Live AI Coach Evaluation
     async function runLiveAiEvaluation() {
       const promptText = document.getElementById('prompt-output-code').value;
@@ -1328,11 +1109,11 @@
       spinner.classList.remove('hidden');
       reportContainer.innerHTML = '';
       badge.textContent = '分析中...';
-      badge.className = 'px-2.5 py-0.5 text-[10px] font-semibold rounded-md bg-[#FAF4E8] text-[#78622E]';
+      badge.className = 'px-2.5 py-0.5 text-[10px] font-semibold rounded-md bg-[#FFF9E6] text-[#C27803]';
 
       showToast(i18nDict[currentLang].toastAiRunning);
 
-      const apiKey = ""; // Canvas runtime supplies API Key
+      const apiKey = ""; // Runtime automatically injects API Key if available
       const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
 
       const payload = {
@@ -1342,7 +1123,6 @@
         }
       };
 
-      // Exponential backoff helper
       async function fetchWithRetry(url, options, maxRetries = 3) {
         let delay = 1000;
         for (let i = 0; i < maxRetries; i++) {
@@ -1370,9 +1150,8 @@
 
         if (candidateText) {
           badge.textContent = '精批完成';
-          badge.className = 'px-2.5 py-0.5 text-[10px] font-semibold rounded-md bg-[#EBF0EC] text-[#4A5B4C]';
+          badge.className = 'px-2.5 py-0.5 text-[10px] font-semibold rounded-md bg-[#EAF7F0] text-[#1D8A58]';
           
-          // Simple Markdown renderer
           let htmlResult = candidateText
             .replace(/^### (.*$)/gim, '<h3>$1</h3>')
             .replace(/^## (.*$)/gim, '<h3>$1</h3>')
@@ -1388,11 +1167,11 @@
         }
       } catch (err) {
         console.error('AI Error:', err);
-        badge.textContent = '请求失败';
-        badge.className = 'px-2.5 py-0.5 text-[10px] font-semibold rounded-md bg-[#F9EFEF] text-[#7A4B4A]';
+        badge.textContent = '建议使用复制功能';
+        badge.className = 'px-2.5 py-0.5 text-[10px] font-semibold rounded-md bg-[#FFF2EF] text-[#E04832]';
         reportContainer.innerHTML = `
-          <div class="p-4 bg-[#F9EFEF] border border-[#EBD5D4] rounded-xl text-[#7A4B4A]">
-            <p><b>生成失败：</b> 无法连接至 AI 考官模型。请点击“复制 Prompt”按钮，将其直接粘贴至 ChatGPT 或 Gemini Web 端使用。</p>
+          <div class="p-4 bg-[#FFF2EF] border border-[#FCD3C9] rounded-xl text-[#E04832]">
+            <p><b>生成提示：</b> 点击上方的“复制 Prompt”按钮，直接将生成好的考官级 Prompt 粘贴至 ChatGPT、Gemini 或 Claude 中即可获得精准回复！</p>
           </div>
         `;
       } finally {
@@ -1401,184 +1180,60 @@
       }
     }
 
-    // Render Saved Error Log Matrix Table
-    function renderErrorLogsTable() {
-      const tbody = document.getElementById('error-matrix-tbody');
-      const emptyMsg = document.getElementById('empty-error-msg');
-      tbody.innerHTML = '';
+    // Initialization & Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
 
-      if (errorLogs.length === 0) {
-        emptyMsg.classList.remove('hidden');
-        document.getElementById('stat-error-count').textContent = '0';
-        document.getElementById('stat-top-reason').textContent = '-';
-        return;
-      }
-
-      emptyMsg.classList.add('hidden');
-      document.getElementById('stat-error-count').textContent = errorLogs.length;
-
-      // Calculate top error category
-      const counts = {};
-      errorLogs.forEach(log => { counts[log.type] = (counts[log.type] || 0) + 1; });
-      let topType = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b, '');
-      const typeMap = { synonym: '同义替换未识', logic: '逻辑过度推导', syntax: '长难句剥离失误', phonetics: '连读吞音偏差', collocation: '搭配不地道' };
-      document.getElementById('stat-top-reason').textContent = typeMap[topType] || '-';
-
-      errorLogs.forEach((log, index) => {
-        const tr = document.createElement('tr');
-        tr.className = 'hover:bg-[#FAF9F7] transition';
-        tr.innerHTML = `
-          <td class="p-2.5 font-semibold text-[#4A5B4C]">${log.skill.toUpperCase()}</td>
-          <td class="p-2.5 font-medium">${log.source || '-'}</td>
-          <td class="p-2.5"><span class="px-2 py-0.5 text-[10px] font-semibold rounded tag-lavender">${log.typeLabel}</span></td>
-          <td class="p-2.5 text-[#7A756C]">${log.myWrong}</td>
-          <td class="p-2.5 font-medium text-[#2D312E]">${log.correct}</td>
-          <td class="p-2.5 text-right no-export">
-            <button onclick="deleteErrorLog(${index})" class="text-[#7A4B4A] hover:underline text-[11px]">删除</button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function deleteErrorLog(index) {
-      errorLogs.splice(index, 1);
-      localStorage.setItem('ielts_master_error_matrix', JSON.stringify(errorLogs));
-      renderErrorLogsTable();
-    }
-
-    // Toast Helper
-    function showToast(msg) {
-      toastMsg.textContent = msg;
-      toastNotification.classList.remove('translate-y-20', 'opacity-0');
-      toastNotification.classList.add('translate-y-0', 'opacity-100');
-    }
-
-    function hideToast() {
-      toastNotification.classList.remove('translate-y-0', 'opacity-100');
-      toastNotification.classList.add('translate-y-20', 'opacity-0');
-    }
-
-    // PNG Export Function
-    async function exportToPNG() {
-      showToast(i18nDict[currentLang].toastExportPng);
-      document.body.classList.add('exporting');
-
-      try {
-        const canvas = await html2canvas(appContainer, {
-          scale: 2,
-          useCORS: true,
-          backgroundColor: '#F8F7F4',
-          logging: false
-        });
-
-        const image = canvas.toDataURL('image/png');
-        const link = document.createElement('a');
-        link.href = image;
-        link.download = `IELTS_Master_Roadmap_${currentLang.toUpperCase()}.png`;
-        link.click();
-      } catch (err) {
-        console.error('PNG Export Failed:', err);
-      } finally {
-        document.body.classList.remove('exporting');
-        hideToast();
-      }
-    }
-
-    // PDF Export Function
-    async function exportToPDF() {
-      showToast(i18nDict[currentLang].toastExportPdf);
-      document.body.classList.add('exporting');
-
-      try {
-        const { jsPDF } = window.jspdf;
-        const canvas = await html2canvas(appContainer, {
-          scale: 2,
-          useCORS: true,
-          backgroundColor: '#F8F7F4',
-          logging: false
-        });
-
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const imgWidth = 210;
-        const pageHeight = 297;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        let heightLeft = imgHeight;
-        let position = 0;
-
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-
-        while (heightLeft >= 0) {
-          position = heightLeft - imgHeight;
-          pdf.addPage();
-          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-          heightLeft -= pageHeight;
-        }
-
-        pdf.save(`IELTS_Master_Roadmap_${currentLang.toUpperCase()}.pdf`);
-      } catch (err) {
-        console.error('PDF Export Failed:', err);
-      } finally {
-        document.body.classList.remove('exporting');
-        hideToast();
-      }
-    }
-
-    // Initialize All Event Listeners
-    function initEventListeners() {
-      // Search
-      searchInput.addEventListener('input', (e) => {
-        searchQuery = e.target.value;
-        renderRoadmap();
-      });
-
-      // Language Switcher
+      // Language Switcher Event
       langToggleBtn.addEventListener('click', () => {
         currentLang = currentLang === 'zh' ? 'en' : 'zh';
         updateLanguageUI();
       });
 
-      // Tab Buttons
+      // Navigation Tabs Switching
       document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
 
-          const tabId = btn.dataset.tab;
-          document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+          const tabId = btn.getAttribute('data-tab');
+          document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
           document.getElementById(tabId).classList.remove('hidden');
           currentTab = tabId;
         });
       });
 
-      // Stage Filter Buttons
+      // Stage Filters
       document.querySelectorAll('.stage-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('.stage-btn').forEach(b => {
-            b.classList.remove('active', 'tag-sage', 'font-medium');
-            b.classList.add('bg-white', 'text-[#6E685E]');
+            b.classList.remove('active', 'tag-sage');
+            b.classList.add('bg-white', 'border-[#E2DCD5]', 'text-[#646E78]');
           });
-          btn.classList.add('active', 'tag-sage', 'font-medium');
-          btn.classList.remove('bg-white', 'text-[#6E685E]');
-          currentStage = btn.dataset.stage;
+          btn.classList.add('active', 'tag-sage');
+          btn.classList.remove('bg-white', 'border-[#E2DCD5]', 'text-[#646E78]');
+          currentStage = btn.getAttribute('data-stage');
           renderRoadmap();
         });
       });
 
-      // Skill Filter Buttons
+      // Skill Filters
       document.querySelectorAll('.skill-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('.skill-btn').forEach(b => {
-            b.classList.remove('active', 'tag-blue', 'font-medium');
-            b.classList.add('bg-white', 'text-[#6E685E]');
+            b.classList.remove('active', 'tag-blue');
+            b.classList.add('bg-white', 'border-[#E2DCD5]', 'text-[#646E78]');
           });
-          btn.classList.add('active', 'tag-blue', 'font-medium');
-          btn.classList.remove('bg-white', 'text-[#6E685E]');
-          currentSkill = btn.dataset.skill;
+          btn.classList.add('active', 'tag-blue');
+          btn.classList.remove('bg-white', 'border-[#E2DCD5]', 'text-[#646E78]');
+          currentSkill = btn.getAttribute('data-skill');
           renderRoadmap();
         });
+      });
+
+      // Search Box Event
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value;
+        renderRoadmap();
       });
 
       // Reset Filters
@@ -1587,23 +1242,23 @@
         currentSkill = 'all';
         searchQuery = '';
         searchInput.value = '';
-
+        
         document.querySelectorAll('.stage-btn').forEach(b => {
-          b.classList.remove('active', 'tag-sage', 'font-medium');
-          if (b.dataset.stage === 'all') b.classList.add('active', 'tag-sage', 'font-medium');
-          else b.classList.add('bg-white', 'text-[#6E685E]');
+          b.classList.remove('active', 'tag-sage');
+          b.classList.add('bg-white', 'border-[#E2DCD5]', 'text-[#646E78]');
+          if (b.getAttribute('data-stage') === 'all') b.classList.add('active', 'tag-sage');
         });
 
         document.querySelectorAll('.skill-btn').forEach(b => {
-          b.classList.remove('active', 'tag-blue', 'font-medium');
-          if (b.dataset.skill === 'all') b.classList.add('active', 'tag-blue', 'font-medium');
-          else b.classList.add('bg-white', 'text-[#6E685E]');
+          b.classList.remove('active', 'tag-blue');
+          b.classList.add('bg-white', 'border-[#E2DCD5]', 'text-[#646E78]');
+          if (b.getAttribute('data-skill') === 'all') b.classList.add('active', 'tag-blue');
         });
 
         renderRoadmap();
       });
 
-      // AI Studio Prompt Form Events
+      // AI Prompt Configurator Inputs Event
       document.getElementById('prompt-preset-select').addEventListener('change', updateDefaultAiPromptText);
       document.querySelectorAll('input[name="targetBand"]').forEach(r => r.addEventListener('change', updateDefaultAiPromptText));
       document.getElementById('input-topic').addEventListener('input', updateDefaultAiPromptText);
@@ -1615,66 +1270,62 @@
         setTimeout(hideToast, 1500);
       });
 
+      // Copy Prompt Button
+      document.getElementById('copy-prompt-btn').addEventListener('click', () => {
+        const promptCode = document.getElementById('prompt-output-code').value;
+        if (!promptCode) return;
+        navigator.clipboard.writeText(promptCode).then(() => {
+          showToast('Prompt 已成功复制到剪贴板！');
+          setTimeout(hideToast, 2000);
+        });
+      });
+
+      // Run AI Evaluation
       document.getElementById('run-ai-btn').addEventListener('click', runLiveAiEvaluation);
 
-      // Copy Prompt Code
-      document.getElementById('copy-prompt-btn').addEventListener('click', () => {
-        const codeText = document.getElementById('prompt-output-code').value;
-        const tempTex = document.createElement('textarea');
-        tempTex.value = codeText;
-        document.body.appendChild(tempTex);
-        tempTex.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempTex);
-
-        showToast('Prompt 代码已复制至剪贴板！');
-        setTimeout(hideToast, 2000);
-      });
-
-      // Add Error Entry Form
-      document.getElementById('add-error-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const skill = document.getElementById('err-input-skill').value;
-        const source = document.getElementById('err-input-source').value;
-        const typeSelect = document.getElementById('err-input-type');
-        const type = typeSelect.value;
-        const typeLabel = typeSelect.options[typeSelect.selectedIndex].text;
-        const myWrong = document.getElementById('err-input-mywrong').value;
-        const correct = document.getElementById('err-input-correct').value;
-
-        if (!myWrong || !correct) return;
-
-        errorLogs.unshift({ skill, source, type, typeLabel, myWrong, correct });
-        localStorage.setItem('ielts_master_error_matrix', JSON.stringify(errorLogs));
-        
-        document.getElementById('err-input-source').value = '';
-        document.getElementById('err-input-mywrong').value = '';
-        document.getElementById('err-input-correct').value = '';
-
-        renderErrorLogsTable();
-        showToast(i18nDict[currentLang].toastErrorSaved);
-        setTimeout(hideToast, 1500);
-      });
-
-      // Clear all errors
-      document.getElementById('clear-errors-btn').addEventListener('click', () => {
-        if (confirm('确定要清空所有错题归因记录吗？')) {
-          errorLogs = [];
-          localStorage.setItem('ielts_master_error_matrix', JSON.stringify(errorLogs));
-          renderErrorLogsTable();
+      // Export PNG
+      document.getElementById('export-png-btn').addEventListener('click', async () => {
+        showToast(i18nDict[currentLang].toastExportPng);
+        document.body.classList.add('exporting');
+        try {
+          const canvas = await html2canvas(appContainer, { scale: 2, useCORS: true, backgroundColor: '#FAF8F5' });
+          const link = document.createElement('a');
+          link.download = 'IELTS_AI_Studio_Roadmap.png';
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+        } catch (err) {
+          console.error(err);
+        } finally {
+          document.body.classList.remove('exporting');
+          hideToast();
         }
       });
 
-      // Exports
-      document.getElementById('export-png-btn').addEventListener('click', exportToPNG);
-      document.getElementById('export-pdf-btn').addEventListener('click', exportToPDF);
-    }
+      // Export PDF
+      document.getElementById('export-pdf-btn').addEventListener('click', async () => {
+        showToast(i18nDict[currentLang].toastExportPdf);
+        document.body.classList.add('exporting');
+        try {
+          const canvas = await html2canvas(appContainer, { scale: 1.5, useCORS: true, backgroundColor: '#FAF8F5' });
+          const imgData = canvas.toDataURL('image/jpeg', 0.95);
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF('p', 'mm', 'a4');
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+          pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+          pdf.save('IELTS_AI_Studio_Roadmap.pdf');
+        } catch (err) {
+          console.error(err);
+        } finally {
+          document.body.classList.remove('exporting');
+          hideToast();
+        }
+      });
 
-    // App Initialize
-    window.onload = function() {
-      initEventListeners();
+      // Initial Render
       updateLanguageUI();
-    };
+    });
+
   </script>
 </body>
 </html>
