@@ -48,7 +48,7 @@
     <!-- Header Navigation -->
     <header class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-[var(--border-color)] bg-[var(--bg-primary)]/80">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-2 text-sm font-semibold hover:text-[var(--accent-color)] transition-colors">
+            <a href="javascript:void(0)" onclick="if(document.referrer.includes('index.html')){ history.back(); } else { window.location.href='index.html#cases'; }" class="flex items-center gap-2 text-sm font-semibold hover:text-[var(--accent-color)] transition-colors">
                 <i data-lucide="arrow-left" class="w-4 h-4"></i>
                 <span data-en="Back to Overview" data-zh="返回主页概览">Back to Overview</span>
             </a>
