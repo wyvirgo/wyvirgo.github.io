@@ -1,43 +1,664 @@
 <!DOCTYPE html>
-<html lang="zh">
-
+<html lang="en" data-theme="light">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
-    <title>木可&三土</title>
-    <link rel="stylesheet" type="text/css" href="./static/css/style.css">
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yao Wang | Digital Media Strategist & Spatial Storyteller</title>
+    <meta name="description" content="Digital Media Leadership, Spatial Storytelling & AIGC Innovation. AUT Master of Communication Studies Candidate.">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F5F5F7;
+            --text-primary: #1D1D1F;
+            --text-secondary: #86868B;
+            --accent-color: #0066CC;
+            --border-color: rgba(0,0,0,0.06);
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
 
-<body cz-shortcut-listen="true">
-    <div>
-        <div class="topnav">
-            <ul style="float: right">
-                <li><a href="./inputcontainer.html">We</a></li>
-                <li><a href="#">WeSee</a>
-                    <ul>
-                        <li><a href="./Auckland_English_Hub.html">Auckland English Hub</a></li>
-                        <li><a href="./IELTS_AI_Studio.html">IELTS AI Studio</a></li>
-                        <li><a href="#">云南</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">WeDo</a>
-                    <ul>
-                        <li><a href="#">Design</a></li>
-                        <li><a href="#">Editor</a></li>
-                    </ul>
-                </li>
-                <li><a href="loadtext.html">WeChat</a></li>
-            </ul>
+        [data-theme="dark"] {
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --accent-color: #38BDF8;
+            --border-color: #334155;
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .bg-custom-primary { background-color: var(--bg-primary); }
+        .bg-custom-secondary { background-color: var(--bg-secondary); }
+        .text-custom-primary { color: var(--text-primary); }
+        .text-custom-secondary { color: var(--text-secondary); }
+        .text-accent { color: var(--accent-color); }
+        .border-custom { border-color: var(--border-color); }
+        .card-shadow { box-shadow: var(--card-shadow); }
+
+        .glass-nav {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-sky-500 selection:text-white">
+
+    <!-- 1. Navigation Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-custom bg-custom-primary/80">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="text-xl font-bold tracking-tight flex items-center gap-2">
+                <span class="text-accent">YAO WANG</span>
+                <span class="text-xs px-2 py-0.5 rounded-full border border-custom text-custom-secondary font-normal">Media Innovator</span>
+            </a>
+
+            <!-- Navigation Links (Updated Order) -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="#cases" class="hover:text-accent" data-en="Cases" data-zh="精选案例">Cases</a>
+                <a href="#insights" class="hover:text-accent" data-en="Insights" data-zh="学术与洞察">Insights</a>
+                <a href="#awards" class="hover:text-accent" data-en="Awards" data-zh="荣誉奖项">Awards</a>
+                <a href="#about" class="hover:text-accent" data-en="About & CV" data-zh="关于&简历">About & CV</a>
+                <a href="#contact" class="hover:text-accent" data-en="Contact" data-zh="联系方式">Contact</a>
+                <a href="#tools" class="hover:text-accent" data-en="Tools" data-zh="实用工具">Tools</a>
             </nav>
+
+            <div class="flex items-center gap-4">
+                <button id="langToggleBtn" onclick="toggleLanguage()" class="px-3 py-1.5 rounded-full border border-custom text-xs font-semibold hover:border-sky-500 transition-all flex items-center gap-1">
+                    <i data-lucide="globe" class="w-3.5 h-3.5"></i>
+                    <span id="currentLangLabel">EN / 中</span>
+                </button>
+
+                <button onclick="toggleTheme()" class="p-2 rounded-full border border-custom hover:border-sky-500 transition-all" title="Toggle Light/Dark Theme">
+                    <i id="themeIcon" data-lucide="sun" class="w-4 h-4 text-accent"></i>
+                </button>
+
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-custom-primary">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
         </div>
-        <div class="index-word">
-            <ul class="welcome-word">
-                <li>好的爱情</li>
-                <li>让一切通向彼此</li>
-                <li>让我们成为自己</li>
-            </ul>
+
+        <div id="mobileMenu" class="hidden md:hidden border-b border-custom bg-custom-primary px-6 py-4 flex flex-col gap-4 text-sm font-medium">
+            <a href="#cases" onclick="toggleMobileMenu()" data-en="Cases" data-zh="精选案例">Cases</a>
+            <a href="#insights" onclick="toggleMobileMenu()" data-en="Insights" data-zh="学术与洞察">Insights</a>
+            <a href="#awards" onclick="toggleMobileMenu()" data-en="Awards" data-zh="荣誉奖项">Awards</a>
+            <a href="#about" onclick="toggleMobileMenu()" data-en="About & CV" data-zh="关于&简历">About & CV</a>
+            <a href="#contact" onclick="toggleMobileMenu()" data-en="Contact" data-zh="联系方式">Contact</a>
+            <a href="#tools" onclick="toggleMobileMenu()" data-en="Tools" data-zh="实用工具">Tools</a>
+        </div>
+    </header>
+
+    <!-- 2. Hero Section (Updated Tagline) -->
+    <section class="pt-36 pb-20 px-6 max-w-7xl mx-auto w-full flex flex-col items-start justify-center min-h-[85vh]">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-custom bg-custom-secondary text-xs font-medium mb-8">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span data-en="Auckland, NZ | AUT Master Student | Valid Work Rights" data-zh="新西兰奥克兰 | AUT 在读硕士 | 具备合法工作权">Auckland, NZ | AUT Master Student | Valid Work Rights</span>
+        </div>
+
+        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6">
+            <span data-en="Bridging Asia-Pacific Digital Media Mastery with " data-zh="连接亚太数字媒体前沿实操与">
+                Bridging Asia-Pacific Digital Media Mastery with
+            </span>
+            <!-- Merged "the future / 未来" into the accent colored visual unit -->
+            <span class="text-sky-500 font-extrabold" data-en="the Future of Spatial Storytelling & AIGC Innovation." data-zh="未来空间叙事及 AIGC 创新。">
+                the Future of Spatial Storytelling & AIGC Innovation.
+            </span>
+        </h1>
+
+        <p class="text-lg md:text-xl text-custom-secondary max-w-3xl leading-relaxed mb-10" data-en="Former Executive Producer at Zhilu Media and Operations Manager at CCTV.COM. Synthesizing commercial leadership, spatial visual engineering, and emerging AI workflows for global brands and creative enterprises." data-zh="前知路传媒执行制片人、央视网运营经理。融合商业领导力、空间视觉工程与前沿 AI 工作流，为全球品牌与文化科技创新赋能。">
+            Former Executive Producer at Zhilu Media and Operations Manager at CCTV.COM. Synthesizing commercial leadership, spatial visual engineering, and emerging AI workflows for global brands and creative enterprises.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-4">
+            <a href="#cases" class="px-8 py-4 rounded-xl bg-sky-600 hover:bg-sky-500 !text-white font-semibold text-sm transition-all shadow-lg hover:shadow-sky-500/25 flex items-center gap-2">
+                <span data-en="View Selected Cases" data-zh="浏览精选案例">View Selected Cases</span>
+                <i data-lucide="arrow-down-right" class="w-4 h-4"></i>
+            </a>
+            <a href="#contact" class="px-8 py-4 rounded-xl border border-custom bg-custom-secondary hover:border-sky-500 text-custom-primary font-semibold text-sm transition-all flex items-center gap-2">
+                <span data-en="Get in Touch" data-zh="立即取得联系">Get in Touch</span>
+                <i data-lucide="mail" class="w-4 h-4"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- 3. Selected Cases Section (Image Placeholders & Replaced Case 02) -->
+    <section id="cases" class="py-24 px-6 max-w-7xl mx-auto w-full border-t border-custom">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+            <div>
+                <h2 class="text-xs font-bold text-accent uppercase tracking-widest mb-3" data-en="Case Studies" data-zh="商业实操案例">Case Studies</h2>
+                <h3 class="text-3xl md:text-4xl font-bold" data-en="Featured Projects & Commercial Systems" data-zh="精选商业项目与空间系统">Featured Projects & Commercial Systems</h3>
+            </div>
+            <p class="text-sm text-custom-secondary max-w-md" data-en="Click any project to launch its interactive Web-based Pitch Deck detailing strategy, architecture, and ROI." data-zh="点击任意项目即可进入专属的“网页式 PPT 宣讲页”，直观拆解商业逻辑、技术架构与量化产出。">
+                Click any project to launch its interactive Web-based Pitch Deck detailing strategy, architecture, and ROI.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Case 01 Card in index.html -->
+            <a href="deck.html?id=5d-cave" class="group block rounded-2xl bg-custom-secondary border border-custom card-shadow hover:border-sky-500 transition-all overflow-hidden">
+                <div class="w-full h-52 bg-slate-900 flex items-center justify-center text-xs text-custom-secondary relative overflow-hidden border-b border-custom">
+                    <span class="z-10 font-mono text-sky-400">[ Case Cover: 122m² CAVE 5-Fold LED System ]</span>
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+                </div>
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="px-3 py-1 rounded-full border border-custom text-xs font-mono text-accent">Case 01 / Spatial Tech</span>
+                        <span class="text-xs text-custom-secondary flex items-center gap-1 group-hover:text-accent">
+                            <span data-en="Launch Slide Deck" data-zh="开启宣讲 Deck">Launch Slide Deck</span>
+                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                        </span>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-3 group-hover:text-accent transition-colors" data-en="Urban TOD: CAVE 5-Fold Glasses-Free 3D System" data-zh="《城市 TOD》CAVE 5折幕沉浸式裸眼 3D 系统">Urban TOD: CAVE 5-Fold Glasses-Free 3D System</h4>
+                    <p class="text-sm text-custom-secondary leading-relaxed mb-6" data-en="Led spatial narrative & rendering pipeline for CUC XR Lab's 122m² 5-fold LED system. Re-engineered 8K-to-5K rendering output and deployed at CIFTIS (服贸会) & Beijing Urban Construction Group." data-zh="主导中国传媒大学未来影像研究中心 122㎡ 五折幕 LED 系统《城市 TOD》制作。突破 8K 至 5K 渲染播控解算瓶颈，并作为服贸会网红体验舱及北京城建展厅成功落地。">
+                        Led spatial narrative & rendering pipeline for CUC XR Lab's 122m² 5-fold LED system. Re-engineered 8K-to-5K rendering output and deployed at CIFTIS (服贸会) & Beijing Urban Construction Group.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2.5 py-1 rounded-md text-xs bg-custom-primary text-custom-secondary border border-custom">CUC XR Lab</span>
+                        <span class="px-2.5 py-1 rounded-md text-xs bg-custom-primary text-custom-secondary border border-custom">8K to 5K Pipeline</span>
+                        <span class="px-2.5 py-1 rounded-md text-xs bg-custom-primary text-custom-secondary border border-custom">CIFTIS Deployment</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Case 2 (Replaced: 5D Flying Cinema Commercial Attraction) -->
+            <a href="deck.html?id=flying-theater" class="group block rounded-2xl bg-custom-secondary border border-custom card-shadow hover:border-sky-500 transition-all overflow-hidden">
+                <div class="w-full h-48 bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-xs text-custom-secondary relative overflow-hidden border-b border-custom">
+                    <span class="z-10 font-mono">[ Case Image Placeholder: 5D Flying Cinema ]</span>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                </div>
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="px-3 py-1 rounded-full border border-custom text-xs font-mono text-accent">Case 02 / Cultural Tourism</span>
+                        <span class="text-xs text-custom-secondary flex items-center gap-1 group-hover:text-accent">
+                            <span data-en="Launch Deck" data-zh="开启宣讲 PPT">Launch Deck</span>
+                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                        </span>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-3 group-hover:text-accent transition-colors" data-en="5D Flying Theater: 'Flying Over Xiangdong'" data-zh="5D 动态飞行影院《飞越湘东》">5D Flying Theater: 'Flying Over Xiangdong'</h4>
+                    <p class="text-sm text-custom-secondary leading-relaxed mb-6" data-en="Project Leader for a landmark cultural tourism 5D immersive flight-experience film in Pingxiang City. Coordinated multi-disciplinary teams across motion sync and visual narrative." data-zh="萍乡市重点文旅 5D 飞行体验影片项目负责人。统筹跨学科团队完成动态座椅同步、视觉叙事与现场工程落地，上线后成为当地核心文旅标杆。">
+                        Project Leader for a landmark cultural tourism 5D immersive flight-experience film in Pingxiang City. Coordinated multi-disciplinary teams across motion sync and visual narrative.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2.5 py-1 rounded-md text-xs bg-custom-primary text-custom-secondary border border-custom">5D Flying Cinema</span>
+                        <span class="px-2.5 py-1 rounded-md text-xs bg-custom-primary text-custom-secondary border border-custom">Cultural Tourism</span>
+                        <span class="px-2.5 py-1 rounded-md text-xs bg-custom-primary text-custom-secondary border border-custom">Motion Sync</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Case 3 -->
+            <a href="deck.html?id=digital-marketing" class="group block rounded-2xl bg-custom-secondary border border-custom card-shadow hover:border-sky-500 transition-all overflow-hidden">
+                <div class="w-full h-48 bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-xs text-custom-secondary relative overflow-hidden border-b border-custom">
+                    <span class="z-10 font-mono">[ Case Image Placeholder: Content Matrix ]</span>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                </div>
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="px-3 py-1 rounded-full border border-custom text-xs font-mono text-accent">Case 03 / Growth & Matrix</span>
+                        <span class="text-xs text-custom-secondary flex items-center gap-1 group-hover:text-accent">
+                            <span data-en="Launch Deck" data-zh="开启宣讲 PPT">Launch Deck</span>
+                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                        </span>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-3 group-hover:text-accent transition-colors" data-en="Integrated Digital Marketing & Video Matrix" data-zh="品牌整合数字营销与短视频矩阵">Integrated Digital Marketing & Video Matrix</h4>
+                    <p class="text-sm text-custom-secondary leading-relaxed mb-6" data-en="Directed brand strategy for enterprise clients and state-owned entities at Zhilu Media & CCTV.COM. Built cross-platform short video content engines and crisis communication protocols." data-zh="主导北京知路传媒与央视网的企业级数字营销转型，搭建跨平台短视频内容矩阵、知识类 IP 与舆情监测体系。">
+                        Directed brand strategy for enterprise clients and state-owned entities at Zhilu Media & CCTV.COM. Built cross-platform short video content engines and crisis communication protocols.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2.5 py-1 rounded-md text-xs bg-custom-primary text-custom-secondary border border-custom">CCTV.com Project</span>
+                        <span class="px-2.5 py-1 rounded-md text-xs bg-custom-primary text-custom-secondary border border-custom">Content Matrix</span>
+                        <span class="px-2.5 py-1 rounded-md text-xs bg-custom-primary text-custom-secondary border border-custom">Brand Strategy</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Case 4 -->
+            <a href="deck.html?id=aigc-workflow" class="group block rounded-2xl bg-custom-secondary border border-custom card-shadow hover:border-sky-500 transition-all overflow-hidden">
+                <div class="w-full h-48 bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-xs text-custom-secondary relative overflow-hidden border-b border-custom">
+                    <span class="z-10 font-mono">[ Case Image Placeholder: AIGC Pipeline ]</span>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                </div>
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="px-3 py-1 rounded-full border border-custom text-xs font-mono text-accent">Case 04 / AI & Future Media</span>
+                        <span class="text-xs text-custom-secondary flex items-center gap-1 group-hover:text-accent">
+                            <span data-en="Launch Deck" data-zh="开启宣讲 PPT">Launch Deck</span>
+                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                        </span>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-3 group-hover:text-accent transition-colors" data-en="AIGC Workflow Innovation Practice" data-zh="AIGC 工作流创新与媒体实操">AIGC Workflow Innovation Practice</h4>
+                    <p class="text-sm text-custom-secondary leading-relaxed mb-6" data-en="Integration of generative AI tools into video production, concept design, and localized storyboards. Combining deep storytelling experience with state-of-the-art AI productivity." data-zh="将生成式 AI 工具深入整合至视频前期策划、概念图生成与分镜制作，将资深制作经验与生成式 AI 生产力全面赋能。">
+                        Integration of generative AI tools into video production, concept design, and localized storyboards. Combining deep storytelling experience with state-of-the-art AI productivity.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2.5 py-1 rounded-md text-xs bg-custom-primary text-custom-secondary border border-custom">AIGC Pipeline</span>
+                        <span class="px-2.5 py-1 rounded-md text-xs bg-custom-primary text-custom-secondary border border-custom">AI Storyboarding</span>
+                        <span class="px-2.5 py-1 rounded-md text-xs bg-custom-primary text-custom-secondary border border-custom">AUT Media Innovation</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- 4. Insights & Papers Section (Theses Prioritized & Reorganized) -->
+    <section id="insights" class="py-24 px-6 max-w-7xl mx-auto w-full border-t border-custom">
+        <div class="mb-12">
+            <h2 class="text-xs font-bold text-accent uppercase tracking-widest mb-3" data-en="Thought Leadership & Research" data-zh="学术研究与观点洞察">Thought Leadership & Research</h2>
+            <h3 class="text-3xl md:text-4xl font-bold" data-en="Master Theses & Publications" data-zh="硕士论文与学术发表">Master Theses & Publications</h3>
+        </div>
+
+        <div class="space-y-6">
+            <!-- Paper 1: MBA Master Thesis (Moved from Cases to Insights Top) -->
+            <a href="deck.html?id=palace-museum" class="group p-6 rounded-2xl bg-custom-secondary border border-custom flex flex-col md:flex-row items-start md:items-center justify-between gap-6 hover:border-sky-500 transition-all">
+                <div class="w-full md:w-32 h-20 bg-slate-200 dark:bg-slate-800 rounded-lg flex items-center justify-center text-[10px] text-custom-secondary shrink-0 font-mono">
+                    [ Paper Cover ]
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-500/10 text-accent">MBA Master Thesis · CUC</span>
+                        <span class="text-xs text-custom-secondary">2024</span>
+                    </div>
+                    <h4 class="text-lg font-bold group-hover:text-accent transition-colors" data-en="Research on Virtual Experiential Marketing Strategy of the Palace Museum" data-zh="故宫博物院虚拟体验营销策略研究（中国传媒大学 MBA 硕士论文）">Research on Virtual Experiential Marketing Strategy of the Palace Museum</h4>
+                    <p class="text-xs text-custom-secondary mt-1 leading-relaxed" data-en="Investigated virtual reality applications, haptic visual perception, and experiential branding in cultural heritage communication." data-zh="深入探讨虚拟现实技术、触视觉感知及沉浸式体验在文化遗产品牌传播与营销中的演进路径。">Investigated virtual reality applications, haptic visual perception, and experiential branding.</p>
+                </div>
+                <span class="px-4 py-2 rounded-lg bg-custom-primary border border-custom text-xs font-semibold flex items-center gap-1 shrink-0">
+                    <span data-en="View Research Deck" data-zh="查看论文 PPT">View Research Deck</span>
+                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </span>
+            </a>
+
+            <!-- Paper 2: Published Journal Article -->
+            <a href="deck.html?id=insight-trade-zone" class="group p-6 rounded-2xl bg-custom-secondary border border-custom flex flex-col md:flex-row items-start md:items-center justify-between gap-6 hover:border-sky-500 transition-all">
+                <div class="w-full md:w-32 h-20 bg-slate-200 dark:bg-slate-800 rounded-lg flex items-center justify-center text-[10px] text-custom-secondary shrink-0 font-mono">
+                    [ Journal Cover ]
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-500">Published Article · Modern Marketing</span>
+                        <span class="text-xs text-custom-secondary">2020</span>
+                    </div>
+                    <h4 class="text-lg font-bold group-hover:text-accent transition-colors" data-en="Local Culture Promoting High-Quality Development of Digital Culture Industry in Free Trade Zone" data-zh="本土文化推动自贸区数字文化产业高质量发展研究（发表于《现代营销》）">Local Culture Promoting High-Quality Development of Digital Culture Industry in Free Trade Zone</h4>
+                    <p class="text-xs text-custom-secondary mt-1 leading-relaxed" data-en="Analyzed spatial cultural assets and policy mechanics driving digital media development in trade zones." data-zh="分析自贸区背景下本土文化资源转化为数字文化产业核心竞争力的机制与路径。">Analyzed spatial cultural assets and policy mechanics driving digital media development.</p>
+                </div>
+                <span class="px-4 py-2 rounded-lg bg-custom-primary border border-custom text-xs font-semibold flex items-center gap-1 shrink-0">
+                    <span data-en="Read Article Deck" data-zh="查看文章 Deck">Read Article Deck</span>
+                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </span>
+            </a>
+
+            <!-- Paper 3: Upcoming Paper (Marked "Coming Soon / 敬请期待") -->
+            <div class="p-6 rounded-2xl bg-custom-secondary/50 border border-custom flex flex-col md:flex-row items-start md:items-center justify-between gap-6 opacity-75">
+                <div class="w-full md:w-32 h-20 bg-slate-200 dark:bg-slate-800 rounded-lg flex items-center justify-center text-[10px] text-custom-secondary shrink-0 font-mono">
+                    [ Draft Cover ]
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-500">AUT Research Project</span>
+                        <span class="text-xs text-amber-500 font-mono font-semibold" data-en="Coming Soon / 敬请期待" data-zh="敬请期待 / Coming Soon">Coming Soon / 敬请期待</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-custom-secondary" data-en="Re-architecting Spatial Storytelling in the Era of Generative AI" data-zh="生成式 AI 时代下空间叙事的解构与重构">Re-architecting Spatial Storytelling in the Era of Generative AI</h4>
+                    <p class="text-xs text-custom-secondary mt-1" data-en="Exploring multi-modal AI workflows and spatial computing in modern brand narratives." data-zh="探讨多模态 AI 工作流与空间计算如何重塑现代品牌传播叙事框架。">Exploring multi-modal AI workflows and spatial computing in modern brand narratives.</p>
+                </div>
+                <span class="px-4 py-2 rounded-lg bg-custom-primary border border-custom text-xs font-mono text-custom-secondary shrink-0 cursor-not-allowed">
+                    Coming Soon
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Honors & Awards Section -->
+    <section id="awards" class="py-24 px-6 max-w-7xl mx-auto w-full border-t border-custom">
+        <div class="mb-12">
+            <h2 class="text-xs font-bold text-accent uppercase tracking-widest mb-3" data-en="Recognition" data-zh="国家级荣誉与奖项">Recognition</h2>
+            <h3 class="text-3xl md:text-4xl font-bold" data-en="National Honors & Competitions" data-zh="国家级视频与科技创新奖项">National Honors & Competitions</h3>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="p-6 rounded-xl bg-custom-secondary border border-custom flex items-start gap-4">
+                <div class="p-3 rounded-lg bg-amber-500/10 text-amber-500 shrink-0">
+                    <i data-lucide="award" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-mono text-custom-secondary">2024 · China Society of Motion Picture & TV Engineers</span>
+                    <h4 class="font-bold mt-1" data-en="2nd Prize, China Innovative Imaging Competition" data-zh="2024 中国创新影像大赛 二等奖（专业组）">2nd Prize, China Innovative Imaging Competition</h4>
+                    <p class="text-xs text-custom-secondary mt-1" data-en="Awarded for 'Urban · Future' Immersive Video Track (Selected by CUC Future Imaging Research Center)." data-zh="作品《Urban · Future》沉浸式视频赛道（中国传媒大学未来影像研究中心遴选推荐）。">Awarded for 'Urban · Future' Immersive Video Track.</p>
+                </div>
+            </div>
+
+            <div class="p-6 rounded-xl bg-custom-secondary border border-custom flex items-start gap-4">
+                <div class="p-3 rounded-lg bg-amber-500/10 text-amber-500 shrink-0">
+                    <i data-lucide="award" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-mono text-custom-secondary">2023 · National Radio and Television Administration (NRTA)</span>
+                    <h4 class="font-bold mt-1" data-en="2nd Prize, 3rd High-Tech Video Innovation Competition" data-zh="第三届高新技术视频创新应用大赛 二等奖">2nd Prize, 3rd High-Tech Video Innovation Competition</h4>
+                    <p class="text-xs text-custom-secondary mt-1" data-en="Immersive Naked-Eye 3D Category for LED CAVE Immersive System Application." data-zh="沉浸式裸眼 3D 呈现类（国家广电总局颁发）。">Immersive Naked-Eye 3D Category for LED CAVE System.</p>
+                </div>
+            </div>
+
+            <div class="p-6 rounded-xl bg-custom-secondary border border-custom flex items-start gap-4">
+                <div class="p-3 rounded-lg bg-amber-500/10 text-amber-500 shrink-0">
+                    <i data-lucide="award" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-mono text-custom-secondary">2022 · NRTA National Competition</span>
+                    <h4 class="font-bold mt-1" data-en="3rd Prize, 2nd High-Tech Video Competition" data-zh="第二届高新技术视频创新应用大赛 三等奖">3rd Prize, 2nd High-Tech Video Competition</h4>
+                    <p class="text-xs text-custom-secondary mt-1" data-en="LED Five-Fold Screen CAVE Immersive System Innovation." data-zh="LED 五面屏 CAVE 沉浸式裸眼 3D 系统创新应用。">LED Five-Fold Screen CAVE Immersive System Innovation.</p>
+                </div>
+            </div>
+
+            <div class="p-6 rounded-xl bg-custom-secondary border border-custom flex items-start gap-4">
+                <div class="p-3 rounded-lg bg-sky-500/10 text-sky-500 shrink-0">
+                    <i data-lucide="trophy" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-mono text-custom-secondary">2015 · China Network Audiovisual Program Association</span>
+                    <h4 class="font-bold mt-1" data-en="Top 10 National Video Program Award" data-zh="全国网络视听精彩节目 Top 10（央视网）">Top 10 National Video Program Award</h4>
+                    <p class="text-xs text-custom-secondary mt-1" data-en="Recognized for CCTV Online Lecture Hall Educational Video Series." data-zh="主导打造央视网《网络大讲堂》系列原创短视频节目。">Recognized for CCTV Online Lecture Hall Educational Video Series.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About & CV Section -->
+<section id="about" class="py-24 px-6 max-w-7xl mx-auto w-full border-t border-custom">
+    <div class="grid md:grid-cols-12 gap-12 items-center">
+        <!-- Bio Description (Left) -->
+        <div class="md:col-span-7">
+            <h2 class="text-xs font-bold text-accent uppercase tracking-widest mb-3" data-en="About & Executive Bio" data-zh="关于我与履历">About & Executive Bio</h2>
+            <h3 class="text-3xl md:text-4xl font-bold mb-6" data-en="Commercial Impact & Academic Excellence" data-zh="商业落地沉淀与学术跨越">Commercial Impact & Academic Excellence</h3>
+            <p class="text-custom-secondary leading-relaxed mb-6" data-en="I am an experienced media strategist and executive producer with extensive leadership experience spanning CCTV.COM, Beijing Zhilu Media, and high-tech spatial visualization. Graduated with an MBA from Communication University of China (CUC), I am currently pursuing my Master of Communication Studies (Media Innovation) at Auckland University of Technology (AUT) in New Zealand." data-zh="我是一名资深数字媒体战略家与执行制片人，历任央视网运营经理、北京知路传媒执行制片人。毕业于中国传媒大学 MBA，目前在新西兰奥克兰理工大学（AUT）攻读传播学硕士（媒体创新方向）。">
+                I am an experienced media strategist and executive producer with extensive leadership experience spanning CCTV.COM, Beijing Zhilu Media, and high-tech spatial visualization. Graduated with an MBA from Communication University of China (CUC), I am currently pursuing my Master of Communication Studies (Media Innovation) at Auckland University of Technology (AUT) in New Zealand.
+            </p>
+            
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <div class="p-4 rounded-lg bg-custom-secondary border border-custom">
+                    <div class="text-2xl font-extrabold text-accent">Strategic Lead</div>
+                    <div class="text-xs text-custom-secondary" data-en="Media & Production Leadership" data-zh="媒体与制作领导力">Media & Production Leadership</div>
+                </div>
+                <div class="p-4 rounded-xl bg-custom-secondary border border-custom">
+                    <!-- Big Text: CUC & AUT -->
+                    <div class="text-2xl font-extrabold text-accent">CUC & AUT</div>
+                    <!-- Small Text with precise degree abbreviations -->
+                    <div class="text-xs text-custom-secondary mt-1" 
+                        data-en="MBA & MCIS (Media Innovation)" 
+                        data-zh="工商管理硕士 (MBA) & 传播学硕士 (媒体创新)">
+                        MBA & MCIS (Media Innovation)
+                    </div>
+                </div>
+            </div>
+
+            <a href="assets/cv-yaowang.pdf" download="Yao_Wang_Executive_CV.pdf" class="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-sky-600 hover:bg-sky-500 !text-white font-bold text-sm transition-all shadow-lg shadow-sky-500/20">
+                <i data-lucide="file-down" class="w-5 h-5 !text-white"></i>
+                <span data-en="Download Official CV (PDF)" data-zh="下载官方英文 PDF 简历" class="!text-white">Download Official CV (PDF)</span>
+            </a>
+        </div>
+
+        <!-- Cutout Avatar Profile Card (Right) - Transparent, Frame-less Design -->
+        <div class="md:col-span-5 relative flex flex-col items-center md:items-start">
+            <!-- Cutout PNG Image with Subtle Glow Effect (No Box Border) -->
+            <div class="relative w-64 h-72 md:w-80 md:h-96 flex items-end justify-center">
+                <!-- Background Ambient Glow -->
+                <div class="absolute inset-x-8 bottom-4 top-12 bg-gradient-to-tr from-sky-500/20 to-indigo-500/10 rounded-3xl blur-2xl -z-10"></div>
+                
+                <!-- Transparent Avatar Image -->
+                <img src="assets/avatar.png" alt="Yao Wang (王垚)" class="w-full h-full object-contain filter drop-shadow-xl hover:scale-105 transition-transform duration-500" onerror="this.onerror=null; this.parentNode.innerHTML='<div class=\'text-xs text-custom-secondary font-mono p-4 border border-dashed rounded-xl\'>Avatar PNG Placeholder<br>(assets/avatar.png)</div>'">
+            </div>
+
+            <!-- Profile Info Line below avatar -->
+            <div class="mt-4 text-center md:text-left">
+                <h4 class="text-2xl font-extrabold tracking-tight">Yao Wang <span class="text-accent font-extrabold text-lg">(王垚)</span></h4>
+                <p class="text-xs text-custom-secondary mt-1">Auckland, New Zealand · Available for Global Roles</p>
+                
+                <div class="flex flex-wrap gap-2 mt-4 justify-center md:justify-start">
+                    <span class="px-3 py-1 rounded-full bg-custom-secondary border border-custom text-[11px] text-custom-secondary flex items-center gap-1">
+                        <i data-lucide="check-circle" class="w-3 h-3 text-emerald-500"></i> NZ Work Rights
+                    </span>
+                    <span class="px-3 py-1 rounded-full bg-custom-secondary border border-custom text-[11px] text-custom-secondary flex items-center gap-1">
+                        <i data-lucide="check-circle" class="w-3 h-3 text-emerald-500"></i> Bilingual
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
-</body>
+</section>
 
+    <!-- 7. Contact Section (Updated Phone Numbers) -->
+    <section id="contact" class="py-24 px-6 max-w-7xl mx-auto w-full border-t border-custom">
+        <div class="grid md:grid-cols-2 gap-12">
+            <div>
+                <h2 class="text-xs font-bold text-accent uppercase tracking-widest mb-3" data-en="Let's Connect" data-zh="建立联系">Let's Connect</h2>
+                <h3 class="text-3xl md:text-4xl font-bold mb-6" data-en="Get In Touch" data-zh="期待与您的合作交流">Get In Touch</h3>
+                <p class="text-custom-secondary mb-8 text-sm leading-relaxed" data-en="Currently based in Auckland, New Zealand. Open to media production, digital strategy consulting, brand transformation, and communication research roles." data-zh="目前常驻新西兰奥克兰。欢迎关于媒体制作、数字营销顾问、品牌转型及空间计算方向的求职与项目合作沟通。">
+                    Currently based in Auckland, New Zealand. Open to media production, digital strategy consulting, brand transformation, and communication research roles.
+                </p>
+
+                <div class="space-y-4">
+                    <a href="mailto:wyvirgo@outlook.com" class="p-4 rounded-xl bg-custom-secondary border border-custom flex items-center gap-4 hover:border-sky-500 transition-all">
+                        <i data-lucide="mail" class="w-5 h-5 text-accent"></i>
+                        <div>
+                            <div class="text-[10px] text-custom-secondary uppercase font-mono">Email</div>
+                            <div class="text-sm font-bold">wyvirgo@outlook.com</div>
+                        </div>
+                    </a>
+
+                    <!-- Updated Phone Numbers -->
+                    <div class="p-4 rounded-xl bg-custom-secondary border border-custom flex items-center gap-4">
+                        <i data-lucide="phone" class="w-5 h-5 text-accent"></i>
+                        <div>
+                            <div class="text-[10px] text-custom-secondary uppercase font-mono">Phone Numbers</div>
+                            <div class="text-sm font-bold">+64 27 544 0510 (NZ) &nbsp;|&nbsp; +86 13051848716 (CN)</div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <a href="https://linkedin.com" target="_blank" class="flex-1 p-4 rounded-xl bg-custom-secondary border border-custom flex items-center justify-center gap-2 hover:border-sky-500 text-sm font-semibold transition-all">
+                            <i data-lucide="linkedin" class="w-4 h-4 text-accent"></i>
+                            <span>LinkedIn Profile</span>
+                        </a>
+
+                        <button onclick="openWeChatModal()" class="flex-1 p-4 rounded-xl bg-custom-secondary border border-custom flex items-center justify-center gap-2 hover:border-sky-500 text-sm font-semibold transition-all">
+                            <i data-lucide="message-square" class="w-4 h-4 text-emerald-500"></i>
+                            <span>WeChat ID</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-8 rounded-2xl bg-custom-secondary border border-custom card-shadow">
+                <h4 class="font-bold mb-4 text-lg" data-en="Send a Direct Message" data-zh="发送在线留言">Send a Direct Message</h4>
+                <form action="https://formspree.io/f/your-formspree-id" method="POST" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-custom-secondary mb-1" data-en="Your Name" data-zh="您的姓名">Your Name</label>
+                        <input type="text" name="name" required class="w-full px-4 py-3 rounded-lg border border-custom bg-custom-primary text-sm focus:outline-none focus:border-sky-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-custom-secondary mb-1" data-en="Your Email" data-zh="您的邮箱">Your Email</label>
+                        <input type="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-custom bg-custom-primary text-sm focus:outline-none focus:border-sky-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-custom-secondary mb-1" data-en="Message" data-zh="留言内容">Message</label>
+                        <textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-lg border border-custom bg-custom-primary text-sm focus:outline-none focus:border-sky-500"></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-3.5 rounded-lg bg-sky-600 text-white font-bold text-sm hover:opacity-90 transition-all">
+                        <span data-en="Send Message" data-zh="提交留言">Send Message</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Tools & Resources Section (Moved to Page End & Links Updated) -->
+    <section id="tools" class="py-24 px-6 max-w-7xl mx-auto w-full border-t border-custom bg-custom-secondary/30">
+        <div class="mb-12">
+            <h2 class="text-xs font-bold text-accent uppercase tracking-widest mb-3" data-en="Personal Projects & Web Tools" data-zh="个人实践与小工具集">Personal Projects & Web Tools</h2>
+            <h3 class="text-3xl md:text-4xl font-bold" data-en="Interactive Web Applications Hub" data-zh="创新实践与实用网页应用">Interactive Web Applications Hub</h3>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <!-- Tool Item 1: Auckland English Hub -->
+            <div class="p-6 rounded-2xl bg-custom-secondary border border-custom card-shadow flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase bg-sky-500/10 text-accent">Auckland Local</span>
+                        <i data-lucide="map-pin" class="w-5 h-5 text-custom-secondary"></i>
+                    </div>
+                    <h4 class="font-bold mb-2 text-base" data-en="Auckland English Hub" data-zh="Auckland English Hub（奥克兰英语交流检索）">Auckland English Hub</h4>
+                    <p class="text-xs text-custom-secondary mb-6 leading-relaxed" data-en="An interactive tool gathering offline English exchange events, language cafes, and community meetups across Auckland." data-zh="检索与收集奥克兰本地线下英语角、社区交流及 Language Cafe 活动的便民检索工具。">
+                        An interactive tool gathering offline English exchange events, language cafes, and community meetups across Auckland.
+                    </p>
+                </div>
+                <a href="./Auckland_English_Hub.html" target="_blank" class="inline-flex items-center justify-center gap-2 py-2.5 rounded-lg border border-custom bg-custom-primary text-xs font-semibold hover:border-sky-500 transition-all">
+                    <span data-en="Open App ↗" data-zh="打开应用 ↗">Open App ↗</span>
+                </a>
+            </div>
+
+            <!-- Tool Item 2: IELTS AI Studio -->
+            <div class="p-6 rounded-2xl bg-custom-secondary border border-custom card-shadow flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase bg-purple-500/10 text-purple-400">AI Utility</span>
+                        <i data-lucide="sparkles" class="w-5 h-5 text-custom-secondary"></i>
+                    </div>
+                    <h4 class="font-bold mb-2 text-base" data-en="IELTS AI Studio" data-zh="IELTS AI Studio（雅思 AI 备考助手）">IELTS AI Studio</h4>
+                    <p class="text-xs text-custom-secondary mb-6 leading-relaxed" data-en="A specialized web tool helping master academic vocabulary, sentence structures, and speaking prompts tailored for IELTS preparation." data-zh="专为雅思学术类写作与口语打造的 AI 词汇增强与句型练习辅助工具。">
+                        A specialized web tool helping master academic vocabulary, sentence structures, and speaking prompts tailored for IELTS preparation.
+                    </p>
+                </div>
+                <a href="./IELTS_AI_Studio.html" target="_blank" class="inline-flex items-center justify-center gap-2 py-2.5 rounded-lg border border-custom bg-custom-primary text-xs font-semibold hover:border-sky-500 transition-all">
+                    <span data-en="Open App ↗" data-zh="打开应用 ↗">Open App ↗</span>
+                </a>
+            </div>
+
+            <!-- Tool Item 3: Future Tools Placeholder -->
+            <div class="p-6 rounded-2xl bg-custom-secondary/40 border border-dashed border-custom flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase bg-amber-500/10 text-amber-500">Lab & Innovation</span>
+                        <i data-lucide="hourglass" class="w-5 h-5 text-custom-secondary"></i>
+                    </div>
+                    <h4 class="font-bold mb-2 text-base text-custom-secondary" data-en="More Web Tools Coming Soon" data-zh="更多好玩有趣的工具，敬请期待">更多好玩有趣的工具，敬请期待</h4>
+                    <p class="text-xs text-custom-secondary mb-6 leading-relaxed" data-en="More fun, creative, and interactive web tools are currently in development. Stay tuned!" data-zh="更多结合空间计算、AI 工作流与传播学研究的创意小应用正在开发中，敬请期待！">
+                        More fun, creative, and interactive web tools are currently in development. Stay tuned!
+                    </p>
+                </div>
+                <div class="py-2.5 text-center text-xs font-mono text-custom-secondary bg-custom-primary/50 rounded-lg border border-custom">
+                    Coming Soon
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Footer -->
+    <footer class="py-8 px-6 border-t border-custom bg-custom-primary text-center text-xs text-custom-secondary">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div>© 2026 Yao Wang. Built with Tailwind CSS & GitHub Pages.</div>
+            <div class="flex gap-4">
+                <a href="#cases" class="hover:underline">Cases</a>
+                <a href="#about" class="hover:underline">About</a>
+                <a href="#contact" class="hover:underline">Contact</a>
+                <a href="#tools" class="hover:underline">Tools</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WeChat Modal -->
+    <div id="wechatModal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-custom-primary p-8 rounded-2xl border border-custom max-w-sm w-full text-center relative card-shadow">
+            <button onclick="closeWeChatModal()" class="absolute top-4 right-4 text-custom-secondary hover:text-custom-primary">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <h4 class="font-bold text-lg mb-2">WeChat Contact</h4>
+            <p class="text-xs text-custom-secondary mb-4">Scan QR Code or copy WeChat ID</p>
+            <div class="w-48 h-48 mx-auto bg-custom-secondary border border-custom rounded-xl p-2 flex items-center justify-center mb-4">
+                <img src="assets/wechat-qr.jpg" alt="WeChat QR Code" class="w-full h-full object-cover rounded-lg" onerror="this.onerror=null; this.parentNode.innerHTML='<div class=\'text-xs text-custom-secondary\'>QR Image Placeholder<br>(assets/wechat-qr.jpg)</div>'">
+            </div>
+            <div class="p-2 rounded bg-custom-secondary border border-custom text-xs font-mono select-all">
+                WeChat ID: <span class="font-bold text-accent">wyvirgo</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        lucide.createIcons();
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            
+            const themeIcon = document.getElementById('themeIcon');
+            themeIcon.setAttribute('data-lucide', newTheme === 'dark' ? 'moon' : 'sun');
+            lucide.createIcons();
+            
+            localStorage.setItem('theme', newTheme);
+        }
+
+        let currentLang = 'en';
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'zh' : 'en';
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            });
+            document.getElementById('currentLangLabel').textContent = currentLang === 'en' ? 'EN / 中' : '中 / EN';
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        }
+
+        function openWeChatModal() {
+            document.getElementById('wechatModal').classList.remove('hidden');
+        }
+        function closeWeChatModal() {
+            document.getElementById('wechatModal').classList.add('hidden');
+        }
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        document.getElementById('themeIcon').setAttribute('data-lucide', savedTheme === 'dark' ? 'moon' : 'sun');
+    </script>
+   
+   <!-- Subdued, Fixed-Size Back to Top Button (Zero-Dependency Inline SVG) -->
+    <button id="backToTopBtn" onclick="scrollToTop()" 
+            aria-label="Back to Top"
+            class="fixed bottom-6 right-6 z-40 w-10 h-10 rounded-full border border-[var(--border-color)] bg-[var(--bg-secondary)]/80 backdrop-blur-md text-[var(--text-secondary)] hover:text-[var(--accent-color)] hover:border-[var(--accent-color)] opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center shadow-sm">
+        <!-- Native SVG Arrow Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 stroke-current" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+    </button>
+
+    <script>
+        const backBtn = document.getElementById('backToTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                backBtn.classList.remove('opacity-0', 'pointer-events-none');
+                backBtn.classList.add('opacity-100', 'pointer-events-auto');
+            } else {
+                backBtn.classList.remove('opacity-100', 'pointer-events-auto');
+                backBtn.classList.add('opacity-0', 'pointer-events-none');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
 </html>
