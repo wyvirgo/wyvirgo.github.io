@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide Deck Presentation | Yao Wang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --accent-color: #38BDF8;
+            --border-color: #334155;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #F8FAFC;
+            --bg-secondary: #FFFFFF;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --accent-color: #0284C7;
+            --border-color: #E2E8F0;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .slide-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .glass-nav {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between overflow-x-hidden">
+
+    <!-- Header Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-[var(--border-color)] bg-[var(--bg-primary)]/80">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 text-sm font-semibold hover:text-[var(--accent-color)] transition-colors">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                <span data-en="Back to Overview" data-zh="返回主页概览">Back to Overview</span>
+            </a>
+
+            <div class="flex items-center gap-3">
+                <span id="slideCounter" class="text-xs font-mono text-[var(--text-secondary)] px-3 py-1 rounded-full border border-[var(--border-color)]">
+                    Slide 01 / 01
+                </span>
+
+                <!-- EN/ZH Switcher -->
+                <button id="langToggleBtn" onclick="toggleLanguage()" class="px-3 py-1 rounded-full border border-[var(--border-color)] text-xs font-semibold hover:border-sky-500 transition-all flex items-center gap-1">
+                    <i data-lucide="globe" class="w-3.5 h-3.5"></i>
+                    <span id="currentLangLabel">EN / 中</span>
+                </button>
+
+                <!-- Theme Switcher -->
+                <button onclick="toggleTheme()" class="p-1.5 rounded-full border border-[var(--border-color)] hover:border-sky-500 transition-all">
+                    <i id="themeIcon" data-lucide="moon" class="w-4 h-4 text-[var(--accent-color)]"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Slide Content Box -->
+    <main class="flex-1 pt-24 pb-20 px-4 md:px-8 max-w-6xl mx-auto w-full flex flex-col justify-center">
+        
+        <div id="deckContainer" class="relative w-full aspect-[16/9] min-h-[500px] rounded-2xl slide-card shadow-2xl p-8 md:p-12 flex flex-col justify-between overflow-hidden">
+            <!-- Dynamic Slide Content Injected Here -->
+        </div>
+
+        <!-- Controls -->
+        <div class="flex items-center justify-between mt-6 px-2">
+            <button onclick="prevSlide()" class="px-5 py-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-secondary)] hover:border-sky-500 transition-all flex items-center gap-2 text-sm font-medium">
+                <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                <span data-en="Previous Slide" data-zh="上一页">Previous Slide</span>
+            </button>
+
+            <div class="flex gap-2" id="dotsContainer"></div>
+
+            <button onclick="nextSlide()" class="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white transition-all flex items-center gap-2 text-sm font-medium">
+                <span data-en="Next Slide" data-zh="下一页">Next Slide</span>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </main>
+
+    <script>
+        // Multi-Deck Database with Dynamic Param Matching
+        const decksData = {
+            // Case 01: 5D CAVE TOD Project
+            "5d-cave": [
+                {
+                    tagEn: "Case 01 · CUC XR Lab",
+                    tagZh: "案例 01 · 中国传媒大学未来影像研究中心",
+                    titleEn: "Urban TOD: CAVE 5-Fold Glasses-Free 3D System",
+                    titleZh: "《城市 TOD》CAVE 5折幕沉浸式裸眼3D系统",
+                    descEn: "Designed and produced by CUC XR Lab, integrating a 122m² 5-fold P2.5 LED CAVE spatial environment with glasses-free 3D visual storytelling to explore the boundary of spatial media.",
+                    descZh: "由中国传媒大学未来影像研究中心领衔研发，将122平方米P2.5 LED五面体空间与裸眼3D视觉结合，探索空间媒介落地模式。",
+                    metrics: [
+                        { labelEn: "Total Area", labelZh: "LED 总面积", value: "122 m²" },
+                        { labelEn: "Pipeline Optimization", labelZh: "渲染优化", value: "8K → 5K" },
+                        { labelEn: "Key Showcase", labelZh: "落地展会", value: "CIFTIS 服贸会" }
+                    ]
+                },
+                {
+                    tagEn: "Technical Pipeline · Rendering Optimization",
+                    tagZh: "技术创新 · 渲染解算优化",
+                    titleEn: "Resolution Re-engineering: 8K to 5K Pipeline",
+                    titleZh: "输出解算创新：传统 8K 至 5K 渲染播控重构",
+                    descEn: "Optimized traditional cross-type 5-fold CAVE layout. Re-engineered signal stitching and rendering calculations from 8K down to 5K, drastically increasing rendering output and decoding stability.",
+                    descZh: "在传统十字型五折幕基础上重构拼接算法，将近8K分辨率优化调整为5K，极大提升渲染输出与解算效率。",
+                    metrics: [
+                        { labelEn: "Resolution", labelZh: "优化分辨率", value: "5K Custom" },
+                        { labelEn: "Efficiency Gain", labelZh: "效率提升", value: "+40%" },
+                        { labelEn: "Control Unit", labelZh: "播控系统", value: "Integrated" }
+                    ]
+                }
+            ],
+
+            // Case 02: Palace Museum VR
+            "palace-vr": [
+                {
+                    tagEn: "Case 02 · Academic Thesis & Campaign",
+                    tagZh: "案例 02 · 故宫虚拟体验营销研究",
+                    titleEn: "Palace Museum Virtual Experience Marketing Strategy",
+                    titleZh: "故宫博物院虚拟体验营销策略与研究",
+                    descEn: "Constructed an integrated experiential marketing framework analyzing PEST, SWOT, and user sensory/emotional responses to optimize digital cultural inheritance.",
+                    descZh: "建立整合体验营销评估框架，结合 PEST/SWOT 分析与感官、情感、思维、行为维度，优化故宫数字文旅落地方案。",
+                    metrics: [
+                        { labelEn: "Framework", labelZh: "分析模型", value: "PEST & SWOT" },
+                        { labelEn: "Focus Area", labelZh: "核心维度", value: "5 Dimensions" },
+                        { labelEn: "Institution", labelZh: "学术依托", value: "CUC Master Thesis" }
+                    ]
+                }
+            ]
+        };
+
+        // Standard Placeholder Generator for Under-Construction Decks
+        function generatePlaceholderDeck(id, titleEn, titleZh) {
+            return [
+                {
+                    tagEn: `Deck ID: ${id} · Under Construction`,
+                    tagZh: `项目 ID: ${id} · 内容正在建设中`,
+                    titleEn: `${titleEn} (Full Slide Deck Coming Soon)`,
+                    titleZh: `${titleZh}（完整 PPT 宣讲页正在整理中）`,
+                    descEn: "This slide deck is currently being compiled from technical documents and project archives. Updated visual materials and detailed metrics will be available shortly.",
+                    descZh: "该项目的详细 PPT 宣讲资料正根据项目归档材料与技术文档进行二次整理。完整的图片、解算指标及商业逻辑将很快上线，敬请期待。",
+                    metrics: [
+                        { labelEn: "Status", labelZh: "当前状态", value: "In Progress" },
+                        { labelEn: "Notice", labelZh: "提示", value: "建设中" },
+                        { labelEn: "Archive ID", labelZh: "档案编号", value: id.toUpperCase() }
+                    ]
+                }
+            ];
+        }
+
+        // Title Map for missing decks
+        const titleMap = {
+            "brand-matrix": { en: "Integrated Brand Digital Marketing Matrix", zh: "品牌数字营销全案矩阵" },
+            "aigc-workflow": { en: "AIGC Commercial Creative Workflow Practice", zh: "AIGC 商业创意工作流实践" },
+            "insight-1": { en: "Spatial Computing & Experiential Media Deck", zh: "空间计算与体验式媒介 宣讲页" },
+            "insight-2": { en: "AIGC Content Engine Architecture Deck", zh: "AIGC 内容引擎架构 宣讲页" },
+            "insight-3": { en: "Cross-Border Media Strategy Deck", zh: "跨国媒体传播策略 宣讲页" }
+        };
+
+        let urlParams = new URLSearchParams(window.location.search);
+        let currentDeckId = urlParams.get('id') || '5d-cave';
+        
+        let currentSlides = decksData[currentDeckId] || 
+            generatePlaceholderDeck(
+                currentDeckId, 
+                titleMap[currentDeckId]?.en || "Project Presentation", 
+                titleMap[currentDeckId]?.zh || "项目详细宣讲"
+            );
+
+        let currentSlideIdx = 0;
+        let currentLang = localStorage.getItem('lang') || 'en';
+
+        function renderSlide() {
+            const slide = currentSlides[currentSlideIdx];
+            const container = document.getElementById('deckContainer');
+            
+            const tag = currentLang === 'en' ? slide.tagEn : slide.tagZh;
+            const title = currentLang === 'en' ? slide.titleEn : slide.titleZh;
+            const desc = currentLang === 'en' ? slide.descEn : slide.descZh;
+
+            let metricsHTML = slide.metrics.map(m => `
+                <div class="p-4 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-color)]">
+                    <div class="text-xs text-[var(--text-secondary)] mb-1">${currentLang === 'en' ? m.labelEn : m.labelZh}</div>
+                    <div class="text-lg md:text-xl font-bold text-[var(--accent-color)]">${m.value}</div>
+                </div>
+            `).join('');
+
+            container.innerHTML = `
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--border-color)] bg-[var(--bg-primary)] text-xs font-mono text-[var(--accent-color)] mb-4">
+                        <span>${tag}</span>
+                    </div>
+                    <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-4">${title}</h2>
+                    <p class="text-sm md:text-base text-[var(--text-secondary)] leading-relaxed max-w-3xl">${desc}</p>
+                </div>
+                <div class="grid grid-cols-3 gap-4 mt-8">
+                    ${metricsHTML}
+                </div>
+            `;
+
+            document.getElementById('slideCounter').textContent = `Slide 0${currentSlideIdx + 1} / 0${currentSlides.length}`;
+            renderDots();
+            lucide.createIcons();
+        }
+
+        function renderDots() {
+            const dotsContainer = document.getElementById('dotsContainer');
+            dotsContainer.innerHTML = currentSlides.map((_, idx) => `
+                <button onclick="goToSlide(${idx})" class="w-3 h-3 rounded-full transition-all ${idx === currentSlideIdx ? 'bg-sky-500 scale-125' : 'bg-[var(--border-color)] hover:bg-slate-400'}"></button>
+            `).join('');
+        }
+
+        function nextSlide() {
+            if (currentSlideIdx < currentSlides.length - 1) { currentSlideIdx++; renderSlide(); }
+        }
+        function prevSlide() {
+            if (currentSlideIdx > 0) { currentSlideIdx--; renderSlide(); }
+        }
+        function goToSlide(idx) {
+            currentSlideIdx = idx; renderSlide();
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'zh' : 'en';
+            localStorage.setItem('lang', currentLang);
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            });
+            document.getElementById('currentLangLabel').textContent = currentLang === 'en' ? 'EN / 中' : '中 / EN';
+            renderSlide();
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            document.getElementById('themeIcon').setAttribute('data-lucide', newTheme === 'dark' ? 'moon' : 'sun');
+            lucide.createIcons();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Initialize
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        document.getElementById('themeIcon').setAttribute('data-lucide', savedTheme === 'dark' ? 'moon' : 'sun');
+        renderSlide();
+    </script>
+</body>
+</html>
