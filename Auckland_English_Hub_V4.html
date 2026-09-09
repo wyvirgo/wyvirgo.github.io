@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="dark">
+<html lang="zh-CN">
 <head>
   <!-- Favicon / Browser Tab Logo -->
   <link rel="icon" href="./assets/ico01.png" type="image/png">
@@ -33,95 +33,8 @@
     }
   </script>
   <style>
-    :root {
-      --bg-primary: #f4f1ea;
-      --card-bg: #ffffff;
-      --text-primary: #333333;
-      --text-secondary: #666666;
-      --border-color: #e5e7eb;
-      --input-bg: #ffffff;
-      --input-border: #e5e7eb;
-      --shadow-color: rgba(0, 0, 0, 0.03);
-      --subcard-bg: rgba(255, 255, 255, 0.7);
-      --badge-bg: rgba(255, 255, 255, 0.8);
-    }
-
-    [data-theme="dark"] {
-      --bg-primary: #0F172A;
-      --card-bg: #1E293B;
-      --text-primary: #F8FAFC;
-      --text-secondary: #94A3B8;
-      --border-color: #334155;
-      --input-bg: #0F172A;
-      --input-border: #334155;
-      --shadow-color: rgba(0, 0, 0, 0.4);
-      --subcard-bg: #0F172A;
-      --badge-bg: #0F172A;
-    }
-
-    body { 
-      background-color: var(--bg-primary); 
-      color: var(--text-primary); 
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-    .card-shadow { box-shadow: 0 4px 15px var(--shadow-color); }
-
-    /* Dark Mode Global & Component Overrides */
-    [data-theme="dark"] .bg-white {
-      background-color: var(--card-bg) !important;
-      color: var(--text-primary) !important;
-    }
-    [data-theme="dark"] .text-gray-800,
-    [data-theme="dark"] .text-gray-600 {
-      color: var(--text-primary) !important;
-    }
-    [data-theme="dark"] .text-gray-500 {
-      color: var(--text-secondary) !important;
-    }
-    [data-theme="dark"] .border-gray-200,
-    [data-theme="dark"] .border-gray-100,
-    [data-theme="dark"] .border-gray-100\/50 {
-      border-color: var(--border-color) !important;
-    }
-    [data-theme="dark"] input,
-    [data-theme="dark"] select {
-      background-color: var(--input-bg) !important;
-      color: var(--text-primary) !important;
-      border-color: var(--input-border) !important;
-    }
-    [data-theme="dark"] .bg-white\/80,
-    [data-theme="dark"] .bg-white\/70 {
-      background-color: var(--subcard-bg) !important;
-      color: var(--text-primary) !important;
-    }
-    [data-theme="dark"] .bg-morandi-bg\/40 {
-      background-color: rgba(15, 23, 42, 0.6) !important;
-      border-color: var(--border-color) !important;
-    }
-    [data-theme="dark"] .bg-morandi-bg {
-      background-color: #334155 !important;
-      color: #F8FAFC !important;
-    }
-    [data-theme="dark"] .bg-morandi-morning\/40 {
-      background-color: rgba(30, 58, 138, 0.25) !important;
-    }
-    [data-theme="dark"] .bg-morandi-afternoon\/40 {
-      background-color: rgba(120, 53, 15, 0.25) !important;
-    }
-    [data-theme="dark"] .bg-morandi-evening\/40 {
-      background-color: rgba(88, 28, 135, 0.25) !important;
-    }
-    [data-theme="dark"] .bg-amber-50 {
-      background-color: rgba(120, 53, 15, 0.3) !important;
-      color: #fef08a !important;
-      border-color: #78350f !important;
-    }
-    [data-theme="dark"] .bg-blue-50 {
-      background-color: rgba(30, 58, 138, 0.3) !important;
-      color: #bfdbfe !important;
-      border-color: #1e3a8a !important;
-    }
+    body { background-color: #f4f1ea; color: #333333; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    .card-shadow { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03); }
   </style>
 </head>
 <body class="p-4 md:p-8">
@@ -134,10 +47,6 @@
     </div>
     
     <div class="flex flex-wrap items-center gap-2">
-      <!-- 暗色/明色主题切换按钮 -->
-      <button onclick="toggleTheme()" id="themeBtn" class="bg-gray-800 text-white dark:bg-slate-200 dark:text-slate-900 px-3 py-2 rounded-lg text-sm hover:opacity-90 transition font-bold flex items-center gap-1">
-        <span id="themeIcon">🌙</span> <span id="btn-theme">暗色模式</span>
-      </button>
       <!-- 语言切换按钮 -->
       <button onclick="toggleLanguage()" id="langBtn" class="bg-morandi-accent text-white px-3 py-2 rounded-lg text-sm hover:opacity-90 transition font-bold">
         🌐 English
@@ -274,8 +183,6 @@
         btnIcs: "导出日历 (.ics)",
         btnImg: "导出图片",
         btnPdf: "导出 PDF",
-        btnThemeDark: "暗色模式",
-        btnThemeLight: "明色模式",
         mornTitle: "🌅 上午 (12:00前)",
         aftnTitle: "☀️ 下午 (12:00–18:00)",
         eveTitle: "🌙 晚间 (18:00以后)",
@@ -316,8 +223,6 @@
         btnIcs: "Export Calendar (.ics)",
         btnImg: "Export Image",
         btnPdf: "Export PDF",
-        btnThemeDark: "Dark Mode",
-        btnThemeLight: "Light Mode",
         mornTitle: "🌅 Morning (Before 12:00)",
         aftnTitle: "☀️ Afternoon (12:00–18:00)",
         eveTitle: "🌙 Evening (After 18:00)",
@@ -462,29 +367,6 @@
 
     let commuteEstimates = {};
 
-    function toggleTheme() {
-      const html = document.documentElement;
-      const currentTheme = html.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      setTheme(newTheme);
-    }
-
-    function setTheme(theme) {
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
-      updateThemeButton();
-    }
-
-    function updateThemeButton() {
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      const iconEl = document.getElementById('themeIcon');
-      const textEl = document.getElementById('btn-theme');
-      if (iconEl && textEl) {
-        iconEl.innerText = isDark ? '☀️' : '🌙';
-        textEl.innerText = isDark ? i18n[currentLang].btnThemeLight : i18n[currentLang].btnThemeDark;
-      }
-    }
-
     function toggleLanguage() {
       currentLang = currentLang === 'zh' ? 'en' : 'zh';
       const langText = currentLang === 'zh' ? '🌐 English' : '🌐 中文界面';
@@ -534,7 +416,6 @@
       document.getElementById('ui-ice-title').innerText = dict.iceTitle;
       document.getElementById('ui-ice-desc').innerText = dict.iceDesc;
 
-      updateThemeButton();
       filterEvents();
       renderIcebreakers();
     }
@@ -612,9 +493,9 @@
     }
 
     function getFeeBadge(fee) {
-      if (fee === 'Free') return `<span class="border border-green-600 text-green-700 dark:text-green-400 dark:border-green-500 text-xs px-1.5 py-0.5 rounded">${currentLang === 'zh' ? '免费' : 'Free'}</span>`;
-      if (fee === 'Donation') return `<span class="border border-amber-600 text-amber-700 dark:text-amber-400 dark:border-amber-500 text-xs px-1.5 py-0.5 rounded">${currentLang === 'zh' ? '自愿捐助' : 'Donation'}</span>`;
-      return `<span class="border border-red-400 text-red-600 dark:text-red-400 dark:border-red-400 text-xs px-1.5 py-0.5 rounded">${currentLang === 'zh' ? '付费/测试免费' : 'Paid/Test'}</span>`;
+      if (fee === 'Free') return `<span class="border border-green-600 text-green-700 text-xs px-1.5 py-0.5 rounded">${currentLang === 'zh' ? '免费' : 'Free'}</span>`;
+      if (fee === 'Donation') return `<span class="border border-amber-600 text-amber-700 text-xs px-1.5 py-0.5 rounded">${currentLang === 'zh' ? '自愿捐助' : 'Donation'}</span>`;
+      return `<span class="border border-red-400 text-red-600 text-xs px-1.5 py-0.5 rounded">${currentLang === 'zh' ? '付费/测试免费' : 'Paid/Test'}</span>`;
     }
 
     function renderTimetable(data) {
@@ -630,7 +511,10 @@
         const dayEvents = data.filter(item => item.dayName === dayName);
         if (dayEvents.length === 0) return;
 
+        // Ensure each day column has a sensible minimum width so its inner cards never overflow.
+        // Tailwind arbitrary value `min-w-[250px]` sets a 250px floor, and it works responsively.
         const dayWrapper = document.createElement('div');
+        // Minimum width increased to avoid inner content overflow on larger screens.
         dayWrapper.className = 'bg-white rounded-xl p-5 card-shadow min-w-[350px]';
 
         const displayDayName = currentLang === 'zh' ? dayName : dayEvents[0].dayNameEn;
@@ -806,10 +690,7 @@
       });
     }
 
-    // Initialize Theme & Page
-    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    setTheme(savedTheme);
-
+    // Initialize
     renderTimetable(coursesData);
     renderIcebreakers();
   </script>
