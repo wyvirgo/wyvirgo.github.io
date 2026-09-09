@@ -187,9 +187,11 @@
         let currentSlideIdx = 0;
         let currentLang = localStorage.getItem('lang') || 'en';
 
+        // 渲染动态 Slide 卡片
         function renderSlide() {
             const slide = currentSlides[currentSlideIdx];
             const container = document.getElementById('deckContainer');
+            if (!container || !slide) return;
             
             const tag = currentLang === 'en' ? slide.tagEn : slide.tagZh;
             const title = currentLang === 'en' ? slide.titleEn : slide.titleZh;
@@ -222,6 +224,7 @@
 
         function renderDots() {
             const dotsContainer = document.getElementById('dotsContainer');
+            if (!dotsContainer) return;
             dotsContainer.innerHTML = currentSlides.map((_, idx) => `
                 <button onclick="goToSlide(${idx})" class="w-3 h-3 rounded-full transition-all ${idx === currentSlideIdx ? 'bg-sky-500 scale-125' : 'bg-[var(--border-color)] hover:bg-slate-400'}"></button>
             `).join('');
@@ -237,35 +240,61 @@
             currentSlideIdx = idx; renderSlide();
         }
 
-        function toggleLanguage() {
-            currentLang = currentLang === 'en' ? 'zh' : 'en';
-            localStorage.setItem('lang', currentLang);
+        // 统一双语同步切换函数（同时更新 DOM 静态文本与动态模板渲染）
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            
+            // 替换静态页面上的 [data-en] / [data-zh] 文本
             document.querySelectorAll('[data-en]').forEach(el => {
-                el.textContent = el.getAttribute(`data-${currentLang}`);
+                const text = el.getAttribute(`data-${lang}`);
+                if (text) el.textContent = text;
             });
-            document.getElementById('currentLangLabel').textContent = currentLang === 'en' ? 'EN / 中' : '中 / EN';
+
+            // 更新语言按钮提示
+            const langLabel = document.getElementById('currentLangLabel');
+            if (langLabel) {
+                langLabel.textContent = lang === 'en' ? 'EN / 中' : '中 / EN';
+            }
+
+            // 重新渲染当前 Slide
             renderSlide();
         }
 
+        function toggleLanguage() {
+            const nextLang = (localStorage.getItem('lang') || 'en') === 'zh' ? 'en' : 'zh';
+            setLanguage(nextLang);
+        }
+
+        // 主题切换函数
         function toggleTheme() {
             const html = document.documentElement;
             const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
             html.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
-            document.getElementById('themeIcon').setAttribute('data-lucide', newTheme === 'dark' ? 'moon' : 'sun');
+            const themeIcon = document.getElementById('themeIcon');
+            if (themeIcon) {
+                themeIcon.setAttribute('data-lucide', newTheme === 'dark' ? 'moon' : 'sun');
+            }
             lucide.createIcons();
         }
 
+        // 键盘左右键翻页
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight') nextSlide();
             if (e.key === 'ArrowLeft') prevSlide();
         });
 
-        // Initialize
+        // 页面初始化加载
         const savedTheme = localStorage.getItem('theme') || 'dark';
         document.documentElement.setAttribute('data-theme', savedTheme);
-        document.getElementById('themeIcon').setAttribute('data-lucide', savedTheme === 'dark' ? 'moon' : 'sun');
-        renderSlide();
+        const themeIcon = document.getElementById('themeIcon');
+        if (themeIcon) {
+            themeIcon.setAttribute('data-lucide', savedTheme === 'dark' ? 'moon' : 'sun');
+        }
+
+        const savedLang = localStorage.getItem('lang') || 'en';
+        setLanguage(savedLang);
     </script>
 </body>
 </html>
