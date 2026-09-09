@@ -1,19 +1,15 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="h-full" data-theme="dark">
+<html lang="zh-CN" class="h-full">
 <head>
   <!-- Favicon / Browser Tab Logo -->
   <link rel="icon" href="./assets/ico01.png" type="image/png">
+  <!-- <link rel="icon" href="./assets/logo.svg" type="image/svg+xml"> -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IELTS AI Studio</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-    }
-  </script>
   
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -25,49 +21,16 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap');
     
-    /* CSS Custom Properties for Themes */
-    :root {
-      --bg-primary: #FAF8F5;
-      --bg-card: #FFFFFF;
-      --border-color: #ECE7E0;
-      --text-primary: #23272F;
-      --text-secondary: #646E78;
-      --text-muted: #808A94;
-      --input-bg: #FAF8F5;
-      --input-border: #E2DCD5;
-      --header-bg: rgba(255, 255, 255, 0.9);
-      --card-inner-bg: #FAF8F5;
-      --card-inner-border: #ECE7E0;
-    }
-
-    [data-theme="dark"] {
-      --bg-primary: #0F172A;
-      --bg-card: #1E293B;
-      --border-color: #334155;
-      --text-primary: #F8FAFC;
-      --text-secondary: #94A3B8;
-      --text-muted: #64748B;
-      --input-bg: #0F172A;
-      --input-border: #334155;
-      --header-bg: rgba(15, 23, 42, 0.9);
-      --card-inner-bg: #111827;
-      --card-inner-border: #1F2937;
-    }
-
-    * {
-      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-    }
-
     body {
       font-family: 'Plus Jakarta Sans', 'Noto Sans SC', sans-serif;
-      background-color: var(--bg-primary);
-      color: var(--text-primary);
+      background-color: #FAF8F5;
+      color: #23272F;
     }
 
     /* Uplifting Bright Morandi Tokens */
-    .bg-morandi-base { background-color: var(--bg-primary); }
-    .bg-morandi-card { background-color: var(--bg-card); }
-    .border-morandi { border-color: var(--border-color); }
+    .bg-morandi-base { background-color: #FAF8F5; }
+    .bg-morandi-card { background-color: #FFFFFF; }
+    .border-morandi { border-color: #ECE7E0; }
 
     /* Cheerful Bright Morandi Tags */
     .tag-sage { background-color: #EAF7F0; color: #1D8A58; border: 1px solid #B8E8D0; }
@@ -76,51 +39,17 @@
     .tag-rose { background-color: #FFF2EF; color: #E04832; border: 1px solid #FCD3C9; }
     .tag-lavender { background-color: #F5F0FF; color: #7C3AED; border: 1px solid #DDD6FE; }
 
-    /* Dark Mode Tag Overrides */
-    [data-theme="dark"] .tag-sage { background-color: rgba(6, 78, 59, 0.4); color: #34D399; border-color: rgba(5, 150, 105, 0.4); }
-    [data-theme="dark"] .tag-blue { background-color: rgba(30, 58, 138, 0.4); color: #60A5FA; border-color: rgba(37, 99, 235, 0.4); }
-    [data-theme="dark"] .tag-ochre { background-color: rgba(120, 53, 15, 0.4); color: #FBBF24; border-color: rgba(217, 119, 6, 0.4); }
-    [data-theme="dark"] .tag-rose { background-color: rgba(136, 19, 55, 0.4); color: #F87171; border-color: rgba(225, 29, 72, 0.4); }
-    [data-theme="dark"] .tag-lavender { background-color: rgba(76, 29, 149, 0.4); color: #A78BFA; border-color: rgba(124, 58, 237, 0.4); }
-
     /* Bright Highlight Method Boxes */
     .method-box-listening { background-color: #F0FBF6; border-left: 4px solid #1D8A58; }
     .method-box-reading { background-color: #F0F7FF; border-left: 4px solid #1E64D4; }
     .method-box-speaking { background-color: #FFFDF0; border-left: 4px solid #C27803; }
     .method-box-writing { background-color: #FFF5F3; border-left: 4px solid #E04832; }
 
-    /* Dark Mode Method Boxes */
-    [data-theme="dark"] .method-box-listening { background-color: rgba(6, 78, 59, 0.25); border-left: 4px solid #10B981; }
-    [data-theme="dark"] .method-box-reading { background-color: rgba(30, 58, 138, 0.25); border-left: 4px solid #3B82F6; }
-    [data-theme="dark"] .method-box-speaking { background-color: rgba(120, 53, 15, 0.25); border-left: 4px solid #F59E0B; }
-    [data-theme="dark"] .method-box-writing { background-color: rgba(136, 19, 55, 0.25); border-left: 4px solid #F43F5E; }
-
     /* Tab active state */
     .tab-btn.active {
-      background-color: var(--text-primary);
-      color: var(--bg-card);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    /* Dynamic UI Component Overrides for Dark Mode */
-    [data-theme="dark"] .bg-white { background-color: var(--bg-card) !important; }
-    [data-theme="dark"] .bg-\[\#FAF8F5\] { background-color: var(--card-inner-bg) !important; }
-    [data-theme="dark"] .border-morandi, 
-    [data-theme="dark"] .border-\[\#ECE7E0\], 
-    [data-theme="dark"] .border-\[\#E2DCD5\],
-    [data-theme="dark"] .border-\[\#F5F0EA\],
-    [data-theme="dark"] .border-\[\#EAE3DA\] { border-color: var(--border-color) !important; }
-
-    [data-theme="dark"] .text-\[\#23272F\] { color: var(--text-primary) !important; }
-    [data-theme="dark"] .text-\[\#646E78\], 
-    [data-theme="dark"] .text-\[\#4E5660\] { color: var(--text-secondary) !important; }
-
-    [data-theme="dark"] input, 
-    [data-theme="dark"] select, 
-    [data-theme="dark"] textarea {
-      background-color: var(--input-bg) !important;
-      color: var(--text-primary) !important;
-      border-color: var(--input-border) !important;
+      background-color: #23272F;
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(35, 39, 47, 0.15);
     }
 
     /* Filter button active state */
@@ -129,13 +58,11 @@
     }
 
     /* Markdown output container styling */
-    .markdown-body h3 { font-weight: 700; font-size: 1.05rem; margin-top: 1rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+    .markdown-body h3 { font-weight: 700; font-size: 1.05rem; margin-top: 1rem; margin-bottom: 0.5rem; color: #23272F; }
     .markdown-body h4 { font-weight: 600; font-size: 0.95rem; margin-top: 0.75rem; margin-bottom: 0.25rem; color: #1D8A58; }
     .markdown-body ul { list-style-type: disc; padding-left: 1.25rem; margin-bottom: 0.75rem; }
     .markdown-body p { margin-bottom: 0.5rem; line-height: 1.6; }
-    .markdown-body code { background-color: var(--card-inner-bg); padding: 0.1rem 0.3rem; border-radius: 0.25rem; font-size: 0.85em; }
-
-    [data-theme="dark"] .markdown-body code { background-color: #334155; color: #38BDF8; }
+    .markdown-body code { background-color: #F3EFEA; padding: 0.1rem 0.3rem; border-radius: 0.25rem; font-size: 0.85em; }
 
     /* Hide export artifacts */
     body.exporting .no-export { display: none !important; }
@@ -145,13 +72,13 @@
 <body class="min-h-full pb-12 flex flex-col">
 
   <!-- Top Navigation Header -->
-  <header class="bg-white/90 dark:bg-[#0F172A]/90 backdrop-blur-md sticky top-0 z-30 border-b border-morandi no-export shadow-sm">
+  <header class="bg-white/90 backdrop-blur-md sticky top-0 z-30 border-b border-morandi no-export shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
       
       <!-- Brand & Title & Logo -->
       <div class="flex items-center space-x-3">
         <!-- Modern Bright Morandi Logo -->
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#FFF2EF] via-[#EAF7F0] to-[#EDF5FF] dark:from-[#1E293B] dark:via-[#0F172A] dark:to-[#1E293B] border border-[#E2ECE9] dark:border-[#334155] flex items-center justify-center shadow-sm flex-shrink-0">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#FFF2EF] via-[#EAF7F0] to-[#EDF5FF] border border-[#E2ECE9] flex items-center justify-center shadow-sm flex-shrink-0">
           <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 3L2 8L12 13L22 8L12 3Z" stroke="#1E64D4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M5 9.5V16.5C5 16.5 8.5 18.5 12 18.5C15.5 18.5 19 16.5 19 16.5V9.5" stroke="#E04832" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -174,24 +101,18 @@
             class="w-36 sm:w-48 pl-8 pr-3 py-1.5 text-xs rounded-xl bg-[#FAF8F5] border border-[#E2DCD5] focus:outline-none focus:ring-2 focus:ring-[#1E64D4] text-[#23272F] placeholder-[#A0AAB2]">
         </div>
 
-        <!-- Dark / Light Theme Switcher Button -->
-        <button id="theme-toggle-btn" class="px-3 py-1.5 text-xs font-semibold rounded-xl bg-[#FAF8F5] dark:bg-[#1E293B] text-[#23272F] dark:text-[#F8FAFC] border border-[#E2DCD5] dark:border-[#334155] hover:bg-[#F0ECE1] dark:hover:bg-[#334155] transition flex items-center space-x-1.5">
-          <i class="fa-solid fa-moon text-xs text-indigo-500 dark:text-amber-400" id="theme-toggle-icon"></i>
-          <span id="theme-toggle-text">暗色模式</span>
-        </button>
-
         <!-- Language Toggle -->
-        <button id="lang-toggle-btn" class="px-3 py-1.5 text-xs font-semibold rounded-xl bg-[#F5F0FF] dark:bg-[#4C1D95]/30 text-[#7C3AED] dark:text-[#A78BFA] border border-[#DDD6FE] dark:border-[#7C3AED]/40 hover:bg-[#EDE5FF] transition flex items-center space-x-1.5">
+        <button id="lang-toggle-btn" class="px-3 py-1.5 text-xs font-semibold rounded-xl bg-[#F5F0FF] text-[#7C3AED] border border-[#DDD6FE] hover:bg-[#EDE5FF] transition flex items-center space-x-1.5">
           <i class="fa-solid fa-globe text-xs"></i>
           <span id="lang-toggle-text">EN / 中文</span>
         </button>
 
         <!-- Export Buttons -->
-        <button id="export-png-btn" class="px-3 py-1.5 text-xs font-medium rounded-xl bg-[#EDF5FF] dark:bg-[#1E3A8A]/30 text-[#1E64D4] dark:text-[#60A5FA] border border-[#BFDBFE] dark:border-[#2563EB]/40 hover:bg-[#DCEBFF] transition flex items-center space-x-1">
+        <button id="export-png-btn" class="px-3 py-1.5 text-xs font-medium rounded-xl bg-[#EDF5FF] text-[#1E64D4] border border-[#BFDBFE] hover:bg-[#DCEBFF] transition flex items-center space-x-1">
           <i class="fa-solid fa-image text-xs"></i>
           <span id="export-png-text">导出图片</span>
         </button>
-        <button id="export-pdf-btn" class="px-3 py-1.5 text-xs font-medium rounded-xl bg-[#FFF9E6] dark:bg-[#78350F]/30 text-[#C27803] dark:text-[#FBBF24] border border-[#FDE68A] dark:border-[#D97706]/40 hover:bg-[#FFF2C6] transition flex items-center space-x-1">
+        <button id="export-pdf-btn" class="px-3 py-1.5 text-xs font-medium rounded-xl bg-[#FFF9E6] text-[#C27803] border border-[#FDE68A] hover:bg-[#FFF2C6] transition flex items-center space-x-1">
           <i class="fa-solid fa-file-pdf text-xs"></i>
           <span id="export-pdf-text">导出 PDF</span>
         </button>
@@ -199,16 +120,16 @@
     </div>
 
     <!-- Navigation Tabs Bar -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-[#F5F0EA] dark:border-[#334155] py-2 flex overflow-x-auto gap-2 no-export">
-      <button class="tab-btn active px-4 py-1.5 text-xs font-semibold rounded-xl text-[#646E78] hover:bg-[#FAF8F5] dark:hover:bg-[#1E293B] transition flex items-center space-x-1.5 whitespace-nowrap" data-tab="tab-roadmap">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-[#F5F0EA] py-2 flex overflow-x-auto gap-2 no-export">
+      <button class="tab-btn active px-4 py-1.5 text-xs font-semibold rounded-xl text-[#646E78] hover:bg-[#FAF8F5] transition flex items-center space-x-1.5 whitespace-nowrap" data-tab="tab-roadmap">
         <i class="fa-solid fa-map-location-dot"></i>
         <span id="nav-roadmap-text">备考路线图 & 模块</span>
       </button>
-      <button class="tab-btn px-4 py-1.5 text-xs font-semibold rounded-xl text-[#646E78] hover:bg-[#FAF8F5] dark:hover:bg-[#1E293B] transition flex items-center space-x-1.5 whitespace-nowrap" data-tab="tab-theory">
+      <button class="tab-btn px-4 py-1.5 text-xs font-semibold rounded-xl text-[#646E78] hover:bg-[#FAF8F5] transition flex items-center space-x-1.5 whitespace-nowrap" data-tab="tab-theory">
         <i class="fa-solid fa-brain"></i>
         <span id="nav-theory-text">科学习得理论基础</span>
       </button>
-      <button class="tab-btn px-4 py-1.5 text-xs font-semibold rounded-xl text-[#646E78] hover:bg-[#FAF8F5] dark:hover:bg-[#1E293B] transition flex items-center space-x-1.5 whitespace-nowrap" data-tab="tab-ai-studio">
+      <button class="tab-btn px-4 py-1.5 text-xs font-semibold rounded-xl text-[#646E78] hover:bg-[#FAF8F5] transition flex items-center space-x-1.5 whitespace-nowrap" data-tab="tab-ai-studio">
         <i class="fa-solid fa-robot text-[#1E64D4]"></i>
         <span id="nav-aistudio-text">AI 导师 & Prompts 工作室</span>
       </button>
@@ -276,7 +197,7 @@
           
           <!-- Theory 1 -->
           <div class="bg-[#FAF8F5] rounded-xl p-5 border border-[#ECE7E0]">
-            <div class="w-9 h-9 rounded-xl bg-[#EAF7F0] dark:bg-[#064E3B]/40 border border-[#B8E8D0] dark:border-[#059669]/40 flex items-center justify-center text-[#1D8A58] dark:text-[#34D399] mb-3 font-bold text-sm">
+            <div class="w-9 h-9 rounded-xl bg-[#EAF7F0] border border-[#B8E8D0] flex items-center justify-center text-[#1D8A58] mb-3 font-bold text-sm">
               i+1
             </div>
             <h4 class="text-sm font-bold text-[#23272F] mb-1">Krashen 可理解性输入假说</h4>
@@ -284,14 +205,14 @@
             <p class="text-xs text-[#4E5660] leading-relaxed mb-3">
               语言习得发生在理解略高于当前水平 ($i+1$) 的输入时。材料难度保持在 85%-90% 可理解度，既无挫败感，又能实现自然吸收。
             </p>
-            <div class="text-[11px] text-[#1D8A58] dark:text-[#34D399] bg-white dark:bg-[#1E293B] p-2.5 rounded-lg border border-[#D5EFE2] dark:border-[#059669]/30 font-medium">
+            <div class="text-[11px] text-[#1D8A58] bg-white p-2.5 rounded-lg border border-[#D5EFE2] font-medium">
               💡 <b>雅思应用:</b> 5.0选 News in Levels，6.5+选 The Economist，精准对标 $i+1$。
             </div>
           </div>
 
           <!-- Theory 2 -->
           <div class="bg-[#FAF8F5] rounded-xl p-5 border border-[#ECE7E0]">
-            <div class="w-9 h-9 rounded-xl bg-[#FFF2EF] dark:bg-[#881337]/40 border border-[#FCD3C9] dark:border-[#E11D48]/40 flex items-center justify-center text-[#E04832] dark:text-[#F87171] mb-3 font-bold text-sm">
+            <div class="w-9 h-9 rounded-xl bg-[#FFF2EF] border border-[#FCD3C9] flex items-center justify-center text-[#E04832] mb-3 font-bold text-sm">
               <i class="fa-solid fa-bullhorn"></i>
             </div>
             <h4 class="text-sm font-bold text-[#23272F] mb-1">Swain 受迫输出假说</h4>
@@ -299,14 +220,14 @@
             <p class="text-xs text-[#4E5660] leading-relaxed mb-3">
               单纯听读输入无法自动转化为高分口笔头表达。必须通过“受迫”输出，促使大脑注意到表达缺口（Noticing Gap），从而重构语法与词汇。
             </p>
-            <div class="text-[11px] text-[#E04832] dark:text-[#F87171] bg-white dark:bg-[#1E293B] p-2.5 rounded-lg border border-[#FDE3DC] dark:border-[#E11D48]/30 font-medium">
+            <div class="text-[11px] text-[#E04832] bg-white p-2.5 rounded-lg border border-[#FDE3DC] font-medium">
               💡 <b>雅思应用:</b> 听完 TED 或读完卫报后，限时 3 分钟进行口头或书面 150 词 Summary。
             </div>
           </div>
 
           <!-- Theory 3 -->
           <div class="bg-[#FAF8F5] rounded-xl p-5 border border-[#ECE7E0]">
-            <div class="w-9 h-9 rounded-xl bg-[#EDF5FF] dark:bg-[#1E3A8A]/40 border border-[#BFDBFE] dark:border-[#2563EB]/40 flex items-center justify-center text-[#1E64D4] dark:text-[#60A5FA] mb-3 font-bold text-sm">
+            <div class="w-9 h-9 rounded-xl bg-[#EDF5FF] border border-[#BFDBFE] flex items-center justify-center text-[#1E64D4] mb-3 font-bold text-sm">
               <i class="fa-solid fa-filter"></i>
             </div>
             <h4 class="text-sm font-bold text-[#23272F] mb-1">Narrow Input 狭窄输入法</h4>
@@ -314,14 +235,14 @@
             <p class="text-xs text-[#4E5660] leading-relaxed mb-3">
               集中在同一话题（如“环境保护”或“人工智能”）连续阅读/收听 5-8 篇文章。核心术语重复出现，实现高频无痛词汇内化。
             </p>
-            <div class="text-[11px] text-[#1E64D4] dark:text-[#60A5FA] bg-white dark:bg-[#1E293B] p-2.5 rounded-lg border border-[#D2E4FF] dark:border-[#2563EB]/30 font-medium">
+            <div class="text-[11px] text-[#1E64D4] bg-white p-2.5 rounded-lg border border-[#D2E4FF] font-medium">
               💡 <b>雅思应用:</b> 连续3天攻克“科技与社会”类阅读/口语题，建立主题搭配库。
             </div>
           </div>
 
           <!-- Theory 4 -->
           <div class="bg-[#FAF8F5] rounded-xl p-5 border border-[#ECE7E0]">
-            <div class="w-9 h-9 rounded-xl bg-[#FFF9E6] dark:bg-[#78350F]/40 border border-[#FDE68A] dark:border-[#D97706]/40 flex items-center justify-center text-[#C27803] dark:text-[#FBBF24] mb-3 font-bold text-sm">
+            <div class="w-9 h-9 rounded-xl bg-[#FFF9E6] border border-[#FDE68A] flex items-center justify-center text-[#C27803] mb-3 font-bold text-sm">
               <i class="fa-solid fa-arrows-rotate"></i>
             </div>
             <h4 class="text-sm font-bold text-[#23272F] mb-1">间隔重复与主动检索</h4>
@@ -329,14 +250,14 @@
             <p class="text-xs text-[#4E5660] leading-relaxed mb-3">
               拒绝被动看书，采用“线索卡提取”与“听写提炼”。在遗忘临界点（第1/3/7/14天）主动提取回忆，巩固长期记忆。
             </p>
-            <div class="text-[11px] text-[#C27803] dark:text-[#FBBF24] bg-white dark:bg-[#1E293B] p-2.5 rounded-lg border border-[#FEF0B2] dark:border-[#D97706]/30 font-medium">
+            <div class="text-[11px] text-[#C27803] bg-white p-2.5 rounded-lg border border-[#FEF0B2] font-medium">
               💡 <b>雅思应用:</b> 精听单句听写（Dictation）+ 雅思听力错词间隔复习卡。
             </div>
           </div>
 
           <!-- Theory 5 -->
           <div class="bg-[#FAF8F5] rounded-xl p-5 border border-[#ECE7E0]">
-            <div class="w-9 h-9 rounded-xl bg-[#F5F0FF] dark:bg-[#4C1D95]/40 border border-[#DDD6FE] dark:border-[#7C3AED]/40 flex items-center justify-center text-[#7C3AED] dark:text-[#A78BFA] mb-3 font-bold text-sm">
+            <div class="w-9 h-9 rounded-xl bg-[#F5F0FF] border border-[#DDD6FE] flex items-center justify-center text-[#7C3AED] mb-3 font-bold text-sm">
               <i class="fa-solid fa-square-poll-vertical"></i>
             </div>
             <h4 class="text-sm font-bold text-[#23272F] mb-1">错题归因矩阵 (Error Log Matrix)</h4>
@@ -344,14 +265,14 @@
             <p class="text-xs text-[#4E5660] leading-relaxed mb-3">
               盲目刷题收益极低！将每道错题归纳为“同义替换未识别”、“长难句逻辑误判”、“盲目过度推导”或“连读吞音听辨失误”。
             </p>
-            <div class="text-[11px] text-[#7C3AED] dark:text-[#A78BFA] bg-white dark:bg-[#1E293B] p-2.5 rounded-lg border border-[#E9E1FE] dark:border-[#7C3AED]/30 font-medium">
+            <div class="text-[11px] text-[#7C3AED] bg-white p-2.5 rounded-lg border border-[#E9E1FE] font-medium">
               💡 <b>雅思应用:</b> 建立个人错题日志，对听力/阅读错题进行归因分析与微观修正。
             </div>
           </div>
 
           <!-- Theory 6 -->
           <div class="bg-[#FAF8F5] rounded-xl p-5 border border-[#ECE7E0]">
-            <div class="w-9 h-9 rounded-xl bg-[#EAF7F0] dark:bg-[#064E3B]/40 border border-[#B8E8D0] dark:border-[#059669]/40 flex items-center justify-center text-[#1D8A58] dark:text-[#34D399] mb-3 font-bold text-sm">
+            <div class="w-9 h-9 rounded-xl bg-[#EAF7F0] border border-[#B8E8D0] flex items-center justify-center text-[#1D8A58] mb-3 font-bold text-sm">
               <i class="fa-solid fa-feather-pointed"></i>
             </div>
             <h4 class="text-sm font-bold text-[#23272F] mb-1">微观编辑与去套话化</h4>
@@ -359,7 +280,7 @@
             <p class="text-xs text-[#4E5660] leading-relaxed mb-3">
               突破 6.5 分瓶颈的核心：彻底摒弃模板套话（如 "With the rapid development..."），通过三步微观修辞精简冗余、升级搭配。
             </p>
-            <div class="text-[11px] text-[#1D8A58] dark:text-[#34D399] bg-white dark:bg-[#1E293B] p-2.5 rounded-lg border border-[#D5EFE2] dark:border-[#059669]/30 font-medium">
+            <div class="text-[11px] text-[#1D8A58] bg-white p-2.5 rounded-lg border border-[#D5EFE2] font-medium">
               💡 <b>雅思应用:</b> 使用 Ludwig 语料库核对地道 Academic Collocations。
             </div>
           </div>
@@ -376,7 +297,7 @@
         <div class="lg:col-span-5 space-y-4">
           <div class="bg-white rounded-2xl p-5 border border-morandi shadow-sm">
             <div class="flex items-center space-x-2 mb-3">
-              <div class="w-8 h-8 rounded-xl bg-[#F5F0FF] dark:bg-[#4C1D95]/40 text-[#7C3AED] dark:text-[#A78BFA] flex items-center justify-center font-bold">
+              <div class="w-8 h-8 rounded-xl bg-[#F5F0FF] text-[#7C3AED] flex items-center justify-center font-bold">
                 <i class="fa-solid fa-wand-magic-sparkles text-sm"></i>
               </div>
               <div>
@@ -405,9 +326,9 @@
                     <input type="radio" name="targetBand" value="6.5" class="text-[#1E64D4]">
                     <span class="text-xs font-medium">Band 6.5</span>
                   </label>
-                  <label class="cursor-pointer border border-[#B8E8D0] dark:border-[#059669]/50 rounded-xl p-2 text-center bg-[#EAF7F0] dark:bg-[#064E3B]/40 transition flex items-center justify-center space-x-1">
+                  <label class="cursor-pointer border border-[#B8E8D0] rounded-xl p-2 text-center bg-[#EAF7F0] transition flex items-center justify-center space-x-1">
                     <input type="radio" name="targetBand" value="7.0" checked class="text-[#1D8A58]">
-                    <span class="text-xs font-bold text-[#1D8A58] dark:text-[#34D399]">Band 7.0</span>
+                    <span class="text-xs font-bold text-[#1D8A58]">Band 7.0</span>
                   </label>
                   <label class="cursor-pointer border border-[#E2DCD5] rounded-xl p-2 text-center hover:bg-[#FAF8F5] transition flex items-center justify-center space-x-1">
                     <input type="radio" name="targetBand" value="7.5+" class="text-[#1E64D4]">
@@ -452,7 +373,7 @@
           <div class="bg-white rounded-2xl p-5 border border-morandi shadow-sm">
             <div class="flex items-center justify-between mb-2">
               <span class="text-xs font-bold text-[#23272F] flex items-center">
-                <i class="fa-solid fa-terminal mr-1.5 text-[#7C3AED] dark:text-[#A78BFA]"></i>
+                <i class="fa-solid fa-terminal mr-1.5 text-[#7C3AED]"></i>
                 <span id="prompt-box-title">生成的 Copied Prompt 文本</span>
               </span>
               <button id="copy-prompt-btn" class="px-3 py-1 text-[11px] font-semibold rounded-lg tag-sage hover:opacity-90 transition flex items-center space-x-1">
@@ -460,22 +381,22 @@
                 <span id="copy-prompt-text">复制 Prompt</span>
               </button>
             </div>
-            <textarea id="prompt-output-code" rows="6" readonly class="w-full text-xs p-3 rounded-xl bg-[#23272F] dark:bg-[#090D16] text-[#ECE7E0] font-mono leading-relaxed focus:outline-none resize-y"></textarea>
+            <textarea id="prompt-output-code" rows="6" readonly class="w-full text-xs p-3 rounded-xl bg-[#23272F] text-[#ECE7E0] font-mono leading-relaxed focus:outline-none resize-y"></textarea>
           </div>
 
           <!-- Live AI Grading Evaluation Output -->
           <div class="bg-white rounded-2xl p-5 border border-morandi shadow-sm">
-            <div class="flex items-center justify-between mb-3 pb-2 border-b border-[#F5F0EA] dark:border-[#334155]">
+            <div class="flex items-center justify-between mb-3 pb-2 border-b border-[#F5F0EA]">
               <span class="text-xs font-bold text-[#23272F] flex items-center">
-                <i class="fa-solid fa-brain text-[#1E64D4] dark:text-[#60A5FA] mr-1.5"></i>
+                <i class="fa-solid fa-brain text-[#1E64D4] mr-1.5"></i>
                 <span id="ai-result-title">Gemini AI 雅思考官精批报告</span>
               </span>
-              <span id="ai-status-badge" class="px-2.5 py-0.5 text-[10px] font-semibold rounded-md bg-[#FAF8F5] dark:bg-[#111827] text-[#808A94]">就绪</span>
+              <span id="ai-status-badge" class="px-2.5 py-0.5 text-[10px] font-semibold rounded-md bg-[#FAF8F5] text-[#808A94]">就绪</span>
             </div>
 
             <!-- Loading Spinner -->
             <div id="ai-loading-spinner" class="hidden text-center py-12">
-              <i class="fa-solid fa-circle-notch fa-spin text-2xl text-[#1E64D4] dark:text-[#60A5FA] mb-2"></i>
+              <i class="fa-solid fa-circle-notch fa-spin text-2xl text-[#1E64D4] mb-2"></i>
               <p class="text-xs text-[#646E78]" id="ai-loading-text">正在调用 Gemini AI 考官模型生成深度精批报告...</p>
             </div>
 
@@ -495,8 +416,8 @@
   </main>
 
   <!-- Toast Notification -->
-  <div id="toast-notification" class="fixed bottom-6 right-6 z-50 bg-[#23272F] dark:bg-[#1E293B] text-white px-4 py-3 rounded-2xl shadow-xl flex items-center space-x-3 translate-y-20 opacity-0 transition-all duration-300 pointer-events-none border dark:border-[#334155]">
-    <i class="fa-solid fa-circle-notch fa-spin text-sm text-[#1D8A58] dark:text-[#34D399]" id="toast-icon"></i>
+  <div id="toast-notification" class="fixed bottom-6 right-6 z-50 bg-[#23272F] text-white px-4 py-3 rounded-2xl shadow-xl flex items-center space-x-3 translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <i class="fa-solid fa-circle-notch fa-spin text-sm text-[#1D8A58]" id="toast-icon"></i>
     <span class="text-xs font-medium" id="toast-msg">正在处理中...</span>
   </div>
 
@@ -904,8 +825,6 @@
         skillReading: '阅读',
         skillSpeaking: '口语',
         skillWriting: '写作',
-        themeDark: '暗色模式',
-        themeLight: '亮色模式',
         emptyTitle: '未找到匹配的资源或方法',
         emptyDesc: '请尝试调整筛选条件或清除搜索关键字。',
         resetFilters: '重置筛选条件',
@@ -945,8 +864,6 @@
         skillReading: 'Reading',
         skillSpeaking: 'Speaking',
         skillWriting: 'Writing',
-        themeDark: 'Dark Mode',
-        themeLight: 'Light Mode',
         emptyTitle: 'No Matching Resources Found',
         emptyDesc: 'Try adjusting your filter criteria or clearing search keywords.',
         resetFilters: 'Reset Filters',
@@ -977,40 +894,8 @@
     const emptyState = document.getElementById('empty-state');
     const searchInput = document.getElementById('search-input');
     const langToggleBtn = document.getElementById('lang-toggle-btn');
-    const themeToggleBtn = document.getElementById('theme-toggle-btn');
     const toastNotification = document.getElementById('toast-notification');
     const toastMsg = document.getElementById('toast-msg');
-
-    // Dark Mode Theme Switching Logic
-    function setTheme(theme) {
-      const html = document.documentElement;
-      html.setAttribute('data-theme', theme);
-      if (theme === 'dark') {
-        html.classList.add('dark');
-      } else {
-        html.classList.remove('dark');
-      }
-      localStorage.setItem('theme', theme);
-
-      // Update Theme Button UI
-      const themeIcon = document.getElementById('theme-toggle-icon');
-      const themeText = document.getElementById('theme-toggle-text');
-      if (themeIcon && themeText) {
-        if (theme === 'dark') {
-          themeIcon.className = 'fa-solid fa-sun text-xs text-amber-400';
-          themeText.textContent = i18nDict[currentLang].themeLight;
-        } else {
-          themeIcon.className = 'fa-solid fa-moon text-xs text-indigo-500';
-          themeText.textContent = i18nDict[currentLang].themeDark;
-        }
-      }
-    }
-
-    function toggleTheme() {
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      setTheme(newTheme);
-    }
 
     // Language Switcher Function
     function updateLanguageUI() {
@@ -1031,10 +916,6 @@
       document.getElementById('empty-title').textContent = texts.emptyTitle;
       document.getElementById('empty-desc').textContent = texts.emptyDesc;
       document.getElementById('reset-filters-btn').textContent = texts.resetFilters;
-
-      // Update theme toggle text
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      document.getElementById('theme-toggle-text').textContent = isDark ? texts.themeLight : texts.themeDark;
 
       // Filter Buttons
       document.querySelectorAll('.stage-btn[data-stage="all"]').forEach(b => b.textContent = texts.allStages);
@@ -1083,15 +964,15 @@
         const stageSubText = i18nDict[currentLang].stageSubtitles[stageKey];
 
         stageSection.innerHTML = `
-          <div class="mb-5 pb-3 border-b border-[#F5F0EA] dark:border-[#334155] flex flex-col md:flex-row md:items-center justify-between gap-2">
+          <div class="mb-5 pb-3 border-b border-[#F5F0EA] flex flex-col md:flex-row md:items-center justify-between gap-2">
             <div>
               <h3 class="text-base font-bold text-[#23272F] flex items-center">
-                <span class="w-2.5 h-2.5 rounded-full bg-[#1D8A58] dark:bg-[#34D399] mr-2 inline-block"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-[#1D8A58] mr-2 inline-block"></span>
                 ${stageTitleText}
               </h3>
               <p class="text-xs text-[#646E78] mt-0.5">${stageSubText}</p>
             </div>
-            <span class="text-xs font-semibold px-2.5 py-1 rounded-xl bg-[#FAF8F5] dark:bg-[#111827] border border-[#E2DCD5] dark:border-[#334155] text-[#646E78] self-start md:self-auto">
+            <span class="text-xs font-semibold px-2.5 py-1 rounded-xl bg-[#FAF8F5] border border-[#E2DCD5] text-[#646E78] self-start md:self-auto">
               ${stageItems.length} ${currentLang === 'zh' ? '项技能模块' : 'Modules'}
             </span>
           </div>
@@ -1144,7 +1025,7 @@
               <i class="fa-solid fa-link text-[10px] mr-1.5 text-[#A0AAB2]"></i>
               <span class="truncate max-w-[300px]">${platform}</span>
               ${item.url ? `
-                <a href="${item.url}" target="_blank" rel="noopener" class="ml-1.5 text-[#1E64D4] dark:text-[#60A5FA] hover:underline flex items-center no-export" title="${i18nDict[currentLang].visitPlatform}">
+                <a href="${item.url}" target="_blank" rel="noopener" class="ml-1.5 text-[#1E64D4] hover:underline flex items-center no-export" title="${i18nDict[currentLang].visitPlatform}">
                   <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                 </a>
               ` : ''}
@@ -1156,7 +1037,7 @@
             <!-- EMBEDDED RECOMMENDED METHOD CALLOUT BOX -->
             <div class="${methodBoxClass} p-3 rounded-r-xl mb-3">
               <div class="flex items-center text-xs font-bold text-[#23272F] mb-1">
-                <i class="fa-solid fa-lightbulb text-[11px] mr-1.5 text-[#C27803] dark:text-[#FBBF24]"></i>
+                <i class="fa-solid fa-lightbulb text-[11px] mr-1.5 text-[#C27803]"></i>
                 <span>${methodTitle}</span>
               </div>
               <p class="text-[11px] text-[#4E5660] leading-normal">${methodDesc}</p>
@@ -1165,9 +1046,9 @@
 
           <!-- Action Steps -->
           ${steps.length > 0 ? `
-            <div class="pt-2.5 border-t border-[#EAE3DA] dark:border-[#334155] text-[11px] text-[#646E78] space-y-1">
+            <div class="pt-2.5 border-t border-[#EAE3DA] text-[11px] text-[#646E78] space-y-1">
               <div class="font-semibold text-[#23272F] mb-1 flex items-center">
-                <i class="fa-solid fa-list-check text-[10px] mr-1.5 text-[#1D8A58] dark:text-[#34D399]"></i>
+                <i class="fa-solid fa-list-check text-[10px] mr-1.5 text-[#1D8A58]"></i>
                 ${i18nDict[currentLang].actionStepsLabel}
               </div>
               ${steps.map(step => `
@@ -1231,7 +1112,7 @@
       spinner.classList.remove('hidden');
       reportContainer.innerHTML = '';
       badge.textContent = '分析中...';
-      badge.className = 'px-2.5 py-0.5 text-[10px] font-semibold rounded-md bg-[#FFF9E6] dark:bg-[#78350F]/40 text-[#C27803] dark:text-[#FBBF24]';
+      badge.className = 'px-2.5 py-0.5 text-[10px] font-semibold rounded-md bg-[#FFF9E6] text-[#C27803]';
 
       showToast(i18nDict[currentLang].toastAiRunning);
 
@@ -1272,7 +1153,7 @@
 
         if (candidateText) {
           badge.textContent = '精批完成';
-          badge.className = 'px-2.5 py-0.5 text-[10px] font-semibold rounded-md bg-[#EAF7F0] dark:bg-[#064E3B]/40 text-[#1D8A58] dark:text-[#34D399]';
+          badge.className = 'px-2.5 py-0.5 text-[10px] font-semibold rounded-md bg-[#EAF7F0] text-[#1D8A58]';
           
           let htmlResult = candidateText
             .replace(/^### (.*$)/gim, '<h3>$1</h3>')
@@ -1290,9 +1171,9 @@
       } catch (err) {
         console.error('AI Error:', err);
         badge.textContent = '建议使用复制功能';
-        badge.className = 'px-2.5 py-0.5 text-[10px] font-semibold rounded-md bg-[#FFF2EF] dark:bg-[#881337]/40 text-[#E04832] dark:text-[#F87171]';
+        badge.className = 'px-2.5 py-0.5 text-[10px] font-semibold rounded-md bg-[#FFF2EF] text-[#E04832]';
         reportContainer.innerHTML = `
-          <div class="p-4 bg-[#FFF2EF] dark:bg-[#881337]/30 border border-[#FCD3C9] dark:border-[#E11D48]/40 rounded-xl text-[#E04832] dark:text-[#F87171]">
+          <div class="p-4 bg-[#FFF2EF] border border-[#FCD3C9] rounded-xl text-[#E04832]">
             <p><b>生成提示：</b> 点击上方的“复制 Prompt”按钮，直接将生成好的考官级 Prompt 粘贴至 ChatGPT、Gemini 或 Claude 中即可获得精准回复！</p>
           </div>
         `;
@@ -1304,13 +1185,6 @@
 
     // Initialization & Event Listeners
     document.addEventListener('DOMContentLoaded', () => {
-
-      // Initialize Theme
-      const savedTheme = localStorage.getItem('theme') || 'light';
-      setTheme(savedTheme);
-
-      // Theme Switcher Event
-      themeToggleBtn.addEventListener('click', toggleTheme);
 
       // Language Switcher Event
       langToggleBtn.addEventListener('click', () => {
@@ -1416,9 +1290,8 @@
       document.getElementById('export-png-btn').addEventListener('click', async () => {
         showToast(i18nDict[currentLang].toastExportPng);
         document.body.classList.add('exporting');
-        const currentThemeBg = document.documentElement.getAttribute('data-theme') === 'dark' ? '#0F172A' : '#FAF8F5';
         try {
-          const canvas = await html2canvas(appContainer, { scale: 2, useCORS: true, backgroundColor: currentThemeBg });
+          const canvas = await html2canvas(appContainer, { scale: 2, useCORS: true, backgroundColor: '#FAF8F5' });
           const link = document.createElement('a');
           link.download = 'IELTS_AI_Studio_Roadmap.png';
           link.href = canvas.toDataURL('image/png');
@@ -1435,9 +1308,8 @@
       document.getElementById('export-pdf-btn').addEventListener('click', async () => {
         showToast(i18nDict[currentLang].toastExportPdf);
         document.body.classList.add('exporting');
-        const currentThemeBg = document.documentElement.getAttribute('data-theme') === 'dark' ? '#0F172A' : '#FAF8F5';
         try {
-          const canvas = await html2canvas(appContainer, { scale: 1.5, useCORS: true, backgroundColor: currentThemeBg });
+          const canvas = await html2canvas(appContainer, { scale: 1.5, useCORS: true, backgroundColor: '#FAF8F5' });
           const imgData = canvas.toDataURL('image/jpeg', 0.95);
           const { jsPDF } = window.jspdf;
           const pdf = new jsPDF('p', 'mm', 'a4');
