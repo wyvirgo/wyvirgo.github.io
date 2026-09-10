@@ -707,5 +707,33 @@
 
         window.addEventListener('scroll', setActiveNav);
     </script>
+    
+    <!-- Subdued, Fixed-Size Back to Top Button (Zero-Dependency Inline SVG) -->
+    <button id="backToTopBtn" onclick="scrollToTop()" 
+            aria-label="Back to Top"
+            class="fixed bottom-6 right-6 z-40 w-10 h-10 rounded-full border border-[var(--border-color)] bg-[var(--bg-secondary)]/80 backdrop-blur-md text-[var(--text-secondary)] hover:text-[var(--accent-color)] hover:border-[var(--accent-color)] opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center shadow-sm">
+        <!-- Native SVG Arrow Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 stroke-current" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+    </button>
+
+    <script>
+        const backBtn = document.getElementById('backToTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                backBtn.classList.remove('opacity-0', 'pointer-events-none');
+                backBtn.classList.add('opacity-100', 'pointer-events-auto');
+            } else {
+                backBtn.classList.remove('opacity-100', 'pointer-events-auto');
+                backBtn.classList.add('opacity-0', 'pointer-events-none');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+
 </body>
 </html>
