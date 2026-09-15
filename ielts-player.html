@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS & Scene Audio Studio - Tools</title>
+    <!-- 1. 在 <head> 中使用相对路径设置 Logo -->
+    <link rel="icon" href="./assets/ico01.png" type="image/png">
+
+    <!-- 2. 页面载入前立即应用主题，防止闪烁 -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            if (savedTheme === 'dark') document.documentElement.classList.add('dark');
+            else document.documentElement.classList.remove('dark');
+        })();
+    </script>
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Design System Theme Variables -->
+    <style>
+        :root {
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F5F5F7;
+            --text-primary: #1D1D1F;
+            --text-secondary: #86868B;
+            --accent-color: #0066CC;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --card-hover: rgba(0, 102, 204, 0.05);
+            --active-highlight: #EBF5FF;
+        }
+
+        [data-theme="dark"], .dark {
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --accent-color: #38BDF8;
+            --border-color: #334155;
+            --card-hover: rgba(56, 189, 248, 0.1);
+            --active-highlight: #1E3A8A;
+        }
+
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .bg-secondary { background-color: var(--bg-secondary); }
+        .text-secondary { color: var(--text-secondary); }
+        .border-theme { border-color: var(--border-color); }
+        .accent-text { color: var(--accent-color); }
+        .accent-bg { background-color: var(--accent-color); }
+
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+
+        .speaking-line {
+            background-color: var(--active-highlight);
+            border-left: 4px solid var(--accent-color);
+            transform: translateX(2px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-sky-500 selection:text-white">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-[var(--bg-primary)]/80 border-b border-theme">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <!-- <button onclick="returnToMainPage()" class="inline-flex items-center text-sm text-secondary hover:accent-text transition-colors">
+                    <svg class="w-4 h-4 mr-1 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                    <span data-en="← Main Site" data-zh="← 返回主页">← Main Site</span>
+                </button> -->
+                <!-- <div class="h-4 w-px bg-slate-500/30"></div> -->
+                <h1 class="text-base font-semibold tracking-tight" data-en="IELTS & Scene Audio Studio" data-zh="雅思与场景对话朗读工坊">IELTS & Scene Audio Studio</h1>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <button onclick="toggleLanguage()" class="px-2.5 py-1 text-xs font-medium rounded-full border border-theme hover:accent-text transition-all">
+                    <span id="currentLangLabel">EN / 中</span>
+                </button>
+                <button onclick="toggleTheme()" class="p-1.5 text-secondary hover:accent-text rounded-full border border-theme transition-all" aria-label="Toggle Theme">
+                    <svg id="themeIcon" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- LEFT PANEL: Scenarios & Creator (5 Cols) -->
+        <section class="lg:col-span-5 flex flex-col space-y-6">
+            <div class="bg-secondary rounded-2xl p-5 border border-theme shadow-sm">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-bold" data-en="Scenario Library" data-zh="场景与真题库">Scenario Library</h2>
+                    <span class="text-xs px-2 py-0.5 rounded-full bg-sky-500/10 accent-text border border-sky-500/20">IELTS Ready</span>
+                </div>
+
+                <!-- Tabs -->
+                <div class="flex space-x-1 border-b border-theme mb-4 pb-2 text-xs font-medium">
+                    <button onclick="switchTab('daily')" id="tab-daily" class="tab-btn px-3 py-1.5 rounded-lg accent-bg text-white font-semibold" data-en="Daily Life" data-zh="日常生活">Daily Life</button>
+                    <button onclick="switchTab('academic')" id="tab-academic" class="tab-btn px-3 py-1.5 rounded-lg text-secondary hover:text-primary" data-en="Academic" data-zh="学术讨论">Academic</button>
+                    <button onclick="switchTab('speaking')" id="tab-speaking" class="tab-btn px-3 py-1.5 rounded-lg text-secondary hover:text-primary" data-en="Speaking Part 1" data-zh="口语高频">Speaking Part 1</button>
+                    <button onclick="switchTab('custom')" id="tab-custom" class="tab-btn px-3 py-1.5 rounded-lg text-secondary hover:text-primary" data-en="Custom" data-zh="自定义">Custom</button>
+                </div>
+
+                <div id="dialogueList" class="space-y-2 max-h-[360px] overflow-y-auto pr-1">
+                    <!-- Dynamic List -->
+                </div>
+            </div>
+
+            <!-- Custom Content Creator / Editor -->
+            <div class="bg-secondary rounded-2xl p-5 border border-theme shadow-sm">
+                <h3 class="text-sm font-semibold mb-2 flex items-center justify-between">
+                    <span data-en="Script Creator & Exporter" data-zh="自定义剧本创作与导出">Script Creator & Exporter</span>
+                    <button onclick="exportCurrentJSON()" class="text-xs accent-text hover:underline" data-en="Export Script JSON" data-zh="导出剧本 JSON">Export Script JSON</button>
+                </h3>
+                <p class="text-xs text-secondary mb-3" data-en="Format: 'A: Sentence' or 'B: Sentence' per line." data-zh="格式：每行输入 'A: 句子' 或 'B: 句子'">Format: 'A: Sentence' or 'B: Sentence' per line.</p>
+                <textarea id="customInputText" rows="4" placeholder="A: Good morning! How can I help you?&#10;B: Hi, I'm calling to inquire about renting an apartment." class="w-full text-xs p-3 rounded-xl border border-theme bg-[var(--bg-primary)] text-primary focus:outline-none focus:ring-1 focus:ring-sky-500 font-mono mb-3"></textarea>
+                <button onclick="saveCustomDialogue()" class="w-full py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-xl text-xs font-semibold transition-all shadow-sm" data-en="Load Custom Dialogue" data-zh="加载自定义对话">Load Custom Dialogue</button>
+            </div>
+        </section>
+
+        <!-- RIGHT PANEL: Player & Audio Studio (7 Cols) -->
+        <section class="lg:col-span-7 flex flex-col space-y-6">
+
+            <!-- Audio Control Studio Card -->
+            <div class="bg-secondary rounded-2xl p-5 border border-theme shadow-sm space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-theme pb-3">
+                    <div>
+                        <h2 id="currentTitle" class="text-base font-bold">Section 1: Accommodation Enquiry</h2>
+                        <span id="currentCategoryBadge" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-500/10 text-secondary">Life / Housing</span>
+                    </div>
+
+                    <!-- Master & Export Controls -->
+                    <div class="flex items-center space-x-2">
+                        <button id="btnPlay" onclick="togglePlayPause()" class="px-4 py-2 accent-bg text-white font-semibold text-xs rounded-xl shadow-md hover:opacity-90 transition-all flex items-center">
+                            <svg class="w-4 h-4 mr-1 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> <span id="playBtnLabel" data-en="Play" data-zh="播放">Play</span>
+                        </button>
+                        <button onclick="stopTTS()" class="p-2 border border-theme rounded-xl hover:bg-red-500/10 hover:text-red-500 text-secondary transition-all" title="Stop">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"/></svg>
+                        </button>
+                        <!-- AUDIO EXPORT BUTTON -->
+                        <button id="exportAudioBtn" onclick="exportFullAudio()" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs rounded-xl shadow-md transition-all flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                            <span id="exportLabel" data-en="Export MP3/Audio" data-zh="导出音频文件">Export MP3/Audio</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TTS Settings -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                    <div>
+                        <label class="block text-secondary mb-1" data-en="Speaker A Voice" data-zh="角色 A 发音">Speaker A Voice</label>
+                        <select id="voiceA" class="w-full p-2 rounded-lg border border-theme bg-[var(--bg-primary)] text-primary"></select>
+                    </div>
+                    <div>
+                        <label class="block text-secondary mb-1" data-en="Speaker B Voice" data-zh="角色 B 发音">Speaker B Voice</label>
+                        <select id="voiceB" class="w-full p-2 rounded-lg border border-theme bg-[var(--bg-primary)] text-primary"></select>
+                    </div>
+                    <div>
+                        <label class="block text-secondary mb-1" data-en="Speed Rate" data-zh="语速控制">Speed Rate (<span id="rateVal">1.0</span>x)</label>
+                        <input type="range" id="rateInput" min="0.5" max="1.5" step="0.1" value="1.0" oninput="document.getElementById('rateVal').innerText=this.value" class="w-full">
+                    </div>
+                    <div>
+                        <label class="block text-secondary mb-1" data-en="Role-Play Mode" data-zh="角色扮演模式">Role-Play Mode</label>
+                        <select id="rolePlayMode" class="w-full p-2 rounded-lg border border-theme bg-[var(--bg-primary)] text-primary">
+                            <option value="both" data-en="Play Both A & B" data-zh="播放全部角色">Play Both A & B</option>
+                            <option value="muteA" data-en="Mute A (Practice A)" data-zh="静音 A (自己练 A)">Mute A (Practice A)</option>
+                            <option value="muteB" data-en="Mute B (Practice B)" data-zh="静音 B (自己练 B)">Mute B (Practice B)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dialogue Karaoke Output -->
+            <div class="bg-secondary rounded-2xl p-5 border border-theme shadow-sm flex-1 flex flex-col justify-between min-h-[380px]">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-xs text-secondary" data-en="Tip: Double-click word for wordbook | Click sentence to play" data-zh="提示：双击单词查生词 | 点击单句可独立朗读">Tip: Double-click word for wordbook | Click sentence to play</span>
+                    <button onclick="startRecording()" id="recBtn" class="text-xs px-3 py-1 rounded-full border border-red-500/30 text-red-500 hover:bg-red-500/10 flex items-center">
+                        <span class="w-2 h-2 rounded-full bg-red-500 mr-1.5 animate-pulse"></span>
+                        <span id="recStatus" data-en="Record Pitch" data-zh="录音跟读">Record Pitch</span>
+                    </button>
+                </div>
+
+                <div id="dialogueTextDisplay" class="space-y-3 overflow-y-auto max-h-[320px] pr-2 my-2"></div>
+
+                <!-- STT Box -->
+                <div class="mt-4 pt-3 border-t border-theme text-xs flex flex-col space-y-1">
+                    <div class="flex justify-between text-secondary">
+                        <span data-en="Speech Recognition Match (STT):" data-zh="跟读识别结果比对：">Speech Recognition Match (STT):</span>
+                        <span id="sttAccuracy" class="font-bold accent-text">0% Match</span>
+                    </div>
+                    <p id="sttTranscript" class="text-slate-400 italic bg-[var(--bg-primary)] p-2.5 rounded-xl border border-theme min-h-[36px]" data-en="Click 'Record Pitch' and read aloud to test your pronunciation..." data-zh="点击“录音跟读”朗读句子以测试发音特征...">Click 'Record Pitch' and read aloud to test your pronunciation...</p>
+                </div>
+            </div>
+
+            <!-- Wordbook -->
+            <div class="bg-secondary rounded-2xl p-4 border border-theme shadow-sm">
+                <div class="flex justify-between items-center mb-2">
+                    <h4 class="text-xs font-bold" data-en="Saved Wordbook (Local)" data-zh="本地暂存生词本">Saved Wordbook (Local)</h4>
+                    <button onclick="clearWordbook()" class="text-[10px] text-secondary hover:underline" data-en="Clear All" data-zh="清空词本">Clear All</button>
+                </div>
+                <div id="wordbookTags" class="flex flex-wrap gap-1.5 text-xs"></div>
+            </div>
+        </section>
+    </main>
+
+    <button id="backToTopBtn" onclick="scrollToTop()" aria-label="Back to Top"
+            class="fixed bottom-6 right-6 z-40 w-10 h-10 rounded-full border border-[var(--border-color)] bg-[var(--bg-secondary)]/80 backdrop-blur-md text-[var(--text-secondary)] hover:text-[var(--accent-color)] hover:border-[var(--accent-color)] opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 stroke-current" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+    </button>
+
+    <footer class="border-t border-theme py-6 text-center text-xs text-secondary mt-12">
+        <p>© 2026 Interactive IELTS TTS Player | Engineered for Client-side GitHub Pages Deployment</p>
+    </footer>
+
+    <script>
+        const IELTS_DATABASE = {
+            daily: [
+                {
+                    id: "renting-repair",
+                    sub_en: "Housing: Rental & Repair",
+                    sub_zh: "住宿：租房与房屋报修",
+                    title_en: "Section 1: Rental Repair Request",
+                    title_zh: "听力 S1：租房报修电话沟通",
+                    lines: [
+                        { speaker: "A", en: "Good morning, Northside Property Management. How can I help you today?", zh: "早上好，北区物业管理处。请问有什么可以帮您？" },
+                        { speaker: "B", en: "Hi, I'm calling from Flat 4B on College Street. We have a leak under the kitchen sink.", zh: "你好，我是学院街4B公寓的租客。我们厨房水槽下面漏水了。" },
+                        { speaker: "A", en: "I see. Is it a major flood or just a continuous drip?", zh: "好的，漏水很严重吗？还只是在持续滴水？" },
+                        { speaker: "B", en: "It's dripping quite fast, and it has already damaged the wooden cabinet underneath.", zh: "滴得挺快的，而且已经把下面的木柜给泡坏了。" }
+                    ]
+                },
+                {
+                    id: "course-registration",
+                    sub_en: "Registration: Gym & Courses",
+                    sub_zh: "报名注册：课程/活动预约",
+                    title_en: "Section 1: Sports Club Membership",
+                    title_zh: "听力 S1：体育俱乐部入会咨询",
+                    lines: [
+                        { speaker: "A", en: "Welcome to the Campus Fitness Center! Are you looking to join as a full member?", zh: "欢迎来到校园健身中心！您是想办理全能会员吗？" },
+                        { speaker: "B", en: "Yes, I'd like to sign up for the student off-peak package.", zh: "是的，我想办理学生非高峰期套餐。" },
+                        { speaker: "A", en: "Great! That gives you unlimited access to the pool and gym between 9 AM and 4 PM.", zh: "太好了！该套餐允许您在上午9点到下午4点间无限制使用泳池和健身房。" }
+                    ]
+                }
+            ],
+            academic: [
+                {
+                    id: "thesis-feedback",
+                    sub_en: "Academic: Thesis Review",
+                    sub_zh: "论文/课题讨论：文献与导师沟通",
+                    title_en: "Section 3: Dissertation Progress Review",
+                    title_zh: "听力 S3：毕业论文进度导师面谈",
+                    lines: [
+                        { speaker: "A", en: "Come in, Alex. I've reviewed the draft chapter you sent me last Tuesday.", zh: "请进 Alex。我看了你上周二发给我的论文初稿。" },
+                        { speaker: "B", en: "Thanks Professor. Did you think my literature review section was thorough enough?", zh: "谢谢教授。您觉得我的文献综述部分内容足够详实吗？" },
+                        { speaker: "A", en: "The scope is broad, but you need to critically analyze the methodology rather than just summarizing conclusions.", zh: "范围很广，但你需要批判性地分析研究方法，而不仅仅是总结结论。" }
+                    ]
+                }
+            ],
+            speaking: [
+                {
+                    id: "topic-hometown",
+                    sub_en: "Speaking Part 1: Hometown",
+                    sub_zh: "口语高频：Hometown & Living",
+                    title_en: "Speaking Part 1: Hometown",
+                    title_zh: "口语 Part 1：家乡与生活环境",
+                    lines: [
+                        { speaker: "A", en: "Let's talk about your hometown. Whereabouts did you grow up?", zh: "我们来聊聊你的家乡。你在哪里长大的？" },
+                        { speaker: "B", en: "I was born and raised in a coastal city. What I love most about it is the relaxing vibrant atmosphere.", zh: "我在一个沿海城市土生土长。我最喜欢它的地方是那种令人放松且活力满满的氛围。" }
+                    ]
+                }
+            ],
+            custom: []
+        };
+
+        let currentTab = 'daily';
+        let currentDialogue = IELTS_DATABASE.daily[0];
+        let voices = [];
+        let synth = window.speechSynthesis;
+        let isPlaying = false;
+        let currentLineIndex = 0;
+        let savedWordbook = JSON.parse(localStorage.getItem('tts_wordbook') || '[]');
+
+        function populateVoices() {
+            voices = synth.getVoices();
+            const voiceASelect = document.getElementById('voiceA');
+            const voiceBSelect = document.getElementById('voiceB');
+            
+            if (!voiceASelect || !voiceBSelect) return;
+
+            voiceASelect.innerHTML = '';
+            voiceBSelect.innerHTML = '';
+
+            voices.forEach((voice, index) => {
+                if (voice.lang.includes('en')) {
+                    const optA = new Option(`${voice.name} (${voice.lang})`, index);
+                    const optB = new Option(`${voice.name} (${voice.lang})`, index);
+                    voiceASelect.add(optA);
+                    voiceBSelect.add(optB);
+                }
+            });
+
+            if (voiceASelect.options.length > 0) voiceASelect.selectedIndex = 0;
+            if (voiceBSelect.options.length > 1) voiceBSelect.selectedIndex = 1;
+        }
+
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = populateVoices;
+        }
+
+        function switchTab(tabKey) {
+            currentTab = tabKey;
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('accent-bg', 'text-white', 'font-semibold');
+                btn.classList.add('text-secondary');
+            });
+            const activeBtn = document.getElementById(`tab-${tabKey}`);
+            if (activeBtn) activeBtn.classList.add('accent-bg', 'text-white', 'font-semibold');
+            renderDialogueList();
+        }
+
+        function renderDialogueList() {
+            const listContainer = document.getElementById('dialogueList');
+            if (!listContainer) return;
+            const items = IELTS_DATABASE[currentTab] || [];
+            const lang = localStorage.getItem('lang') || 'en';
+            listContainer.innerHTML = '';
+
+            items.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = `p-3 rounded-xl border border-theme cursor-pointer transition-all hover:bg-[var(--card-hover)] ${item.id === currentDialogue.id ? 'border-sky-500 bg-sky-500/5' : ''}`;
+                card.onclick = () => selectDialogue(item);
+                card.innerHTML = `
+                    <div class="text-xs font-bold text-primary mb-1">${lang === 'en' ? item.title_en : item.title_zh}</div>
+                    <div class="text-[11px] text-secondary flex justify-between">
+                        <span>${lang === 'en' ? item.sub_en : item.sub_zh}</span>
+                        <span>${item.lines.length} Lines</span>
+                    </div>
+                `;
+                listContainer.appendChild(card);
+            });
+
+            if (items.length > 0 && !items.find(i => i.id === currentDialogue.id)) {
+                selectDialogue(items[0]);
+            }
+        }
+
+        function selectDialogue(item) {
+            currentDialogue = item;
+            stopTTS();
+            const lang = localStorage.getItem('lang') || 'en';
+            document.getElementById('currentTitle').innerText = lang === 'en' ? item.title_en : item.title_zh;
+            document.getElementById('currentCategoryBadge').innerText = lang === 'en' ? item.sub_en : item.sub_zh;
+            renderDialogueText();
+            renderDialogueList();
+        }
+
+        function renderDialogueText() {
+            const displayBox = document.getElementById('dialogueTextDisplay');
+            if (!displayBox) return;
+            const lang = localStorage.getItem('lang') || 'en';
+            displayBox.innerHTML = '';
+
+            currentDialogue.lines.forEach((line, idx) => {
+                const lineDiv = document.createElement('div');
+                lineDiv.id = `line-${idx}`;
+                lineDiv.className = `p-3 rounded-xl border border-theme transition-all cursor-pointer hover:border-sky-500/50 flex flex-col space-y-1`;
+                
+                lineDiv.innerHTML = `
+                    <div class="flex justify-between items-center text-[11px]">
+                        <span class="font-bold ${line.speaker === 'A' ? 'accent-text' : 'text-emerald-500'}">Speaker ${line.speaker}</span>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="exportSingleLineAudio(${idx}, event)" class="text-[10px] accent-text hover:underline" title="Export this line audio">Export Line MP3</button>
+                            <span class="text-secondary text-[10px]">#${idx + 1}</span>
+                        </div>
+                    </div>
+                    <p class="text-xs font-medium text-primary dialogue-sentence" onclick="playSingleLine(${idx})" ondblclick="handleWordSelection(event)">${line.en}</p>
+                    ${lang === 'zh' ? `<p class="text-[11px] text-secondary">${line.zh}</p>` : ''}
+                `;
+                displayBox.appendChild(lineDiv);
+            });
+        }
+
+        function togglePlayPause() {
+            if (isPlaying) stopTTS(); else startTTSPlayback();
+        }
+
+        function startTTSPlayback() {
+            if (currentDialogue.lines.length === 0) return;
+            isPlaying = true;
+            document.getElementById('playBtnLabel').innerText = localStorage.getItem('lang') === 'zh' ? '暂停' : 'Pause';
+            speakSequence(currentLineIndex);
+        }
+
+        function speakSequence(index) {
+            if (index >= currentDialogue.lines.length || !isPlaying) {
+                stopTTS();
+                return;
+            }
+
+            currentLineIndex = index;
+            highlightLine(index);
+
+            const line = currentDialogue.lines[index];
+            const roleMode = document.getElementById('rolePlayMode').value;
+
+            if ((roleMode === 'muteA' && line.speaker === 'A') || (roleMode === 'muteB' && line.speaker === 'B')) {
+                setTimeout(() => { if (isPlaying) speakSequence(index + 1); }, 3500);
+                return;
+            }
+
+            const utterance = new SpeechSynthesisUtterance(line.en);
+            utterance.rate = parseFloat(document.getElementById('rateInput').value);
+
+            const voiceAIdx = document.getElementById('voiceA').value;
+            const voiceBIdx = document.getElementById('voiceB').value;
+            if (line.speaker === 'A' && voices[voiceAIdx]) utterance.voice = voices[voiceAIdx];
+            if (line.speaker === 'B' && voices[voiceBIdx]) utterance.voice = voices[voiceBIdx];
+
+            utterance.onend = () => { if (isPlaying) speakSequence(index + 1); };
+            utterance.onerror = () => stopTTS();
+
+            synth.speak(utterance);
+        }
+
+        function playSingleLine(index) {
+            stopTTS();
+            currentLineIndex = index;
+            highlightLine(index);
+
+            const line = currentDialogue.lines[index];
+            const utterance = new SpeechSynthesisUtterance(line.en);
+            utterance.rate = parseFloat(document.getElementById('rateInput').value);
+
+            const voiceAIdx = document.getElementById('voiceA').value;
+            const voiceBIdx = document.getElementById('voiceB').value;
+            if (line.speaker === 'A' && voices[voiceAIdx]) utterance.voice = voices[voiceAIdx];
+            if (line.speaker === 'B' && voices[voiceBIdx]) utterance.voice = voices[voiceBIdx];
+
+            synth.speak(utterance);
+        }
+
+        function stopTTS() {
+            synth.cancel();
+            isPlaying = false;
+            currentLineIndex = 0;
+            const btn = document.getElementById('playBtnLabel');
+            if (btn) btn.innerText = localStorage.getItem('lang') === 'zh' ? '播放' : 'Play';
+            clearHighlights();
+        }
+
+        function highlightLine(index) {
+            clearHighlights();
+            const el = document.getElementById(`line-${index}`);
+            if (el) {
+                el.classList.add('speaking-line');
+                el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        function clearHighlights() {
+            document.querySelectorAll('#dialogueTextDisplay > div').forEach(div => div.classList.remove('speaking-line'));
+        }
+
+        /* ----------------------------------------------------
+         * AUDIO EXPORT ENGINE (Client-Side Recording via Web Audio API)
+         * ---------------------------------------------------- */
+        async function exportFullAudio() {
+            stopTTS();
+            const exportBtn = document.getElementById('exportLabel');
+            exportBtn.innerText = "Recording Audio...";
+
+            try {
+                const streamDestination = await recordDialogueToAudioBlob(currentDialogue.lines);
+                downloadBlob(streamDestination, `${currentDialogue.id}.webm`);
+            } catch(e) {
+                alert("Audio recording unsupported or blocked by browser.");
+            } finally {
+                exportBtn.innerText = localStorage.getItem('lang') === 'zh' ? '导出音频文件' : 'Export MP3/Audio';
+            }
+        }
+
+        async function exportSingleLineAudio(idx, event) {
+            event.stopPropagation();
+            const line = [currentDialogue.lines[idx]];
+            const blob = await recordDialogueToAudioBlob(line);
+            downloadBlob(blob, `${currentDialogue.id}-line-${idx + 1}.webm`);
+        }
+
+        function recordDialogueToAudioBlob(linesToRecord) {
+            return new Promise(async (resolve) => {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const dest = audioCtx.createMediaStreamDestination();
+                const mediaRecorder = new MediaRecorder(dest.stream);
+                const chunks = [];
+
+                mediaRecorder.ondataavailable = e => chunks.push(e.data);
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(chunks, { type: 'audio/webm' });
+                    resolve(blob);
+                };
+
+                mediaRecorder.start();
+
+                for (let line of linesToRecord) {
+                    await new Promise(res => {
+                        const utterance = new SpeechSynthesisUtterance(line.en);
+                        utterance.rate = parseFloat(document.getElementById('rateInput').value);
+                        const voiceAIdx = document.getElementById('voiceA').value;
+                        const voiceBIdx = document.getElementById('voiceB').value;
+                        if (line.speaker === 'A' && voices[voiceAIdx]) utterance.voice = voices[voiceAIdx];
+                        if (line.speaker === 'B' && voices[voiceBIdx]) utterance.voice = voices[voiceBIdx];
+
+                        utterance.onend = () => res();
+                        utterance.onerror = () => res();
+                        synth.speak(utterance);
+                    });
+                }
+
+                setTimeout(() => mediaRecorder.stop(), 500);
+            });
+        }
+
+        function downloadBlob(blob, filename) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        }
+
+        /* ----------------------------------------------------
+         * STT Speech Recognition
+         * ---------------------------------------------------- */
+        function startRecording() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert("Web Speech Recognition API is not supported in this browser.");
+                return;
+            }
+
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            document.getElementById('recStatus').innerText = "Listening...";
+
+            recognition.start();
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById('sttTranscript').innerText = `"${transcript}"`;
+                const targetText = currentDialogue.lines[currentLineIndex] ? currentDialogue.lines[currentLineIndex].en : "";
+                const similarity = calculateSimilarity(transcript.toLowerCase(), targetText.toLowerCase());
+                document.getElementById('sttAccuracy').innerText = `${similarity}% Match`;
+                document.getElementById('recStatus').innerText = localStorage.getItem('lang') === 'zh' ? '录音跟读' : 'Record Pitch';
+            };
+
+            recognition.onerror = () => {
+                document.getElementById('recStatus').innerText = "Error, Retry";
+            };
+        }
+
+        function calculateSimilarity(str1, str2) {
+            const words1 = str1.split(' ');
+            const words2 = str2.split(' ');
+            let matches = 0;
+            words1.forEach(w => { if (words2.includes(w)) matches++; });
+            return Math.round((matches / Math.max(words1.length, words2.length)) * 100) || 0;
+        }
+
+        /* ----------------------------------------------------
+         * Custom Editor & Wordbook
+         * ---------------------------------------------------- */
+        function saveCustomDialogue() {
+            const rawText = document.getElementById('customInputText').value.trim();
+            if (!rawText) return;
+
+            const parsedLines = [];
+            rawText.split('\n').forEach(line => {
+                if (line.startsWith('A:') || line.startsWith('a:')) {
+                    parsedLines.push({ speaker: 'A', en: line.substring(2).trim(), zh: 'Custom Practice' });
+                } else if (line.startsWith('B:') || line.startsWith('b:')) {
+                    parsedLines.push({ speaker: 'B', en: line.substring(2).trim(), zh: 'Custom Practice' });
+                }
+            });
+
+            if (parsedLines.length === 0) {
+                alert("Please format text as 'A: ...' or 'B: ...'");
+                return;
+            }
+
+            const customObj = {
+                id: `custom-${Date.now()}`,
+                sub_en: "User Created Script",
+                sub_zh: "自定义预载对话",
+                title_en: "Custom Practice Script",
+                title_zh: "自定义演练剧本",
+                lines: parsedLines
+            };
+
+            IELTS_DATABASE.custom.unshift(customObj);
+            switchTab('custom');
+            selectDialogue(customObj);
+        }
+
+        function exportCurrentJSON() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(currentDialogue, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `${currentDialogue.id}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function handleWordSelection() {
+            const selection = window.getSelection().toString().trim();
+            if (selection && selection.length > 1) {
+                if (!savedWordbook.includes(selection)) {
+                    savedWordbook.push(selection);
+                    localStorage.setItem('tts_wordbook', JSON.stringify(savedWordbook));
+                    renderWordbook();
+                }
+            }
+        }
+
+        function renderWordbook() {
+            const box = document.getElementById('wordbookTags');
+            if (!box) return;
+            const lang = localStorage.getItem('lang') || 'en';
+            if (savedWordbook.length === 0) {
+                box.innerHTML = `<span class="text-secondary text-[11px]">${lang === 'en' ? 'No words saved. Double click any word above.' : '暂无生词，双击上方对话中的单词可加入生词本。'}</span>`;
+                return;
+            }
+            box.innerHTML = savedWordbook.map(w => `<span class="px-2 py-0.5 rounded-md bg-sky-500/10 text-sky-500 border border-sky-500/20">${w}</span>`).join('');
+        }
+
+        function clearWordbook() {
+            savedWordbook = [];
+            localStorage.removeItem('tts_wordbook');
+            renderWordbook();
+        }
+
+        /* ----------------------------------------------------
+         * Navigation & Language Sync Functionality
+         * ---------------------------------------------------- */
+        function returnToMainPage() {
+            window.location.href = `index.html#tools`;
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            if (newTheme === 'dark') {
+                html.classList.add('dark');
+            } else {
+                html.classList.remove('dark');
+            }
+            localStorage.setItem('theme', newTheme);
+        }
+
+        function toggleLanguage() {
+            const currentLang = localStorage.getItem('lang') === 'zh' ? 'en' : 'zh';
+            setLanguage(currentLang);
+        }
+
+        function setLanguage(lang) {
+            localStorage.setItem('lang', lang);
+            document.querySelectorAll('[data-en]').forEach(el => {
+                const text = el.getAttribute(`data-${lang}`);
+                if (text) el.textContent = text;
+            });
+            const langLabel = document.getElementById('currentLangLabel');
+            if (langLabel) langLabel.textContent = lang === 'en' ? 'EN / 中' : '中 / EN';
+            renderDialogueList();
+            renderDialogueText();
+            renderWordbook();
+        }
+
+        // Scroll to Top
+        const backBtn = document.getElementById('backToTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                backBtn.classList.remove('opacity-0', 'pointer-events-none');
+                backBtn.classList.add('opacity-100', 'pointer-events-auto');
+            } else {
+                backBtn.classList.remove('opacity-100', 'pointer-events-auto');
+                backBtn.classList.add('opacity-0', 'pointer-events-none');
+            }
+        });
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+        // Initial Page Load Initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+
+            const savedLang = localStorage.getItem('lang') || 'en';
+            setLanguage(savedLang);
+
+            switchTab('daily');
+            populateVoices();
+        });
+    </script>
+</body>
+</html>
