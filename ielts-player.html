@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IELTS & Scene Audio Studio - Tools</title>
-    <!-- 1. 在 <head> 中使用相对路径设置 Logo -->
+    <!-- Logo -->
     <link rel="icon" href="./assets/ico01.png" type="image/png">
 
-    <!-- 2. 页面载入前立即应用主题，防止闪烁 -->
+    <!-- 主题初始化 -->
     <script>
         (function() {
             const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -18,8 +18,10 @@
     </script>
     <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- MP3 编码库 lamejs -->
+    <script src="https://cdn.jsdelivr.net/npm/lamejs@1.2.1/lame.min.js"></script>
 
-    <!-- Design System Theme Variables -->
+    <!-- Theme Variables -->
     <style>
         :root {
             --bg-primary: #FFFFFF;
@@ -76,11 +78,6 @@
     <header class="sticky top-0 z-50 backdrop-blur-md bg-[var(--bg-primary)]/80 border-b border-theme">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-4">
-                <!-- <button onclick="returnToMainPage()" class="inline-flex items-center text-sm text-secondary hover:accent-text transition-colors">
-                    <svg class="w-4 h-4 mr-1 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-                    <span data-en="← Main Site" data-zh="← 返回主页">← Main Site</span>
-                </button> -->
-                <!-- <div class="h-4 w-px bg-slate-500/30"></div> -->
                 <h1 class="text-base font-semibold tracking-tight" data-en="IELTS & Scene Audio Studio" data-zh="雅思与场景对话朗读工坊">IELTS & Scene Audio Studio</h1>
             </div>
 
@@ -95,12 +92,12 @@
         </div>
     </header>
 
-    <!-- Main Content Grid -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <!-- Main Content Grid: 左侧驱动高度，右侧绝对定位关联 -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
 
-        <!-- LEFT PANEL: Scenarios & Creator (5 Cols) -->
-        <section class="lg:col-span-5 flex flex-col space-y-6">
-            <div class="bg-secondary rounded-2xl p-5 border border-theme shadow-sm">
+        <!-- LEFT PANEL: 左侧决定整体网格高度 -->
+        <section class="lg:col-span-5 flex flex-col gap-6">
+            <div class="bg-secondary rounded-2xl p-5 border border-theme shadow-sm shrink-0">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-lg font-bold" data-en="Scenario Library" data-zh="场景与真题库">Scenario Library</h2>
                     <span class="text-xs px-2 py-0.5 rounded-full bg-sky-500/10 accent-text border border-sky-500/20">IELTS Ready</span>
@@ -114,104 +111,111 @@
                     <button onclick="switchTab('custom')" id="tab-custom" class="tab-btn px-3 py-1.5 rounded-lg text-secondary hover:text-primary" data-en="Custom" data-zh="自定义">Custom</button>
                 </div>
 
-                <div id="dialogueList" class="space-y-2 max-h-[360px] overflow-y-auto pr-1">
+                <div id="dialogueList" class="space-y-2 max-h-[200px] overflow-y-auto pr-1">
                     <!-- Dynamic List -->
                 </div>
             </div>
 
-            <!-- Custom Content Creator / Editor -->
-            <div class="bg-secondary rounded-2xl p-5 border border-theme shadow-sm">
+            <!-- Custom Creator Card: 拖拽文本框手柄，自由拉伸并同步带动右侧高度变化 -->
+            <div class="bg-secondary rounded-2xl p-5 border border-theme shadow-sm flex flex-col shrink-0">
                 <h3 class="text-sm font-semibold mb-2 flex items-center justify-between">
                     <span data-en="Script Creator & Exporter" data-zh="自定义剧本创作与导出">Script Creator & Exporter</span>
                     <button onclick="exportCurrentJSON()" class="text-xs accent-text hover:underline" data-en="Export Script JSON" data-zh="导出剧本 JSON">Export Script JSON</button>
                 </h3>
                 <p class="text-xs text-secondary mb-3" data-en="Format: 'A: Sentence' or 'B: Sentence' per line." data-zh="格式：每行输入 'A: 句子' 或 'B: 句子'">Format: 'A: Sentence' or 'B: Sentence' per line.</p>
-                <textarea id="customInputText" rows="4" placeholder="A: Good morning! How can I help you?&#10;B: Hi, I'm calling to inquire about renting an apartment." class="w-full text-xs p-3 rounded-xl border border-theme bg-[var(--bg-primary)] text-primary focus:outline-none focus:ring-1 focus:ring-sky-500 font-mono mb-3"></textarea>
-                <button onclick="saveCustomDialogue()" class="w-full py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-xl text-xs font-semibold transition-all shadow-sm" data-en="Load Custom Dialogue" data-zh="加载自定义对话">Load Custom Dialogue</button>
+                
+                <textarea id="customInputText" rows="6" placeholder="A: Good morning! How can I help you?&#10;B: Hi, I'm calling to inquire about renting an apartment." class="w-full text-xs p-3 rounded-xl border border-theme bg-[var(--bg-primary)] text-primary focus:outline-none focus:ring-1 focus:ring-sky-500 font-mono mb-3 min-h-[120px] resize-y block"></textarea>
+                
+                <button onclick="saveCustomDialogue()" class="w-full py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-xl text-xs font-semibold transition-all shadow-sm shrink-0" data-en="Load Custom Dialogue" data-zh="加载自定义对话">Load Custom Dialogue</button>
             </div>
         </section>
 
-        <!-- RIGHT PANEL: Player & Audio Studio (7 Cols) -->
-        <section class="lg:col-span-7 flex flex-col space-y-6">
+        <!-- RIGHT PANEL: lg:relative + 内部 lg:absolute lg:inset-0 确保脱离网格高度撑大计算 -->
+        <section class="lg:col-span-7 lg:relative min-h-[600px] lg:min-h-0">
+            
+            <div class="lg:absolute lg:inset-0 flex flex-col gap-6">
 
-            <!-- Audio Control Studio Card -->
-            <div class="bg-secondary rounded-2xl p-5 border border-theme shadow-sm space-y-4">
-                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-theme pb-3">
-                    <div>
-                        <h2 id="currentTitle" class="text-base font-bold">Section 1: Accommodation Enquiry</h2>
-                        <span id="currentCategoryBadge" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-500/10 text-secondary">Life / Housing</span>
+                <!-- Audio Control Studio Card -->
+                <div class="bg-secondary rounded-2xl p-5 border border-theme shadow-sm space-y-4 shrink-0">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-theme pb-3">
+                        <div>
+                            <h2 id="currentTitle" class="text-base font-bold">Section 1: Accommodation Enquiry</h2>
+                            <span id="currentCategoryBadge" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-500/10 text-secondary">Life / Housing</span>
+                        </div>
+
+                        <!-- Master & Export Controls -->
+                        <div class="flex items-center space-x-2">
+                            <button id="btnPlay" onclick="togglePlayPause()" class="px-4 py-2 accent-bg text-white font-semibold text-xs rounded-xl shadow-md hover:opacity-90 transition-all flex items-center">
+                                <svg class="w-4 h-4 mr-1 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> <span id="playBtnLabel" data-en="Play" data-zh="播放">Play</span>
+                            </button>
+                            <button onclick="stopTTS()" class="p-2 border border-theme rounded-xl hover:bg-red-500/10 hover:text-red-500 text-secondary transition-all" title="Stop">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"/></svg>
+                            </button>
+                            <!-- AUDIO EXPORT BUTTON -->
+                            <button id="exportAudioBtn" onclick="exportFullAudio()" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs rounded-xl shadow-md transition-all flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                <span id="exportLabel" data-en="Export MP3 Audio" data-zh="导出 MP3 音频">Export MP3 Audio</span>
+                            </button>
+                        </div>
                     </div>
 
-                    <!-- Master & Export Controls -->
-                    <div class="flex items-center space-x-2">
-                        <button id="btnPlay" onclick="togglePlayPause()" class="px-4 py-2 accent-bg text-white font-semibold text-xs rounded-xl shadow-md hover:opacity-90 transition-all flex items-center">
-                            <svg class="w-4 h-4 mr-1 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> <span id="playBtnLabel" data-en="Play" data-zh="播放">Play</span>
+                    <!-- TTS Settings -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                        <div>
+                            <label class="block text-secondary mb-1" data-en="Speaker A Voice" data-zh="角色 A 发音">Speaker A Voice</label>
+                            <select id="voiceA" class="w-full p-2 rounded-lg border border-theme bg-[var(--bg-primary)] text-primary"></select>
+                        </div>
+                        <div>
+                            <label class="block text-secondary mb-1" data-en="Speaker B Voice" data-zh="角色 B 发音">Speaker B Voice</label>
+                            <select id="voiceB" class="w-full p-2 rounded-lg border border-theme bg-[var(--bg-primary)] text-primary"></select>
+                        </div>
+                        <div>
+                            <label class="block text-secondary mb-1" data-en="Speed Rate" data-zh="语速控制">Speed Rate (<span id="rateVal">1.0</span>x)</label>
+                            <input type="range" id="rateInput" min="0.5" max="1.5" step="0.1" value="1.0" oninput="document.getElementById('rateVal').innerText=this.value" class="w-full">
+                        </div>
+                        <div>
+                            <label class="block text-secondary mb-1" data-en="Role-Play Mode" data-zh="角色扮演模式">Role-Play Mode</label>
+                            <select id="rolePlayMode" class="w-full p-2 rounded-lg border border-theme bg-[var(--bg-primary)] text-primary">
+                                <option value="both" data-en="Play Both A & B" data-zh="播放全部角色">Play Both A & B</option>
+                                <option value="muteA" data-en="Mute A (Practice A)" data-zh="静音 A (自己练 A)">Mute A (Practice A)</option>
+                                <option value="muteB" data-en="Mute B (Practice B)" data-zh="静音 B (自己练 B)">Mute B (Practice B)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dialogue Karaoke Card: 填满右侧剩余空间，字幕限制在可视窗口内 -->
+                <div class="bg-secondary rounded-2xl p-5 border border-theme shadow-sm flex-1 flex flex-col min-h-0">
+                    <div class="flex justify-between items-center mb-3 shrink-0">
+                        <span class="text-xs text-secondary" data-en="Tip: Double-click word for wordbook | Click sentence to play" data-zh="提示：双击单词查生词 | 点击单句可独立朗读">Tip: Double-click word for wordbook | Click sentence to play</span>
+                        <button onclick="startRecording()" id="recBtn" class="text-xs px-3 py-1 rounded-full border border-red-500/30 text-red-500 hover:bg-red-500/10 flex items-center shrink-0">
+                            <span class="w-2 h-2 rounded-full bg-red-500 mr-1.5 animate-pulse"></span>
+                            <span id="recStatus" data-en="Record Pitch" data-zh="录音跟读">Record Pitch</span>
                         </button>
-                        <button onclick="stopTTS()" class="p-2 border border-theme rounded-xl hover:bg-red-500/10 hover:text-red-500 text-secondary transition-all" title="Stop">
-                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"/></svg>
-                        </button>
-                        <!-- AUDIO EXPORT BUTTON -->
-                        <button id="exportAudioBtn" onclick="exportFullAudio()" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs rounded-xl shadow-md transition-all flex items-center">
-                            <svg class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                            <span id="exportLabel" data-en="Export MP3/Audio" data-zh="导出音频文件">Export MP3/Audio</span>
-                        </button>
+                    </div>
+
+                    <!-- 窗口化字幕容器：超出自动出现滚动条 -->
+                    <div id="dialogueTextDisplay" class="space-y-3 overflow-y-auto flex-1 min-h-0 max-h-[350px] lg:max-h-none pr-2 my-2"></div>
+
+                    <!-- STT Box -->
+                    <div class="mt-2 pt-3 border-t border-theme text-xs flex flex-col space-y-1 shrink-0">
+                        <div class="flex justify-between text-secondary">
+                            <span data-en="Speech Recognition Match (STT):" data-zh="跟读识别结果比对：">Speech Recognition Match (STT):</span>
+                            <span id="sttAccuracy" class="font-bold accent-text">0% Match</span>
+                        </div>
+                        <p id="sttTranscript" class="text-slate-400 italic bg-[var(--bg-primary)] p-2.5 rounded-xl border border-theme min-h-[36px]" data-en="Click 'Record Pitch' and read aloud to test your pronunciation..." data-zh="点击“录音跟读”朗读句子以测试发音特征...">Click 'Record Pitch' and read aloud to test your pronunciation...</p>
                     </div>
                 </div>
 
-                <!-- TTS Settings -->
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-                    <div>
-                        <label class="block text-secondary mb-1" data-en="Speaker A Voice" data-zh="角色 A 发音">Speaker A Voice</label>
-                        <select id="voiceA" class="w-full p-2 rounded-lg border border-theme bg-[var(--bg-primary)] text-primary"></select>
+                <!-- Wordbook -->
+                <div class="bg-secondary rounded-2xl p-4 border border-theme shadow-sm shrink-0">
+                    <div class="flex justify-between items-center mb-2">
+                        <h4 class="text-xs font-bold" data-en="Saved Wordbook (Local)" data-zh="本地暂存生词本">Saved Wordbook (Local)</h4>
+                        <button onclick="clearWordbook()" class="text-[10px] text-secondary hover:underline" data-en="Clear All" data-zh="清空词本">Clear All</button>
                     </div>
-                    <div>
-                        <label class="block text-secondary mb-1" data-en="Speaker B Voice" data-zh="角色 B 发音">Speaker B Voice</label>
-                        <select id="voiceB" class="w-full p-2 rounded-lg border border-theme bg-[var(--bg-primary)] text-primary"></select>
-                    </div>
-                    <div>
-                        <label class="block text-secondary mb-1" data-en="Speed Rate" data-zh="语速控制">Speed Rate (<span id="rateVal">1.0</span>x)</label>
-                        <input type="range" id="rateInput" min="0.5" max="1.5" step="0.1" value="1.0" oninput="document.getElementById('rateVal').innerText=this.value" class="w-full">
-                    </div>
-                    <div>
-                        <label class="block text-secondary mb-1" data-en="Role-Play Mode" data-zh="角色扮演模式">Role-Play Mode</label>
-                        <select id="rolePlayMode" class="w-full p-2 rounded-lg border border-theme bg-[var(--bg-primary)] text-primary">
-                            <option value="both" data-en="Play Both A & B" data-zh="播放全部角色">Play Both A & B</option>
-                            <option value="muteA" data-en="Mute A (Practice A)" data-zh="静音 A (自己练 A)">Mute A (Practice A)</option>
-                            <option value="muteB" data-en="Mute B (Practice B)" data-zh="静音 B (自己练 B)">Mute B (Practice B)</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Dialogue Karaoke Output -->
-            <div class="bg-secondary rounded-2xl p-5 border border-theme shadow-sm flex-1 flex flex-col justify-between min-h-[380px]">
-                <div class="flex justify-between items-center mb-3">
-                    <span class="text-xs text-secondary" data-en="Tip: Double-click word for wordbook | Click sentence to play" data-zh="提示：双击单词查生词 | 点击单句可独立朗读">Tip: Double-click word for wordbook | Click sentence to play</span>
-                    <button onclick="startRecording()" id="recBtn" class="text-xs px-3 py-1 rounded-full border border-red-500/30 text-red-500 hover:bg-red-500/10 flex items-center">
-                        <span class="w-2 h-2 rounded-full bg-red-500 mr-1.5 animate-pulse"></span>
-                        <span id="recStatus" data-en="Record Pitch" data-zh="录音跟读">Record Pitch</span>
-                    </button>
+                    <div id="wordbookTags" class="flex flex-wrap gap-1.5 text-xs"></div>
                 </div>
 
-                <div id="dialogueTextDisplay" class="space-y-3 overflow-y-auto max-h-[320px] pr-2 my-2"></div>
-
-                <!-- STT Box -->
-                <div class="mt-4 pt-3 border-t border-theme text-xs flex flex-col space-y-1">
-                    <div class="flex justify-between text-secondary">
-                        <span data-en="Speech Recognition Match (STT):" data-zh="跟读识别结果比对：">Speech Recognition Match (STT):</span>
-                        <span id="sttAccuracy" class="font-bold accent-text">0% Match</span>
-                    </div>
-                    <p id="sttTranscript" class="text-slate-400 italic bg-[var(--bg-primary)] p-2.5 rounded-xl border border-theme min-h-[36px]" data-en="Click 'Record Pitch' and read aloud to test your pronunciation..." data-zh="点击“录音跟读”朗读句子以测试发音特征...">Click 'Record Pitch' and read aloud to test your pronunciation...</p>
-                </div>
-            </div>
-
-            <!-- Wordbook -->
-            <div class="bg-secondary rounded-2xl p-4 border border-theme shadow-sm">
-                <div class="flex justify-between items-center mb-2">
-                    <h4 class="text-xs font-bold" data-en="Saved Wordbook (Local)" data-zh="本地暂存生词本">Saved Wordbook (Local)</h4>
-                    <button onclick="clearWordbook()" class="text-[10px] text-secondary hover:underline" data-en="Clear All" data-zh="清空词本">Clear All</button>
-                </div>
-                <div id="wordbookTags" class="flex flex-wrap gap-1.5 text-xs"></div>
             </div>
         </section>
     </main>
@@ -240,7 +244,10 @@
                         { speaker: "A", en: "Good morning, Northside Property Management. How can I help you today?", zh: "早上好，北区物业管理处。请问有什么可以帮您？" },
                         { speaker: "B", en: "Hi, I'm calling from Flat 4B on College Street. We have a leak under the kitchen sink.", zh: "你好，我是学院街4B公寓的租客。我们厨房水槽下面漏水了。" },
                         { speaker: "A", en: "I see. Is it a major flood or just a continuous drip?", zh: "好的，漏水很严重吗？还只是在持续滴水？" },
-                        { speaker: "B", en: "It's dripping quite fast, and it has already damaged the wooden cabinet underneath.", zh: "滴得挺快的，而且已经把下面的木柜给泡坏了。" }
+                        { speaker: "B", en: "It's dripping quite fast, and it has already damaged the wooden cabinet underneath.", zh: "滴得挺快的，而且已经把下面的木柜给泡坏了。" },
+                        { speaker: "A", en: "Alright. I will dispatch a plumber to your address this afternoon around 2 PM.", zh: "好的。我今天下午2点左右派水管工去您的地址。" },
+                        { speaker: "B", en: "That sounds good. Will I need to be at home to let him in?", zh: "那太好了。我需要在家给他开门吗？" },
+                        { speaker: "A", en: "Yes, please. If you are not there, we will have to reschedule for tomorrow.", zh: "是的，请您在场。如果您不在，我们就必须重排到明天。" }
                     ]
                 },
                 {
@@ -383,7 +390,7 @@
                     <div class="flex justify-between items-center text-[11px]">
                         <span class="font-bold ${line.speaker === 'A' ? 'accent-text' : 'text-emerald-500'}">Speaker ${line.speaker}</span>
                         <div class="flex items-center space-x-2">
-                            <button onclick="exportSingleLineAudio(${idx}, event)" class="text-[10px] accent-text hover:underline" title="Export this line audio">Export Line MP3</button>
+                            <button onclick="exportSingleLineAudio(${idx}, event)" class="text-[10px] accent-text hover:underline" title="Export this line MP3">Export Line MP3</button>
                             <span class="text-secondary text-[10px]">#${idx + 1}</span>
                         </div>
                     </div>
@@ -476,62 +483,135 @@
         }
 
         /* ----------------------------------------------------
-         * AUDIO EXPORT ENGINE (Client-Side Recording via Web Audio API)
+         * AUDIO EXPORT ENGINE
          * ---------------------------------------------------- */
         async function exportFullAudio() {
             stopTTS();
             const exportBtn = document.getElementById('exportLabel');
-            exportBtn.innerText = "Recording Audio...";
+            exportBtn.innerText = "请在弹窗中勾选『分享标签页音频』...";
 
             try {
-                const streamDestination = await recordDialogueToAudioBlob(currentDialogue.lines);
-                downloadBlob(streamDestination, `${currentDialogue.id}.webm`);
+                const mp3Blob = await recordDialogueToMp3Blob(currentDialogue.lines);
+                downloadBlob(mp3Blob, `${currentDialogue.id}.mp3`);
             } catch(e) {
-                alert("Audio recording unsupported or blocked by browser.");
+                console.error(e);
             } finally {
-                exportBtn.innerText = localStorage.getItem('lang') === 'zh' ? '导出音频文件' : 'Export MP3/Audio';
+                exportBtn.innerText = localStorage.getItem('lang') === 'zh' ? '导出 MP3 音频' : 'Export MP3 Audio';
             }
         }
 
         async function exportSingleLineAudio(idx, event) {
             event.stopPropagation();
-            const line = [currentDialogue.lines[idx]];
-            const blob = await recordDialogueToAudioBlob(line);
-            downloadBlob(blob, `${currentDialogue.id}-line-${idx + 1}.webm`);
+            stopTTS();
+            try {
+                const line = [currentDialogue.lines[idx]];
+                const blob = await recordDialogueToMp3Blob(line);
+                downloadBlob(blob, `${currentDialogue.id}-line-${idx + 1}.mp3`);
+            } catch(e) {
+                console.error(e);
+            }
         }
 
-        function recordDialogueToAudioBlob(linesToRecord) {
-            return new Promise(async (resolve) => {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const dest = audioCtx.createMediaStreamDestination();
-                const mediaRecorder = new MediaRecorder(dest.stream);
-                const chunks = [];
-
-                mediaRecorder.ondataavailable = e => chunks.push(e.data);
-                mediaRecorder.onstop = () => {
-                    const blob = new Blob(chunks, { type: 'audio/webm' });
-                    resolve(blob);
-                };
-
-                mediaRecorder.start();
-
-                for (let line of linesToRecord) {
-                    await new Promise(res => {
-                        const utterance = new SpeechSynthesisUtterance(line.en);
-                        utterance.rate = parseFloat(document.getElementById('rateInput').value);
-                        const voiceAIdx = document.getElementById('voiceA').value;
-                        const voiceBIdx = document.getElementById('voiceB').value;
-                        if (line.speaker === 'A' && voices[voiceAIdx]) utterance.voice = voices[voiceAIdx];
-                        if (line.speaker === 'B' && voices[voiceBIdx]) utterance.voice = voices[voiceBIdx];
-
-                        utterance.onend = () => res();
-                        utterance.onerror = () => res();
-                        synth.speak(utterance);
+        function recordDialogueToMp3Blob(linesToRecord) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const captureStream = await navigator.mediaDevices.getDisplayMedia({
+                        video: true,
+                        audio: {
+                            echoCancellation: false,
+                            noiseSuppression: false,
+                            autoGainControl: false
+                        }
                     });
-                }
 
-                setTimeout(() => mediaRecorder.stop(), 500);
+                    const audioTrack = captureStream.getAudioTracks()[0];
+                    if (!audioTrack) {
+                        alert("导出失败：请务必在弹窗中勾选『同时分享标签页音频 (Share tab audio)』！");
+                        captureStream.getTracks().forEach(t => t.stop());
+                        return reject("No audio track selected");
+                    }
+
+                    captureStream.getVideoTracks().forEach(t => t.stop());
+
+                    const audioStream = new MediaStream([audioTrack]);
+                    const mediaRecorder = new MediaRecorder(audioStream);
+                    const chunks = [];
+
+                    mediaRecorder.ondataavailable = e => {
+                        if (e.data && e.data.size > 0) chunks.push(e.data);
+                    };
+
+                    mediaRecorder.onstop = async () => {
+                        audioTrack.stop();
+                        const webmBlob = new Blob(chunks, { type: 'audio/webm' });
+
+                        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                        const arrayBuffer = await webmBlob.arrayBuffer();
+                        const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+                        const mp3Blob = encodeAudioBufferToMp3(audioBuffer);
+
+                        resolve(mp3Blob);
+                    };
+
+                    mediaRecorder.start();
+
+                    for (let line of linesToRecord) {
+                        await new Promise(res => {
+                            const utterance = new SpeechSynthesisUtterance(line.en);
+                            utterance.rate = parseFloat(document.getElementById('rateInput').value);
+                            const voiceAIdx = document.getElementById('voiceA').value;
+                            const voiceBIdx = document.getElementById('voiceB').value;
+                            if (line.speaker === 'A' && voices[voiceAIdx]) utterance.voice = voices[voiceAIdx];
+                            if (line.speaker === 'B' && voices[voiceBIdx]) utterance.voice = voices[voiceBIdx];
+
+                            utterance.onend = () => res();
+                            utterance.onerror = () => res();
+                            synth.speak(utterance);
+                        });
+                    }
+
+                    setTimeout(() => mediaRecorder.stop(), 600);
+                } catch(err) {
+                    alert("取消选择或浏览器不支持录制标签页音频。");
+                    reject(err);
+                }
             });
+        }
+
+        function encodeAudioBufferToMp3(audioBuffer) {
+            const channels = audioBuffer.numberOfChannels;
+            const sampleRate = audioBuffer.sampleRate;
+            const mp3encoder = new lamejs.Mp3Encoder(channels, sampleRate, 128);
+            const mp3Data = [];
+
+            const left = audioBuffer.getChannelData(0);
+            const right = channels > 1 ? audioBuffer.getChannelData(1) : left;
+
+            const sampleBlockSize = 1152;
+            const leftInt16 = new Int16Array(left.length);
+            const rightInt16 = new Int16Array(right.length);
+
+            for (let i = 0; i < left.length; i++) {
+                leftInt16[i] = left[i] < 0 ? left[i] * 0x8000 : left[i] * 0x7FFF;
+                rightInt16[i] = right[i] < 0 ? right[i] * 0x8000 : right[i] * 0x7FFF;
+            }
+
+            for (let i = 0; i < leftInt16.length; i += sampleBlockSize) {
+                const leftChunk = leftInt16.subarray(i, i + sampleBlockSize);
+                let mp3buf;
+                if (channels === 2) {
+                    const rightChunk = rightInt16.subarray(i, i + sampleBlockSize);
+                    mp3buf = mp3encoder.encodeBuffer(leftChunk, rightChunk);
+                } else {
+                    mp3buf = mp3encoder.encodeBuffer(leftChunk);
+                }
+                if (mp3buf.length > 0) mp3Data.push(mp3buf);
+            }
+
+            const endBuf = mp3encoder.flush();
+            if (endBuf.length > 0) mp3Data.push(endBuf);
+
+            return new Blob(mp3Data, { type: 'audio/mp3' });
         }
 
         function downloadBlob(blob, filename) {
@@ -658,10 +738,6 @@
         /* ----------------------------------------------------
          * Navigation & Language Sync Functionality
          * ---------------------------------------------------- */
-        function returnToMainPage() {
-            window.location.href = `index.html#tools`;
-        }
-
         function toggleTheme() {
             const html = document.documentElement;
             const currentTheme = html.getAttribute('data-theme');
@@ -706,7 +782,7 @@
         });
         function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-        // Initial Page Load Initialization
+        // Initial Page Load
         document.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem('theme') || 'dark';
             document.documentElement.setAttribute('data-theme', savedTheme);
