@@ -311,17 +311,51 @@
             voiceASelect.innerHTML = '';
             voiceBSelect.innerHTML = '';
 
+            let zoeIndex = -1;
+            let jamieIndex = -1;
+
             voices.forEach((voice, index) => {
                 if (voice.lang.includes('en')) {
                     const optA = new Option(`${voice.name} (${voice.lang})`, index);
                     const optB = new Option(`${voice.name} (${voice.lang})`, index);
+                    
                     voiceASelect.add(optA);
                     voiceBSelect.add(optB);
+
+                    const currentIndex = voiceASelect.options.length - 1;
+                    const nameLower = voice.name.toLowerCase();
+
+                    // 智能查找 Zoe (优先匹配 Premium 版本)
+                    if (nameLower.includes('zoe')) {
+                        if (zoeIndex === -1 || nameLower.includes('premium')) {
+                            zoeIndex = currentIndex;
+                        }
+                    }
+
+                    // 智能查找 Jamie (优先匹配 Premium 版本)
+                    if (nameLower.includes('jamie')) {
+                        if (jamieIndex === -1 || nameLower.includes('premium')) {
+                            jamieIndex = currentIndex;
+                        }
+                    }
                 }
             });
 
-            if (voiceASelect.options.length > 0) voiceASelect.selectedIndex = 0;
-            if (voiceBSelect.options.length > 1) voiceBSelect.selectedIndex = 1;
+            // 设置 Speaker A 的默认语音 (优先 Zoe，否则选第 1 项)
+            if (zoeIndex !== -1) {
+                voiceASelect.selectedIndex = zoeIndex;
+            } else if (voiceASelect.options.length > 0) {
+                voiceASelect.selectedIndex = 0;
+            }
+
+            // 设置 Speaker B 的默认语音 (优先 Jamie，否则选第 2 项)
+            if (jamieIndex !== -1) {
+                voiceBSelect.selectedIndex = jamieIndex;
+            } else if (voiceBSelect.options.length > 1) {
+                voiceBSelect.selectedIndex = 1;
+            } else if (voiceBSelect.options.length > 0) {
+                voiceBSelect.selectedIndex = 0;
+            }
         }
 
         if (speechSynthesis.onvoiceschanged !== undefined) {
