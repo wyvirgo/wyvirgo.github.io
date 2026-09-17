@@ -311,7 +311,7 @@
             voiceASelect.innerHTML = '';
             voiceBSelect.innerHTML = '';
 
-            let zoeIndex = -1;
+            let serenaIndex = -1;
             let jamieIndex = -1;
 
             voices.forEach((voice, index) => {
@@ -325,10 +325,10 @@
                     const currentIndex = voiceASelect.options.length - 1;
                     const nameLower = voice.name.toLowerCase();
 
-                    // 智能查找 Zoe (优先匹配 Premium 版本)
-                    if (nameLower.includes('zoe')) {
-                        if (zoeIndex === -1 || nameLower.includes('premium')) {
-                            zoeIndex = currentIndex;
+                    // 智能查找 Serena (优先匹配 Premium 版本)
+                    if (nameLower.includes('serena')) {
+                        if (serenaIndex === -1 || nameLower.includes('premium')) {
+                            serenaIndex = currentIndex;
                         }
                     }
 
@@ -341,9 +341,9 @@
                 }
             });
 
-            // 设置 Speaker A 的默认语音 (优先 Zoe，否则选第 1 项)
-            if (zoeIndex !== -1) {
-                voiceASelect.selectedIndex = zoeIndex;
+            // 设置 Speaker A 的默认语音 (优先 Senera，否则选第 1 项)
+            if (serenaIndex !== -1) {
+                voiceASelect.selectedIndex = serenaIndex;
             } else if (voiceASelect.options.length > 0) {
                 voiceASelect.selectedIndex = 0;
             }
